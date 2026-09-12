@@ -3,7 +3,7 @@ name: meta-basics-lite
 description: >
   พื้นฐาน title tag และ meta description วิธีนับตัวอักษรไทย อังกฤษ และ emoji
   กฎความยาว หลักการตั้ง title และ checklist ตรวจก่อนใช้จริง
-  (Lite edition for workshop use.)
+  (Lite edition.)
 allowed-tools:
   - Read
   - Grep

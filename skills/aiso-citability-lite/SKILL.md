@@ -4,7 +4,7 @@ description: >
   AI citability assessment and optimization. Analyzes web page content to determine how likely
   AI systems (ChatGPT, Claude, Perplexity, Gemini) are to cite or quote passages from the page.
   Gives a qualitative assessment per category (ดี / พอใช้ / ต้องแก้) with specific rewrite
-  suggestions. (Lite edition for workshop use.)
+  suggestions. (Lite edition.)
 allowed-tools:
   - Read
   - Grep

@@ -11,7 +11,7 @@ description: >
   weights, no gate. Sole owner of the accessibility-tree, ARIA, control-name and form-semantics
   verdicts. Not for heading hierarchy (seo-heading-matrix-lite), SSR (aiso-technical-lite), robots
   (aiso-crawlers-lite), llms.txt (aiso-llmstxt-lite) or JSON-LD (aiso-schema-lite): cite those,
-  never re-measure. Not a WCAG conformance claim. (Lite edition for workshop use.)
+  never re-measure. Not a WCAG conformance claim. (Lite edition.)
 allowed-tools:
   - Read
   - Grep

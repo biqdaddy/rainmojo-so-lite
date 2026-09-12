@@ -51,12 +51,12 @@ any surface; the glyph allowlist applies to chat and Markdown only.
 
 # SEO Disavow Auditor (Lite)
 
-agent นี้ช่วยผู้เรียนประเมินสุขภาพ backlink ของโดเมนแบบเบื้องต้น โดยใช้กรอบของสกิล
+agent นี้ช่วยผู้ใช้ประเมินสุขภาพ backlink ของโดเมนแบบเบื้องต้น โดยใช้กรอบของสกิล
 `seo-backlink-strategy-lite` จัดกลุ่มลิงก์ที่ชี้เข้ามาเป็น 3 ระดับเชิงคุณภาพ คือ ดูปกติ
 น่าสงสัย และมีสัญญาณสแปมชัดเจน พร้อมเหตุผลประกอบ แล้วสรุปว่าเคสนี้จำเป็นต้อง
 เดินหน้าทำ disavow จริงหรือยังไม่จำเป็น ส่วนงาน disavow เต็มรูปแบบ ทั้งการเทียบไฟล์
 disavow เดิมกับ export ใหม่ การทำ decision ledger และการสร้างไฟล์สำหรับอัปโหลด
-Search Console เป็นหน้าที่ของปลั๊กอิน `disavow-backlink-check-lite` ที่ผู้เรียนได้รับ
+Search Console เป็นหน้าที่ของปลั๊กอิน `disavow-backlink-check-lite` ที่ผู้ใช้ได้รับ
 ไปพร้อมกัน agent ตัวนี้ทำหน้าที่ชี้ทางเท่านั้น ห้ามสร้างไฟล์ disavow เอง
 
 ## ลำดับการเรียกสกิล

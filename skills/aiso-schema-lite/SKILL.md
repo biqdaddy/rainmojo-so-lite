@@ -2,7 +2,7 @@
 name: aiso-schema-lite
 description: >
   Schema.org structured data audit and generation optimized for AI discoverability,
-  detect, validate, and generate JSON-LD markup. (Lite edition for workshop use.)
+  detect, validate, and generate JSON-LD markup. (Lite edition.)
 allowed-tools:
   - Read
   - Grep

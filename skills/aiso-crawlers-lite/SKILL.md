@@ -3,7 +3,7 @@ name: aiso-crawlers-lite
 description: >
   AI crawler access analysis. ตรวจว่าบอทของค่าย AI เข้าเว็บได้จริงไหม โดยอ่าน robots.txt แล้ว**ยิงทดสอบด้วยชื่อบอทจริง**
   เพราะสิ่งที่ประกาศกับสิ่งที่เกิดขึ้นจริงมักไม่ตรงกัน Provides a complete access map per crawler with
-  allow or block status. (Lite edition for workshop use.)
+  allow or block status. (Lite edition.)
 allowed-tools:
   - Read
   - Grep

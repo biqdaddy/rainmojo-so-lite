@@ -4,7 +4,7 @@ description: >
   Brand mention scanner for AI visibility. Counts brand presence across the platforms that
   AI models rely on for entity recognition and citation decisions (YouTube, Reddit,
   Wikipedia, LinkedIn) and reports a per-platform mention count table with
-  platform-specific recommendations. (Lite edition for workshop use.)
+  platform-specific recommendations. (Lite edition.)
 allowed-tools:
   - Read
   - Grep

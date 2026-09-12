@@ -1,7 +1,7 @@
 ---
 name: seo-schema-lite
 description: >
-   Schema.org markup generation for business entities, local SEO, and AI citation readiness with JSON-LD structured data implementation (Lite edition for workshop use.)
+   Schema.org markup generation for business entities, local SEO, and AI citation readiness with JSON-LD structured data implementation (Lite edition.)
 allowed-tools:
   - Read
   - Grep

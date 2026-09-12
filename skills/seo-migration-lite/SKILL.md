@@ -7,7 +7,7 @@ description: >
   และวิธีแก้ redirect ที่วนลูป
   ใช้เมื่อผู้ใช้จะเปลี่ยน URL เปลี่ยนโดเมน ย้ายโฮสต์ ย้ายแพลตฟอร์ม รวมหลายโดเมนเป็นโดเมนเดียว
   หรือรีดีไซน์เว็บที่กระทบโครง URL
-  (Lite edition for workshop use.)
+  (Lite edition.)
 allowed-tools:
   - Read
   - Grep

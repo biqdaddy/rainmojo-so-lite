@@ -1,7 +1,7 @@
 ---
 name: seo-keyword-research-lite
 description: >
-   Comprehensive keyword research combining search behaviour analysis and competitive intelligence using proven Google Suggest methodology. Includes Thai Unicode support and Quick Start Guide. Copy-paste results to other agents for complete workflow. (Lite edition for workshop use.)
+   Comprehensive keyword research combining search behaviour analysis and competitive intelligence using proven Google Suggest methodology. Includes Thai Unicode support and Quick Start Guide. Copy-paste results to other agents for complete workflow. (Lite edition.)
 allowed-tools:
   - Read
   - Grep

@@ -3,7 +3,7 @@ name: report-lite
 description: >
   สร้างรายงาน AISO หน้าเดียวเป็นไฟล์ HTML จากผลตรวจของสกิล aiso ในปลั๊กอินเดียวกัน
   มี 3 ส่วน คือ สรุปสถานะผ่านหรือไม่ผ่าน สิ่งที่ต้องแก้ และขั้นตอนถัดไป
-  (Lite edition for workshop use.)
+  (Lite edition.)
 allowed-tools:
   - Read
   - Grep

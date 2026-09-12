@@ -8,7 +8,7 @@ description: >
   (seo-topical-authority-lite), the per-link internal link plan (seo-internal-linking-lite),
   competitor identification (seo-competitor-lite), guest post targets and partnership links
   (seo-backlink-strategy-lite), or brand setup (new-client-lite, brand-guidelines.md).
-  (Lite edition for workshop use.)
+  (Lite edition.)
 allowed-tools:
   - Read
   - Grep

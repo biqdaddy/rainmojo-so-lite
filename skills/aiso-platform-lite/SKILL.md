@@ -6,7 +6,7 @@ description: >
   Microsoft Copilot and Apple Intelligence (11 cards), bound to the shared AI platform
   registry. Reports a readiness checklist per platform (ผ่าน, บางส่วน, ยังไม่มี, ตรวจไม่ได้),
   never a numeric score; platforms without a documented crawler are reported as could not
-  verify. (Lite edition for workshop use.)
+  verify. (Lite edition.)
 allowed-tools:
   - Read
   - Grep

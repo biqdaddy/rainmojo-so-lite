@@ -3,7 +3,7 @@ name: seo-offpage-lite
 description: >
   สายงานนอกเว็บรุ่น lite ใช้เมื่อต้องการวิเคราะห์คู่แข่งด้านลิงก์แล้ววางแผนสร้าง backlink
   โดยเรียก seo-competitor-lite ก่อน ตามด้วย seo-backlink-strategy-lite แล้วสรุปเป็นแผนสร้างลิงก์
-  พร้อม benchmark คู่แข่งแบบเชิงคุณภาพ ไม่มีคะแนนตัวเลข (Lite edition for workshop use.)
+  พร้อม benchmark คู่แข่งแบบเชิงคุณภาพ ไม่มีคะแนนตัวเลข (Lite edition.)
 model: sonnet
 color: red
 tools:

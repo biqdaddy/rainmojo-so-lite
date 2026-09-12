@@ -3,7 +3,7 @@ name: aiso-content-lite
 description: >
   Content quality and E-E-A-T assessment for AI citability -- evaluate experience, expertise,
   authoritativeness, trustworthiness, and content structure. Reports a qualitative level per
-  dimension (ดี / พอใช้ / ต้องแก้), not a numeric score. (Lite edition for workshop use.)
+  dimension (ดี / พอใช้ / ต้องแก้), not a numeric score. (Lite edition.)
 allowed-tools:
   - Read
   - Grep

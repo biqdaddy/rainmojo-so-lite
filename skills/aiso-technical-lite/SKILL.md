@@ -3,7 +3,7 @@ name: aiso-technical-lite
 description: >
   Technical SEO audit with AISO-specific checks -- crawlability, indexability, security,
   URL structure, mobile-friendliness, and AI crawler access. Reports the number of checks
-  passed per category, not a numeric score. (Lite edition for workshop use.)
+  passed per category, not a numeric score. (Lite edition.)
 allowed-tools:
   - Read
   - Grep
