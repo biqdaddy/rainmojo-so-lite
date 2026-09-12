@@ -43,18 +43,34 @@ HTML source into the chat as text.
 
 | Rung | Host examples | Target flag | Output |
 |---|---|---|---|
-| 1 Host widget | Claude Desktop and Cowork rich visual widget, any host with an inline HTML widget tool | `--target host` | HTML fragment using the host's CSS variables and Tabler outline icons, no outer background, 680 px wide, dark-mode safe |
-| 2 Standalone HTML | Claude Artifacts, ChatGPT Canvas, Gemini Canvas, Cursor or VS Code webview, browser preview pane | `--target html` | Single self-contained file, inline CSS, inline SVG icons, zero external requests, reflows to 360 px |
+| 1 Host widget | Claude Desktop and Cowork inline widget tool, or any MCP Apps host with the plugin's card server connected (`scripts/mcp_server.py`: Claude web, Desktop, mobile, Cowork, Desktop Code tab, ChatGPT paid, Microsoft 365 Copilot, VS Code, Cursor, Goose, Postman) | `--target host` | HTML fragment using the host's CSS variables (MCP Apps `--color-*` tokens resolve as aliases) and Tabler outline icons, no outer background, 680 px wide, dark-mode safe |
+| 2 Standalone HTML | Claude Artifacts, ChatGPT or Gemini canvas, Antigravity HTML artifact, Cursor or VS Code preview, browser preview pane. These hosts open a file; they do not embed a skill's HTML in the chat (inline cards in ChatGPT, Microsoft 365 Copilot, VS Code and Cursor come from the plugin's MCP server, see below) | `--target html` | Single self-contained file, inline CSS, inline SVG icons, zero external requests, reflows to 360 px |
 | 3 Mermaid | Only a host that renders fenced `mermaid` blocks (GitHub, Claude, ChatGPT, Gemini, Cursor, Obsidian) | `--target mermaid` | Workflow, pipeline, decision tree or mindmap only. Never use Mermaid for score cards. A host that shows the block as raw code gets the ASCII rung instead |
 | 3 ASCII | Plain-text viewers, Markdown previews without Mermaid, Windows consoles | `--target ascii` | Pure ASCII tree diagram (`+--`, `|`) of score, key risk, actions, dimensions, hand-off and next steps in a fenced `text` block |
 | 4 Markdown | Terminal, CLI, plain-text chat, email | `--target md` | Rich Markdown: glyph progress bars, aligned tables, text status pills, GitHub alert blocks |
 
 Detection order for `--target auto`: an explicit `RAINMOJO_PRESENT_TARGET`
 environment variable wins; otherwise the calling unit passes the host it knows
-(`--host` with one of claude-desktop, cowork, claude-code, artifact, chatgpt, gemini,
-cursor, vscode, preview, github, obsidian, cli, terminal, email);
-unknown hosts get Markdown. When a widget or artifact fails to render, fall back
-one rung; never leave the user with nothing.
+(`--host` with one of claude-desktop, cowork, claude-code, claude-chrome, codex, gemini-cli,
+artifact, chatgpt, gemini, cursor, vscode, antigravity, preview, github, obsidian, cli,
+terminal, email); unknown hosts get Markdown. When a widget or artifact fails to render,
+fall back one rung; never leave the user with nothing.
+
+**No widget tool, no widget.** A skill can only call a widget tool the host lists in its
+tool set. Codex, Gemini CLI, Antigravity and Claude Code expose none, and a plugin install
+there ships skills only. On such a host: write the `html` target to the client report route
+(Antigravity shows it as an artifact), put the `ascii` or `md` target in the reply, and name
+the file. Never print HTML source as the reply.
+
+**MCP Apps path (3.15.0).** `scripts/mcp_server.py` serves the same card as an MCP Apps
+`ui://` resource (SEP-1865). When the `rainmojo-so-card` server is connected, call its
+`present_card` tool with the summary object: the host draws the card inline (Claude web,
+Desktop, mobile, Cowork, Desktop Code tab, ChatGPT paid plans, Microsoft 365 Copilot, VS Code,
+Cursor, Goose, Postman) and text-only hosts show the tool's Markdown result. The card HTML is
+fetched by the widget through the app-only tool `render_card_html`, so it never enters the
+model context. Registered for Claude Code plugin installs by `.mcp.json`; Claude Desktop, Codex
+and Antigravity users add the same stdio command to their MCP config; ChatGPT needs
+`--http` behind HTTPS and OAuth 2.1 (Developer Mode privately, directory review publicly).
 
 ## 3. The seven response modes
 
@@ -112,8 +128,12 @@ from a reader without JavaScript.
 - Every number on a card is copied from the deliverable. A value the run could not
   measure is shown as could not verify (`null` score, `unverifiable` access) with
   the reason in `transparency.could_not_verify`. Never estimate to fill a slot.
-- Language follows the client profile (`meta.lang`); Thai output uses the plugin's
-  Thai typography rules (Noto Sans Thai or Sarabun stack, 16 px body).
+- Language (`meta.lang`) is decided in this order: an explicit language instruction in the
+  user's request wins; otherwise the output language in the client profile; otherwise the
+  language the user wrote the request in. The card and the Tier 2 deliverable use the same
+  language. Shipped samples render in their own `meta.lang` (use the `-th` files to demo
+  Thai). Thai output uses the plugin's Thai typography rules (Noto Sans Thai or Sarabun
+  stack, 16 px body).
 - The Markdown fallback is the only rendering that may use progress bars, and the
   bars are pure ASCII (`[########--] 8.0/10`) because block-shade glyphs fall back
   to another font in most previews and overflow the line; text pills (`[PASS]`, `[WARN]`, `[CRIT]`, `[INFO]`,

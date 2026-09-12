@@ -6,8 +6,18 @@
     "tier1": {
       "name": "Executive quick-glance card",
       "source": "summary.json emitted at the end of every run that writes a deliverable",
-      "must_contain": ["headline", "handoff", "next_steps"],
-      "audit_must_contain": ["score", "dimensions", "key_risk", "actions", "transparency"],
+      "must_contain": [
+        "headline",
+        "handoff",
+        "next_steps"
+      ],
+      "audit_must_contain": [
+        "score",
+        "dimensions",
+        "key_risk",
+        "actions",
+        "transparency"
+      ],
       "rule": "Every number is copied from the Tier 2 deliverable; unmeasured values render as could not verify."
     },
     "tier2": {
@@ -17,65 +27,260 @@
     }
   },
   "host_ladder": [
-    {"rung": 1, "target": "host", "hosts": ["claude-desktop", "cowork"], "renders": "HTML fragment on host CSS variables, Tabler outline icons, transparent outer background, 680px, dark-mode safe"},
-    {"rung": 2, "target": "html", "hosts": ["artifact", "chatgpt", "gemini", "cursor", "vscode", "preview"], "renders": "single self-contained HTML, inline CSS and SVG, zero external requests, reflows to 360px"},
-    {"rung": 3, "target": "mermaid", "hosts": ["github", "obsidian", "any-markdown-with-mermaid"], "renders": "workflow, pipeline, decision tree, mindmap only; a host that does not render fenced mermaid shows raw code, so use ascii there"},
-    {"rung": 3, "target": "ascii", "hosts": ["plain-text", "any-markdown-without-mermaid", "cp874-console"], "renders": "pure ASCII tree diagram of score, key risk, actions or steps, dimensions, hand-off and next steps inside a fenced text block"},
-    {"rung": 4, "target": "md", "hosts": ["claude-code", "cli", "terminal", "email", "unknown"], "renders": "rich Markdown with ASCII bars [#####-----], text pills, GitHub alert blocks"}
+    {
+      "rung": 1,
+      "target": "host",
+      "hosts": [
+        "claude-desktop",
+        "cowork",
+        "mcp-app"
+      ],
+      "renders": "HTML fragment on host CSS variables (MCP Apps --color-* tokens accepted as aliases), Tabler outline icons, transparent outer background, 680px, dark-mode safe",
+      "requires": "an inline widget tool exposed to the skill (Claude Desktop, Cowork), or the plugin's MCP server connected to an MCP Apps host (mcp-app: Claude web, Desktop, mobile, Cowork, Desktop Code tab, ChatGPT paid, Microsoft 365 Copilot, VS Code, Cursor, Goose, Postman). When neither exists do not paste the fragment, drop to rung 2 and write the file"
+    },
+    {
+      "rung": 2,
+      "target": "html",
+      "hosts": [
+        "artifact",
+        "chatgpt",
+        "gemini",
+        "cursor",
+        "vscode",
+        "antigravity",
+        "preview"
+      ],
+      "renders": "single self-contained HTML, inline CSS and SVG, zero external requests, reflows to 360px",
+      "requires": "a surface that opens a file: Claude artifact, ChatGPT or Gemini canvas, editor preview pane, Antigravity HTML artifact (2.11.0+). Inline cards in ChatGPT, Microsoft 365 Copilot, VS Code Copilot and Cursor come from the plugin's MCP server (scripts/mcp_server.py), not from the skill's HTML"
+    },
+    {
+      "rung": 3,
+      "target": "mermaid",
+      "hosts": [
+        "github",
+        "obsidian",
+        "any-markdown-with-mermaid"
+      ],
+      "renders": "workflow, pipeline, decision tree, mindmap only; a host that does not render fenced mermaid shows raw code, so use ascii there"
+    },
+    {
+      "rung": 3,
+      "target": "ascii",
+      "hosts": [
+        "plain-text",
+        "any-markdown-without-mermaid",
+        "cp874-console"
+      ],
+      "renders": "pure ASCII tree diagram of score, key risk, actions or steps, dimensions, hand-off and next steps inside a fenced text block"
+    },
+    {
+      "rung": 4,
+      "target": "md",
+      "hosts": [
+        "claude-code",
+        "claude-chrome",
+        "codex",
+        "gemini-cli",
+        "cli",
+        "terminal",
+        "email",
+        "unknown"
+      ],
+      "renders": "rich Markdown with ASCII bars [#####-----], text pills, GitHub alert blocks"
+    }
   ],
   "auto_detection": {
     "env_override": "RAINMOJO_PRESENT_TARGET",
     "host_flag": "--host",
     "default_when_unknown": "md",
-    "fallback_rule": "on render failure drop exactly one rung and retry"
+    "fallback_rule": "on render failure drop exactly one rung and retry",
+    "no_widget_tool_rule": "A skill can only call a widget tool the host actually lists. Codex, Gemini CLI, Antigravity and Claude Code expose none: write the html target to the client report route, show the ascii or md target in the reply, and name the file. Never print HTML source as the reply. If the rainmojo-so-card MCP server is connected, call present_card instead and let the host draw the card.",
+    "mcp_apps_note": "Shipped in 3.15.0: scripts/mcp_server.py serves the card as an MCP Apps ui:// resource (SEP-1865, mimeType text/html;profile=mcp-app, tool _meta.ui.resourceUri, openai/outputTemplate alias). Tool present_card returns content = Markdown card (what text-only hosts show) and structuredContent = summary JSON; the shell fetches the HTML via the app-only tool render_card_html, so the card never costs model tokens. Wire-up: .mcp.json (Claude Code plugin), claude_desktop_config.json or .mcpb (Claude Desktop, stdio), Codex .mcp.json / Antigravity mcp_config.json (tools only, no inline render there), --http behind HTTPS + OAuth 2.1 for ChatGPT Developer Mode or the directory. Hosts that render: Claude web/Desktop/mobile/Cowork/Desktop Code tab, ChatGPT paid plans, Microsoft 365 Copilot, VS Code Copilot, Cursor 2.6+, Goose, Postman. Verified 2026-09-12."
   },
   "modes": {
     "quick_fact": {
-      "triggers_th": ["คืออะไร", "ใช่ไหม", "เท่าไร", "กี่", "ถามสั้น"],
-      "triggers_en": ["what is", "is it", "how many", "how much", "yes or no", "tl;dr"],
-      "structure": ["two-line answer box", "up to three bullets", "no preamble"],
-      "fields": ["tldr", "bullets"],
+      "triggers_th": [
+        "คืออะไร",
+        "ใช่ไหม",
+        "เท่าไร",
+        "กี่",
+        "ถามสั้น"
+      ],
+      "triggers_en": [
+        "what is",
+        "is it",
+        "how many",
+        "how much",
+        "yes or no",
+        "tl;dr"
+      ],
+      "structure": [
+        "two-line answer box",
+        "up to three bullets",
+        "no preamble"
+      ],
+      "fields": [
+        "tldr",
+        "bullets"
+      ],
       "md_shape": "> [!TIP] answer lines, then a bullet list"
     },
     "howto": {
-      "triggers_th": ["ทำยังไง", "ขั้นตอน", "สอน", "ตั้งค่า", "วิธี"],
-      "triggers_en": ["how do i", "how to", "steps", "guide", "set up", "walk me through"],
-      "structure": ["numbered steps with circled digits in Markdown", "each step: do, expect, owner"],
-      "fields": ["steps"],
+      "triggers_th": [
+        "ทำยังไง",
+        "ขั้นตอน",
+        "สอน",
+        "ตั้งค่า",
+        "วิธี"
+      ],
+      "triggers_en": [
+        "how do i",
+        "how to",
+        "steps",
+        "guide",
+        "set up",
+        "walk me through"
+      ],
+      "structure": [
+        "numbered steps with circled digits in Markdown",
+        "each step: do, expect, owner"
+      ],
+      "fields": [
+        "steps"
+      ],
       "md_shape": "ordered list, each item: title, then Do and Expect lines"
     },
     "comparison": {
-      "triggers_th": ["เปรียบเทียบ", "เลือกอันไหน", "ดีกว่า", "ต่างกัน", "ควรใช้"],
-      "triggers_en": ["compare", "which should i", "versus", "vs", "pros and cons", "difference"],
-      "structure": ["side-by-side table", "impact and effort columns", "one decisive recommendation line"],
-      "fields": ["comparison"],
+      "triggers_th": [
+        "เปรียบเทียบ",
+        "เลือกอันไหน",
+        "ดีกว่า",
+        "ต่างกัน",
+        "ควรใช้"
+      ],
+      "triggers_en": [
+        "compare",
+        "which should i",
+        "versus",
+        "vs",
+        "pros and cons",
+        "difference"
+      ],
+      "structure": [
+        "side-by-side table",
+        "impact and effort columns",
+        "one decisive recommendation line"
+      ],
+      "fields": [
+        "comparison"
+      ],
       "md_shape": "table then > [!IMPORTANT] Recommendation for you"
     },
     "troubleshoot": {
-      "triggers_th": ["ทำไม", "พัง", "ไม่ขึ้น", "แก้ยังไง", "error", "ไม่ติด"],
-      "triggers_en": ["why", "broken", "not showing", "error", "fix", "not indexed", "dropped"],
-      "structure": ["root-cause callout, critical tint", "three quick-fix steps"],
-      "fields": ["root_cause", "steps"],
+      "triggers_th": [
+        "ทำไม",
+        "พัง",
+        "ไม่ขึ้น",
+        "แก้ยังไง",
+        "error",
+        "ไม่ติด"
+      ],
+      "triggers_en": [
+        "why",
+        "broken",
+        "not showing",
+        "error",
+        "fix",
+        "not indexed",
+        "dropped"
+      ],
+      "structure": [
+        "root-cause callout, critical tint",
+        "three quick-fix steps"
+      ],
+      "fields": [
+        "root_cause",
+        "steps"
+      ],
       "md_shape": "> [!CAUTION] Root cause, then ordered list of fixes"
     },
     "audit": {
-      "triggers_th": ["ตรวจ", "audit", "วิเคราะห์", "รายงาน", "คะแนน", "visibility"],
-      "triggers_en": ["audit", "analyse", "analyze", "score", "visibility", "report", "check my site"],
-      "structure": ["score gauge and status pill", "dimension bars", "platform strip", "query or competitor table", "key risk callout", "priority actions", "transparency footer", "hand-off card"],
-      "fields": ["score", "dimensions", "platforms", "query_matrix", "competitors", "key_risk", "actions", "transparency", "handoff"],
+      "triggers_th": [
+        "ตรวจ",
+        "audit",
+        "วิเคราะห์",
+        "รายงาน",
+        "คะแนน",
+        "visibility"
+      ],
+      "triggers_en": [
+        "audit",
+        "analyse",
+        "analyze",
+        "score",
+        "visibility",
+        "report",
+        "check my site"
+      ],
+      "structure": [
+        "score gauge and status pill",
+        "dimension bars",
+        "platform strip",
+        "query or competitor table",
+        "key risk callout",
+        "priority actions",
+        "transparency footer",
+        "hand-off card"
+      ],
+      "fields": [
+        "score",
+        "dimensions",
+        "platforms",
+        "query_matrix",
+        "competitors",
+        "key_risk",
+        "actions",
+        "transparency",
+        "handoff"
+      ],
       "md_shape": "score line, glyph bars, tables, > [!WARNING] key risk, numbered actions, hand-off line"
     },
     "deployable": {
-      "triggers_th": ["ขอไฟล์", "สร้าง schema", "generate", "llms.txt", "robots.txt", "export"],
-      "triggers_en": ["give me the file", "generate", "template", "export", "json-ld", "csv"],
-      "structure": ["code blocks with filename header", "client-confined path written", "export options"],
-      "fields": ["deployables"],
+      "triggers_th": [
+        "ขอไฟล์",
+        "สร้าง schema",
+        "generate",
+        "llms.txt",
+        "robots.txt",
+        "export"
+      ],
+      "triggers_en": [
+        "give me the file",
+        "generate",
+        "template",
+        "export",
+        "json-ld",
+        "csv"
+      ],
+      "structure": [
+        "code blocks with filename header",
+        "client-confined path written",
+        "export options"
+      ],
+      "fields": [
+        "deployables"
+      ],
       "md_shape": "fenced code per file with language, path line under each"
     },
     "next_steps": {
       "always": true,
-      "structure": ["two or three next moves", "each an exact slash command or message"],
-      "fields": ["next_steps"],
+      "structure": [
+        "two or three next moves",
+        "each an exact slash command or message"
+      ],
+      "fields": [
+        "next_steps"
+      ],
       "md_shape": "Next steps heading with a short list of commands"
     }
   },
@@ -88,11 +293,93 @@
     "history": "Sparklines from compare"
   },
   "glyph_policy": {
-    "chat_and_markdown_allowlist": ["●", "○", "◐", "◑", "■", "□", "▲", "▼", "►", "◄", "✓", "✗", "★", "☆", "•", "→", "←", "↑", "↓", "↗", "↘", "█", "▓", "▒", "░", "─", "│", "┌", "┐", "└", "┘", "├", "┤", "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩"],
-    "forbidden_ranges": [["1F000", "1FAFF"], ["2600", "27BF"], ["1F1E6", "1F1FF"], ["FE0F", "FE0F"], ["200D", "200D"], ["2B00", "2BFF"]],
+    "chat_and_markdown_allowlist": [
+      "●",
+      "○",
+      "◐",
+      "◑",
+      "■",
+      "□",
+      "▲",
+      "▼",
+      "►",
+      "◄",
+      "✓",
+      "✗",
+      "★",
+      "☆",
+      "•",
+      "→",
+      "←",
+      "↑",
+      "↓",
+      "↗",
+      "↘",
+      "█",
+      "▓",
+      "▒",
+      "░",
+      "─",
+      "│",
+      "┌",
+      "┐",
+      "└",
+      "┘",
+      "├",
+      "┤",
+      "①",
+      "②",
+      "③",
+      "④",
+      "⑤",
+      "⑥",
+      "⑦",
+      "⑧",
+      "⑨",
+      "⑩"
+    ],
+    "forbidden_ranges": [
+      [
+        "1F000",
+        "1FAFF"
+      ],
+      [
+        "2600",
+        "27BF"
+      ],
+      [
+        "1F1E6",
+        "1F1FF"
+      ],
+      [
+        "FE0F",
+        "FE0F"
+      ],
+      [
+        "200D",
+        "200D"
+      ],
+      [
+        "2B00",
+        "2BFF"
+      ]
+    ],
     "html_and_pdf_rule": "inline SVG icons only, no glyphs, no emoji",
-    "text_pills": {"ok": "[PASS]", "warning": "[WARN]", "critical": "[CRIT]", "info": "[INFO]", "unverifiable": "[N/A]"},
-    "bar": {"filled": "#", "empty": "-", "width": 10, "open": "[", "close": "]", "why": "block-shade glyphs fall back to a different font in most Markdown previews and Windows consoles (cp874) and overflow the line; ASCII renders identically everywhere"}
+    "text_pills": {
+      "ok": "[PASS]",
+      "warning": "[WARN]",
+      "critical": "[CRIT]",
+      "info": "[INFO]",
+      "unverifiable": "[N/A]"
+    },
+    "bar": {
+      "filled": "#",
+      "empty": "-",
+      "width": 10,
+      "open": "[",
+      "close": "]",
+      "why": "block-shade glyphs fall back to a different font in most Markdown previews and Windows consoles (cp874) and overflow the line; ASCII renders identically everywhere"
+    }
   },
   "forbidden_text": {
     "em_dash": "—",
@@ -100,11 +387,27 @@
     "all_caps_headings": true
   },
   "status_tokens": {
-    "critical": {"fg": "#D64545", "bg": "#FBECEC"},
-    "warning": {"fg": "#B9740B", "bg": "#FBF1E1"},
-    "ok": {"fg": "#2E9E6B", "bg": "#E7F4EE"},
-    "info": {"fg": "#2B6CB0", "bg": "#E9F1FA"}
+    "critical": {
+      "fg": "#D64545",
+      "bg": "#FBECEC"
+    },
+    "warning": {
+      "fg": "#B9740B",
+      "bg": "#FBF1E1"
+    },
+    "ok": {
+      "fg": "#2E9E6B",
+      "bg": "#E7F4EE"
+    },
+    "info": {
+      "fg": "#2B6CB0",
+      "bg": "#E9F1FA"
+    }
   },
-  "brand_override_tokens": ["--brand-primary", "--brand-accent", "--brand-accent-ink"],
+  "brand_override_tokens": [
+    "--brand-primary",
+    "--brand-accent",
+    "--brand-accent-ink"
+  ],
   "installation_marker": "RAINMOJO_PRESENTATION_LAYER_V1"
 }

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RAINMOJO SO card</title>
+<style>
+html,body{margin:0;background:transparent;font-family:var(--font-sans,system-ui,sans-serif);color:var(--color-text-primary,light-dark(#141413,#faf9f5))}
+#root{padding:var(--rm-inset-top,0) var(--rm-inset-right,0) var(--rm-inset-bottom,0) var(--rm-inset-left,0)}
+#wait{font-size:13px;color:var(--color-text-secondary,light-dark(#3d3d3a,#c2c0b6));padding:8px 0}
+</style>
+</head>
+<body>
+<div id="root"><div id="wait">RAINMOJO SO card is loading</div></div>
+<script>
+/* MCP Apps shell (spec 2026-01-26, ext id io.modelcontextprotocol/ui). The host sends the
+   present_card result (Markdown + summary JSON, no HTML) through ui/notifications/tool-result;
+   the shell then calls the app-only tool render_card_html for the fragment, so the card's HTML
+   never enters the model context. No external requests; the fragment carries its own <style>. */
+(function(){
+  var VERSION="{{VERSION}}";
+  var seq=0, initId=null, root=document.getElementById("root");
+  function send(m){ window.parent.postMessage(m,"*"); }
+  function request(method,params){ var id=++seq; send({jsonrpc:"2.0",id:id,method:method,params:params||{}}); return id; }
+  function notify(method,params){ send({jsonrpc:"2.0",method:method,params:params||{}}); }
+  function say(text){ request("ui/message",{role:"user",content:{type:"text",text:text}}); }
+  window.rmPromptBridge=say;
+  function applyCtx(ctx){
+    if(!ctx) return;
+    if(ctx.theme){ document.documentElement.setAttribute("data-theme",ctx.theme); document.documentElement.style.colorScheme=ctx.theme; }
+    var vars=ctx.styles&&ctx.styles.variables;
+    if(vars){ for(var k in vars){ if(Object.prototype.hasOwnProperty.call(vars,k)) document.documentElement.style.setProperty(k,vars[k]); } }
+    var fonts=ctx.styles&&ctx.styles.css&&ctx.styles.css.fonts;
+    if(fonts&&!document.getElementById("rm-host-fonts")){ var st=document.createElement("style"); st.id="rm-host-fonts"; st.textContent=fonts; document.head.appendChild(st); }
+    var ins=ctx.safeAreaInsets;
+    if(ins){ var r=document.documentElement.style; r.setProperty("--rm-inset-top",(ins.top||0)+"px"); r.setProperty("--rm-inset-right",(ins.right||0)+"px"); r.setProperty("--rm-inset-bottom",(ins.bottom||0)+"px"); r.setProperty("--rm-inset-left",(ins.left||0)+"px"); }
+  }
+  function wire(){
+    var b=root.querySelectorAll("button[data-prompt]");
+    for(var i=0;i<b.length;i++){ b[i].addEventListener("click",function(e){ say(e.currentTarget.getAttribute("data-prompt")); }); }
+    var o=root.querySelectorAll("a[data-path]");
+    for(var j=0;j<o.length;j++){ o[j].addEventListener("click",function(e){ e.preventDefault(); say("Open the full report at "+e.currentTarget.getAttribute("data-path")); }); }
+    var a=root.querySelectorAll("a[href^='http']");
+    for(var k=0;k<a.length;k++){ a[k].addEventListener("click",function(e){ e.preventDefault(); request("ui/open-link",{url:e.currentTarget.getAttribute("href")}); }); }
+    var c=root.querySelectorAll("button[data-copy]");
+    for(var l=0;l<c.length;l++){ c[l].addEventListener("click",function(e){ var pre=e.currentTarget.closest(".code"); pre=pre&&pre.querySelector("pre"); if(pre&&navigator.clipboard) navigator.clipboard.writeText(pre.textContent); }); }
+  }
+  function size(){ notify("ui/notifications/size-changed",{width:document.documentElement.scrollWidth,height:document.documentElement.scrollHeight}); }
+  var htmlId=null, fallbackText="";
+  function showText(t){ var pre=document.createElement("pre"); pre.style.whiteSpace="pre-wrap"; pre.style.font="13px/1.5 var(--font-mono,ui-monospace,monospace)"; pre.textContent=t; root.innerHTML=""; root.appendChild(pre); size(); }
+  function inject(html){ root.innerHTML=html; wire(); size(); }
+  function render(p){
+    if(!p) return;
+    var sc=p.structuredContent||{};
+    var c=p.content; if(c&&c.length&&c[0].text) fallbackText=c[0].text;
+    if(sc.card_html){ inject(sc.card_html); return; }
+    if(sc.summary){ htmlId=request("tools/call",{name:"render_card_html",arguments:{summary:sc.summary}}); return; }
+    if(fallbackText) showText(fallbackText);
+  }
+  window.addEventListener("message",function(e){
+    var m=e.data; if(!m||m.jsonrpc!=="2.0") return;
+    if(m.id!==undefined&&(m.result!==undefined||m.error!==undefined)){
+      if(m.id===initId&&m.result){ applyCtx(m.result.hostContext); notify("ui/notifications/initialized",{}); }
+      else if(m.id===htmlId){ var r=m.result||{}; var h=r.structuredContent&&r.structuredContent.card_html; if(h&&!r.isError) inject(h); else if(fallbackText) showText(fallbackText); }
+      return;
+    }
+    if(m.method==="ui/notifications/tool-result"){ render(m.params); }
+    else if(m.method==="ui/notifications/host-context-changed"){ applyCtx(m.params); }
+    else if(m.method==="ping"&&m.id!==undefined){ send({jsonrpc:"2.0",id:m.id,result:{}}); }
+  });
+  if(window.ResizeObserver){ new ResizeObserver(function(){ size(); }).observe(document.body); }
+  initId=request("ui/initialize",{capabilities:{},clientInfo:{name:"rainmojo-so-card",version:VERSION},protocolVersion:"2026-01-26",appCapabilities:{availableDisplayModes:["inline"]}});
+})();
+</script>
+</body>
+</html>

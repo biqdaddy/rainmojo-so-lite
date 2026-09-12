@@ -5,7 +5,8 @@ present.py - Tier 1 presentation renderer for RAINMOJO SO.
 Reads a summary.json (contract: templates/widget/summary.schema.json) and renders
 the executive quick-glance card for the host the caller is running in:
 
-  --target host     HTML fragment for an inline chat widget (host CSS variables,
+  --target host     HTML fragment for an inline chat widget (Claude Desktop and Cowork
+                    widget tool; also the body of a future MCP Apps ui:// resource; host CSS variables,
                     Tabler outline icons, transparent outer background)
   --target html     single self-contained HTML card (inline CSS + SVG, zero
                     external requests) for artifacts, canvases, preview panes
@@ -50,11 +51,17 @@ CSS_HOST = os.path.join(ROOT, "templates", "widget", "tier1-host.css")
 ICONS_PATH = os.path.join(ROOT, "templates", "widget", "icons.json")
 
 HOST_TARGET = {
-    "claude-desktop": "host", "cowork": "host",
+    # rung 1: hosts that expose an inline widget tool to the skill (verified 2026-09-12)
+    "claude-desktop": "host", "cowork": "host", "mcp-app": "host",
+    # rung 2: hosts that open a standalone HTML file (artifact, canvas, preview pane, Antigravity artifact).
+    # ChatGPT, Gemini, Cursor and VS Code render tool HTML inline only through an MCP Apps
+    # server, which this plugin does not ship; from a skill they get the file, not the widget.
     "artifact": "html", "chatgpt": "html", "gemini": "html", "cursor": "html",
-    "vscode": "html", "preview": "html",
+    "vscode": "html", "preview": "html", "antigravity": "html",
     "github": "mermaid", "obsidian": "mermaid",
-    "claude-code": "md", "cli": "md", "terminal": "md", "email": "md",
+    # rung 4: text-only surfaces
+    "claude-code": "md", "claude-chrome": "md", "codex": "md", "gemini-cli": "md",
+    "cli": "md", "terminal": "md", "email": "md",
 }
 
 

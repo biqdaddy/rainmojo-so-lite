@@ -72,13 +72,39 @@ Read and execute the agent workflow from [agent.json](agent.json).
 2. **ตรวจและ lint**: `python {PLUGIN_ROOT}/skills/rainmojo-so-lite/scripts/present.py --summary <file> --lint`
    (schema, emoji และ pictograph ต้องห้าม, em dash, pipe) lint ไม่ผ่านห้ามเรนเดอร์ แก้ JSON ไม่ใช่แก้ตัว lint
 3. **เรนเดอร์ตาม host**: `present.py --summary <file> --target auto --host <host>`
-   host ที่รู้จัก: `claude-desktop`, `cowork` (widget fragment), `artifact`, `chatgpt`, `gemini`, `cursor`, `vscode`,
-   `preview` (HTML ไฟล์เดียว), `github`, `obsidian` (Mermaid), `claude-code`, `cli`, `terminal`, `email` (Markdown)
+   host ที่รู้จัก: `claude-desktop`, `cowork`, `mcp-app` (widget fragment), `artifact`, `chatgpt`, `gemini`, `cursor`, `vscode`,
+   `antigravity`, `preview` (HTML ไฟล์เดียว), `github`, `obsidian` (Mermaid), `claude-code`, `claude-chrome`, `codex`,
+   `gemini-cli`, `cli`, `terminal`, `email` (Markdown)
    host ที่ไม่รู้จักได้ Markdown `--target ascii` วาดการ์ดเดียวกันเป็นต้นไม้ ASCII ล้วนสำหรับ viewer ที่แสดง Mermaid เป็นโค้ดดิบ
-4. **แสดง** ผ่านพื้นผิวของ host เอง: เครื่องมือ widget ในแชตถ้ามี, artifact หรือ canvas สำหรับ HTML, บล็อก `mermaid`
-   เฉพาะที่เรนเดอร์ได้, บล็อก `text` สำหรับต้นไม้ ASCII, หรือข้อความ Markdown **ห้ามวางซอร์ส HTML ลงแชตเป็นข้อความ**
+4. **แสดง** ผ่านพื้นผิวของ host เอง: เครื่องมือ widget ในแชตเมื่อ host มีให้ (Claude Desktop, Cowork), artifact หรือ canvas
+   สำหรับ HTML, บล็อก `mermaid` เฉพาะที่เรนเดอร์ได้, บล็อก `text` สำหรับต้นไม้ ASCII, หรือข้อความ Markdown
+   **ห้ามวางซอร์ส HTML ลงแชตเป็นข้อความ**
+   **ไม่มี widget tool ก็ไม่มี widget:** บน Codex, Gemini CLI, Antigravity หรือ Claude Code ให้เขียนไฟล์ `html` ลง route
+   ของรายงาน (Antigravity เปิดเป็น artifact ได้) แล้วตอบด้วย `ascii` หรือ `md` พร้อมบอกชื่อไฟล์ ส่วน ChatGPT,
+   Microsoft 365 Copilot, VS Code และ Cursor แสดงการ์ดในแชตได้ก็ต่อเมื่อต่อ MCP server ของปลั๊กอิน (หัวข้อถัดไป)
+   ห้ามสัญญาว่าจะได้การ์ดจาก HTML ของสกิลอย่างเดียว
 5. **ส่งต่อ**: บล็อกส่งต่อของการ์ดระบุไฟล์ชั้นที่ 2 (path ใต้ `work/{domain}/` หรือ route ของลูกค้า หรือ URL ของ artifact)
    และรูปแบบไฟล์ ไฟล์ชั้นที่ 2 ต้องครบและไม่ถูกแก้
+
+## เส้นทาง MCP Apps (host ใดก็ได้ที่รองรับ SEP-1865)
+
+`{PLUGIN_ROOT}/skills/rainmojo-so-lite/scripts/mcp_server.py` เสิร์ฟการ์ดชั้นที่ 1 เป็น resource `ui://` ตามมาตรฐาน
+MCP Apps ถ้ารายการ tool มี `present_card` (server ชื่อ `rainmojo-so-lite-card`) ให้ใช้แทน widget tool: เรียก `present_card`
+ด้วย `{"summary": <object จาก summary.json>}` (หรือ `{"sample": "<ชื่อ>"}` สำหรับสาธิต) host จะวาดการ์ดในแชตเอง
+ส่วน host ที่แสดงได้แค่ข้อความจะเห็นผลลัพธ์ Markdown ของ tool เดียวกัน จึงไม่ต้องทำ fallback เพิ่ม
+ตัว widget ไปดึง HTML เองผ่าน tool ที่มองเห็นเฉพาะ app (`render_card_html`) การ์ดจึงมีต้นทุน token ต่อโมเดลแค่
+Markdown กับ JSON
+
+| Host | วิธีต่อ | ผล |
+|---|---|---|
+| ติดตั้งเป็น plugin ใน Claude Code | `.mcp.json` ที่รากปลั๊กอิน (stdio อัตโนมัติ) | การ์ดใน Desktop Code tab ส่วน CLI เห็น Markdown |
+| Claude Desktop, Cowork | ใส่คำสั่ง `python .../mcp_server.py` (stdio) ใน `claude_desktop_config.json` | การ์ดในแชต |
+| Claude web, มือถือ, ChatGPT แบบเสียเงิน, Microsoft 365 Copilot | รัน `--http --port 8765` หลัง HTTPS และ OAuth 2.1 แล้วเพิ่มเป็น custom connector (Claude) หรือ Developer Mode (ChatGPT) การขึ้น directory ของ ChatGPT ต้องผ่านรีวิว | การ์ดในแชต |
+| VS Code Copilot, Cursor, Goose, Postman | ใส่ server (stdio หรือ HTTP) ใน MCP config ของ host | การ์ดในแชต |
+| Codex CLI, Gemini CLI, Antigravity, Claude in Chrome, Grok, Perplexity, Gemini app | ต่อ server เป็น tool หรือไม่ต่อก็ได้ | ได้แค่การ์ด Markdown (host ไม่วาด HTML ในแชต) |
+| ChatGPT Free, DeepSeek, Qwen App, Meta AI | ไม่มีช่องทางนักพัฒนา | ใช้ไม่ได้ |
+
+โหมด remote ปฏิเสธ `summary_path` ให้ส่ง object แทน `mcp_server.py --self-test` ตรวจโปรโตคอลทั้งชุด
 
 ## รุ่น Lite ต่างจากรุ่นเต็มตรงไหน
 
@@ -128,7 +154,8 @@ Read and execute the agent workflow from [agent.json](agent.json).
 - Agent definition: [agent.json](agent.json)
 - สัญญาข้อมูล: `templates/widget/summary.schema.json`; ป้ายข้อความ: `templates/widget/labels.json`; ไอคอน SVG: `templates/widget/icons.json`
 - โหมดและนโยบาย glyph: `reference/frameworks/presentation-modes.json`
-- สคริปต์: `scripts/present.py`, `scripts/present_html.py`, `scripts/build_summary.py`
+- สคริปต์: `scripts/present.py`, `scripts/present_html.py`, `scripts/build_summary.py`, `scripts/mcp_server.py` (MCP Apps card server)
+- shell ของการ์ดสำหรับ MCP Apps: `templates/widget/tier1-mcp-app.html`
 
 ## กฎ
 
@@ -136,4 +163,5 @@ Read and execute the agent workflow from [agent.json](agent.json).
 - **ห้าม emoji และ pictograph ทุกพื้นผิว** glyph ตามรายการอนุญาตใช้ได้เฉพาะแชตและ Markdown การ์ด HTML ใช้ไอคอน SVG inline เท่านั้น
 - **ห้าม em dash และ pipe ในข้อความที่มองเห็น** (ตัวคั่นตารางใน Markdown เป็นโครงสร้าง ไม่นับ)
 - สีสถานะเป็นค่าคงที่ตามความหมาย มีเพียง `--brand-primary`, `--brand-accent`, `--brand-accent-ink` ที่เปลี่ยนตามลูกค้า
-- ภาษาตาม `meta.lang` ของโปรไฟล์ลูกค้า การ์ดกับไฟล์ฉบับเต็มใช้ภาษาเดียวกัน
+- ภาษาตามลำดับ: คำสั่งของผู้ใช้ในรอบนั้น > ภาษาผลลัพธ์ในโปรไฟล์ลูกค้า > ภาษาที่ผู้ใช้พิมพ์มา การ์ดกับไฟล์ฉบับเต็มใช้ภาษาเดียวกัน
+  ตัวอย่างใน `samples/` เรนเดอร์ตาม `meta.lang` ของตัวเอง

@@ -255,13 +255,17 @@ def block_platforms(s, L, T):
     chips = []
     for p in plats:
         st = _status(p["status"])
-        score = ('%s<small>/100</small>' % fmt_num(p["score"])) if p.get("score") is not None else ('<span class="pill pill--info">%s</span>' % esc(L["not_scored"]))
+        # a missing score never sits in the narrow score column: the pill moves to the full-width
+        # access row so long platform names and long pill labels (Thai) cannot collide
+        scored = p.get("score") is not None
+        score = ('%s<small>/100</small>' % fmt_num(p["score"])) if scored else ""
+        na_pill = "" if scored else ('<span class="pill pill--info">%s</span>' % esc(L["not_scored"]))
         icon, _ = access_icon.get(p["crawler_access"], ("help", "na"))
         access = esc(L["access"].get(p["crawler_access"], p["crawler_access"]))
         note = ('<div class="pnote">%s</div>' % esc(p["note"])) if p.get("note") else ""
         chips.append('<div class="pc"><div class="pn">%s%s</div><div class="ps">%s</div>'
-                     '<div class="pa">%s<span>%s: %s</span></div>%s</div>'
-                     % (_dot(st, L), esc(p["label"]), score, T.icon(icon), esc(L["crawler"]), access, note))
+                     '<div class="pa">%s%s<span>%s: %s</span></div>%s</div>'
+                     % (_dot(st, L), esc(p["label"]), score, na_pill, T.icon(icon), esc(L["crawler"]), access, note))
     legend = '<div class="legend"><span>%s %s</span><span>%s %s</span><span>%s %s</span><span>%s %s</span></div>' % (
         T.icon("circle-check"), esc(L["access"]["allowed"]), T.icon("circle-half"), esc(L["access"]["partial"]),
         T.icon("circle-x"), esc(L["access"]["blocked"]), T.icon("circle-dashed"), esc(L["access"]["unverifiable"]))
@@ -443,15 +447,17 @@ def _css(name):
         return f.read()
 
 
+# window.sendPrompt is the Claude widget tool bridge; window.rmPromptBridge is the hook an MCP Apps
+# wrapper defines (ext-apps App -> ui/message) so the same fragment works as a ui:// resource.
 COPY_SCRIPT = ('<script>(function(){var b=document.querySelectorAll("button[data-prompt]");for(var i=0;i<b.length;i++){'
                'b[i].addEventListener("click",function(e){var p=e.currentTarget.getAttribute("data-prompt");'
-               'if(window.sendPrompt){window.sendPrompt(p);return;}'
+               'var s=window.sendPrompt||window.rmPromptBridge;if(s){s(p);return;}'
                'if(navigator.clipboard){navigator.clipboard.writeText(p);}});}'
                'var c=document.querySelectorAll("button[data-copy]");for(var j=0;j<c.length;j++){'
                'c[j].addEventListener("click",function(e){var pre=e.currentTarget.closest(".code").querySelector("pre");'
                'if(pre&&navigator.clipboard){navigator.clipboard.writeText(pre.textContent);}});}'
                'var o=document.querySelectorAll("a[data-path]");for(var k=0;k<o.length;k++){'
-               'o[k].addEventListener("click",function(e){if(window.sendPrompt){e.preventDefault();window.sendPrompt("Open the full report at "+e.currentTarget.getAttribute("data-path"));}});}})();</script>')
+               'o[k].addEventListener("click",function(e){var s=window.sendPrompt||window.rmPromptBridge;if(s){e.preventDefault();s("Open the full report at "+e.currentTarget.getAttribute("data-path"));}});}})();</script>')
 
 
 def render_standalone(s, L, modes):

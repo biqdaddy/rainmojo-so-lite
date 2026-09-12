@@ -17,7 +17,7 @@
   "workflow": {
     "inputs": {
       "deliverable": "The Tier 2 file the calling unit just wrote (report-lite HTML, an audit Markdown, a deploy file) or, for plain questions, the answer content.",
-      "host": "One of claude-desktop, cowork, artifact, chatgpt, gemini, cursor, vscode, preview, github, obsidian, claude-code, cli, terminal, email. Passed by the caller or read from RAINMOJO_PRESENT_TARGET.",
+      "host": "One of claude-desktop, cowork, mcp-app, artifact, chatgpt, gemini, cursor, vscode, antigravity, preview, github, obsidian, claude-code, claude-chrome, codex, gemini-cli, cli, terminal, email. Passed by the caller or read from RAINMOJO_PRESENT_TARGET.",
       "mode": "quick_fact, howto, comparison, troubleshoot, audit, deployable. The caller sets it from the request; the primary deliverable decides when a request mixes modes."
     },
     "step_1_build_summary": {
@@ -41,13 +41,15 @@
     "step_3_render": {
       "command": "python {PLUGIN_ROOT}/skills/rainmojo-so-lite/scripts/present.py --summary {summary_target} --target auto --host {host}",
       "ladder": [
-        {"target": "host", "show": "Pass the fragment to the host's inline widget tool. Write the one-sentence summary in the reply text as well; the widget holds the visual."},
+        {"target": "host", "show": "Pass the fragment to the host's inline widget tool (Claude Desktop, Cowork). Write the one-sentence summary in the reply text as well; the widget holds the visual. If no widget tool is listed in the current tool set, do not paste the fragment: drop to html plus ascii or md."},
         {"target": "html", "show": "Publish as an artifact or canvas page, or write the card file next to the deliverable and open it in the preview pane."},
         {"target": "mermaid", "show": "Emit the fenced mermaid block for workflow or decision questions only, and only where the host renders mermaid; pair it with the Markdown card for counts."},
         {"target": "ascii", "show": "Emit the fenced text block with the pure ASCII tree when the host shows mermaid as raw code or is a plain console."},
         {"target": "md", "show": "Emit the Markdown as the reply body. ASCII bars [#####-----] and text pills are allowed here only."}
       ],
-      "fallback": "If a rung fails to render, drop exactly one rung and retry; never leave the user without a card."
+      "fallback": "If a rung fails to render, drop exactly one rung and retry; never leave the user without a card.",
+      "no_widget_tool": "Codex, Gemini CLI, Antigravity and Claude Code expose no widget tool; a plugin install there ships skills only. Write the html target to the report route (Antigravity renders it as an artifact), reply with ascii or md, name the file. Inline cards in ChatGPT, Microsoft 365 Copilot, VS Code and Cursor come from the plugin's MCP server (scripts/mcp_server.py, tool present_card); never promise them from the skill's HTML alone.",
+      "mcp_apps": "If the tool list contains present_card (server rainmojo-so-lite-card), call it with the summary object instead of the widget tool: the host draws the card inline and text-only hosts show the Markdown result. Never send the card HTML to the model; the widget fetches it through the app-only tool render_card_html."
     },
     "step_4_handoff": {
       "rule": "The last thing the user sees is the hand-off line naming the Tier 2 file and the 2 to 3 next steps. The Tier 2 deliverable is never truncated, summarised in place, or replaced by the card."

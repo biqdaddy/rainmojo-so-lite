@@ -2,7 +2,7 @@
 
 SEO and AISO (AI Search Optimization) toolkit for Claude Code, Claude Desktop and Cowork, Codex CLI, ChatGPT, Gemini CLI and Antigravity. 43 skills and 17 agents that check whether ChatGPT, Perplexity, Claude, Google AI Overviews, Gemini and 5 more AI answer platforms can reach, read and cite your website, run the classic SEO audits, fix what fails, and publish WordPress drafts. Every result is a checklist or a count, never a weighted score.
 
-Free lite edition of [RAINMOJO SO](https://rainmojo.com/) by [BIQDADDY](https://biqdaddy.com). Version 2.0.0.
+Free lite edition of [RAINMOJO SO](https://rainmojo.com/) by [BIQDADDY](https://biqdaddy.com). Version 2.1.0.
 
 [Install](#install) · [First run](#first-run) · [What is inside](#what-is-inside) · [How results look](#how-results-look) · [Requirements](#requirements) · [Privacy and license](#privacy-and-license) · [ภาษาไทย](#ภาษาไทย)
 
@@ -121,7 +121,7 @@ Local Python scripts the skills call, each with `--self-test`: `robots_generator
 
 ## How results look
 
-Every run writes a full deliverable (Markdown or HTML report, JSON-LD file, article package) into your workspace, then ends with a short summary card in the chat: what passed, what failed, the biggest risk, the next actions, and a link to the full file. The card is rendered for your host (inline widget, artifact, Mermaid, ASCII tree or Markdown).
+Every run writes a full deliverable (Markdown or HTML report, JSON-LD file, article package) into your workspace, then ends with a short summary card in the chat: what passed, what failed, the biggest risk, the next actions, and a link to the full file. The card is rendered for your host (inline widget, artifact, Mermaid, ASCII tree or Markdown). The bundled MCP Apps server (`skills/rainmojo-so-lite/scripts/mcp_server.py`, registered by `.mcp.json`) draws the same card inline in Claude web, Desktop, mobile and Cowork, ChatGPT (paid plans), Microsoft 365 Copilot, VS Code, Cursor, Goose and Postman; text-only hosts get it as Markdown.
 
 Results are checklists and counts. When something cannot be measured the plugin says could not verify instead of guessing, and it never turns a missing check into a fail.
 
@@ -146,7 +146,7 @@ Support and questions: [biqdaddy.com/contact](https://biqdaddy.com/contact/) or 
 
 ชุดเครื่องมือ SEO และ AISO (AI Search Optimization) สำหรับ Claude Code, Claude Desktop และ Cowork, Codex CLI, ChatGPT, Gemini CLI และ Antigravity 43 สกิล 17 agent ตรวจว่า ChatGPT, Perplexity, Claude, Google AI Overviews, Gemini และอีก 5 แพลตฟอร์มคำตอบ AI เข้าถึง อ่าน และอ้างอิงเว็บของคุณได้ไหม ตรวจ SEO พื้นฐาน แก้จุดที่ไม่ผ่าน และส่งบทความขึ้น WordPress เป็นฉบับร่าง ทุกผลลัพธ์เป็นเช็กลิสต์หรือจำนวนนับ ไม่มีคะแนนถ่วงน้ำหนัก
 
-รุ่นฟรีของ [RAINMOJO SO](https://rainmojo.com/) โดย [BIQDADDY](https://biqdaddy.com) เวอร์ชัน 2.0.0
+รุ่นฟรีของ [RAINMOJO SO](https://rainmojo.com/) โดย [BIQDADDY](https://biqdaddy.com) เวอร์ชัน 2.1.0
 
 [ติดตั้ง](#ติดตั้ง) · [เริ่มใช้ครั้งแรก](#เริ่มใช้ครั้งแรก) · [มีอะไรข้างใน](#มีอะไรข้างใน) · [ผลลัพธ์หน้าตาเป็นยังไง](#ผลลัพธ์หน้าตาเป็นยังไง) · [สิ่งที่ต้องมี](#สิ่งที่ต้องมี) · [ความเป็นส่วนตัวและสิทธิ์การใช้](#ความเป็นส่วนตัวและสิทธิ์การใช้) · [English](#rainmojo-so-lite)
 
@@ -233,7 +233,7 @@ agy plugin install https://github.com/biqdaddy/rainmojo-so-lite
 
 ### ผลลัพธ์หน้าตาเป็นยังไง
 
-ทุกรอบเขียนไฟล์ผลลัพธ์ฉบับเต็ม (รายงาน Markdown หรือ HTML, ไฟล์ JSON-LD, แพ็กเกจบทความ) ลงพื้นที่งานของคุณ แล้วปิดด้วยการ์ดสรุปสั้น ๆ ในแชต: ผ่านอะไร ไม่ผ่านอะไร ความเสี่ยงใหญ่สุด สิ่งที่ควรทำต่อ และลิงก์ไปไฟล์ฉบับเต็ม การ์ดเรนเดอร์ตาม host ที่ใช้ (widget, artifact, Mermaid, ต้นไม้ ASCII หรือ Markdown)
+ทุกรอบเขียนไฟล์ผลลัพธ์ฉบับเต็ม (รายงาน Markdown หรือ HTML, ไฟล์ JSON-LD, แพ็กเกจบทความ) ลงพื้นที่งานของคุณ แล้วปิดด้วยการ์ดสรุปสั้น ๆ ในแชต: ผ่านอะไร ไม่ผ่านอะไร ความเสี่ยงใหญ่สุด สิ่งที่ควรทำต่อ และลิงก์ไปไฟล์ฉบับเต็ม การ์ดเรนเดอร์ตาม host ที่ใช้ (widget, artifact, Mermaid, ต้นไม้ ASCII หรือ Markdown) และ MCP Apps server ที่แถมมา (`skills/rainmojo-so-lite/scripts/mcp_server.py` ลงทะเบียนผ่าน `.mcp.json`) วาดการ์ดเดียวกันในแชตของ Claude web, Desktop, มือถือ, Cowork, ChatGPT แบบเสียเงิน, Microsoft 365 Copilot, VS Code, Cursor, Goose และ Postman ส่วน host ที่แสดงได้แค่ข้อความจะได้การ์ดเป็น Markdown
 
 ผลลัพธ์เป็นเช็กลิสต์และจำนวนนับ สิ่งที่วัดไม่ได้จะขึ้นว่า ตรวจสอบไม่ได้ ไม่เดา และไม่นับข้อที่ตรวจไม่ได้เป็นไม่ผ่าน
 

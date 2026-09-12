@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "rainmojo-so-lite-card": {
+      "command": "python",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/skills/rainmojo-so-lite/scripts/mcp_server.py"]
+    }
+  }
+}
