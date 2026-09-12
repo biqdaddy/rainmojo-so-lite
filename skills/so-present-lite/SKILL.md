@@ -6,13 +6,12 @@ description: >
   tables, one key risk, priority actions, transparency footer, hand-off to the Tier 2 file) and
   the seven response modes (quick fact, how-to, comparison, troubleshoot, audit, deployable,
   next steps). Builds or validates summary.json, renders it for the current host (Claude
-  Desktop or Cowork widget, artifact or canvas HTML, Mermaid, ASCII tree, terminal Markdown)
-  with present.py, and lints emoji, glyph, em dash and pipe policy. Use when a run has
-  finished and its result must be shown, when a card must be re-rendered for another host, or
-  when a plain answer needs the mode structure. Not for producing the Tier 2 deliverable
-  itself (report-lite, each audit skill) and never a substitute for it: every card value is
-  copied from the deliverable, unmeasured values show as could not verify, and the Lite card
-  carries counts, never a weighted score. (Lite edition, full presentation layer.)
+  Desktop or Cowork widget, artifact HTML, Mermaid, ASCII tree, Markdown) with present.py,
+  and lints emoji, glyph, em dash and pipe policy. Use when a run has finished and its result
+  must be shown, when a card must be re-rendered for another host, or when a plain answer
+  needs the mode structure. Not for producing the Tier 2 deliverable itself and never a
+  substitute for it: every card value is copied from the deliverable, unmeasured values show
+  as could not verify, and the Lite card carries counts, never a weighted score. (Lite edition.)
 allowed-tools:
   - Read
   - Grep
