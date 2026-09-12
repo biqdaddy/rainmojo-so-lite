@@ -1,7 +1,7 @@
 {
   "name": "rainmojo-so-lite",
   "version": "2.0.0",
-  "description": "Check whether ChatGPT, Perplexity, Claude, Google AI Overviews, Gemini and 5 more AI answer platforms can reach, read and cite your website, then fix what fails and publish WordPress drafts. 43 skills and 17 agents that report checklists, not scores. Free lite edition of RAINMOJO SO by BIQDADDY.",
+  "description": "SEO and AISO (AI Search Optimization) toolkit in one plugin. AISO: check whether ChatGPT, Perplexity, Claude, Google AI Overviews, Gemini and 5 more AI answer platforms can reach, read and cite your site, with AI crawler access, llms.txt, citability, E-E-A-T, JSON-LD schema, brand mentions and AI agent readiness. SEO: keyword research and clustering, technical audit, heading and meta tags, internal linking, images, sitemaps, local SEO, competitor and content gap analysis, topical authority, backlink strategy, migrations and experiments. Then write and publish WordPress drafts, compare two audit rounds, and get a summary card in chat plus a full HTML report. 43 skills and 17 agents that report checklists, not scores. Free lite edition of RAINMOJO SO by BIQDADDY.",
   "contextFileName": "GEMINI.md",
   "homepage": "https://rainmojo.com/",
   "repository": "https://github.com/biqdaddy/rainmojo-so-lite"

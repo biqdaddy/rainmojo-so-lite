@@ -1,7 +1,7 @@
 {
   "name": "rainmojo-so-lite",
   "version": "2.0.0",
-  "description": "Check whether ChatGPT, Perplexity, Claude, Google AI Overviews, Gemini and 5 more AI answer platforms can reach, read and cite your website, then fix what fails and publish WordPress drafts. 43 skills and 17 agents that report checklists, not scores. Free lite edition of RAINMOJO SO by BIQDADDY.",
+  "description": "SEO and AISO (AI Search Optimization) toolkit in one plugin. AISO: check whether ChatGPT, Perplexity, Claude, Google AI Overviews, Gemini and 5 more AI answer platforms can reach, read and cite your site, with AI crawler access, llms.txt, citability, E-E-A-T, JSON-LD schema, brand mentions and AI agent readiness. SEO: keyword research and clustering, technical audit, heading and meta tags, internal linking, images, sitemaps, local SEO, competitor and content gap analysis, topical authority, backlink strategy, migrations and experiments. Then write and publish WordPress drafts, compare two audit rounds, and get a summary card in chat plus a full HTML report. 43 skills and 17 agents that report checklists, not scores. Free lite edition of RAINMOJO SO by BIQDADDY.",
   "author": {
     "name": "BIQDADDY",
     "url": "https://biqdaddy.com"
@@ -20,7 +20,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "RAINMOJO SO Lite",
-    "shortDescription": "See whether AI answer platforms can reach, read and cite your site, then fix it",
+    "shortDescription": "SEO and AISO toolkit: get your site found, read and cited by AI answer platforms",
     "longDescription": "Free lite edition of RAINMOJO SO for anyone who wants their website reached, read and cited by AI answer platforms. 43 skills and 17 orchestrating agents cover AI crawler access bound to a 68-token crawler registry, readiness checklists for all ten documented AI answer platforms, AI agent readiness (semantic HTML and the accessibility tree), citability, content and schema review, llms.txt, brand mentions with sampled AI answers, keyword research and clustering, competitor and content gap analysis, topical authority, internal linking, image optimization, local SEO, backlink strategy, technical audit, two-round comparison, a Two-Tier presentation layer (a summary card in chat on any AI host plus the full report), and a content production chain that publishes WordPress drafts. Every result is a checklist or a count, never a weighted score, and every output is a recommendation the site owner applies. Built by BIQDADDY, the agency behind RAINMOJO.",
     "developerName": "BIQDADDY",
     "category": "Productivity",
