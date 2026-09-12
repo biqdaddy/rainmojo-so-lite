@@ -1,4 +1,6 @@
-# rainmojo-so-lite
+# RAINMOJO SO Lite
+
+By [BIQDADDY](https://biqdaddy.com) for [RAINMOJO](https://rainmojo.com/) · Source: [github.com/biqdaddy/rainmojo-so-lite](https://github.com/biqdaddy/rainmojo-so-lite) · License: see [LICENSE](LICENSE)
 
 ตรวจและแก้ AI Visibility ทั้งฝั่ง AEO และ GEO ทำรายงาน วางกลยุทธ์เนื้อหา และผลิตบทความขึ้น WordPress · **43 สกิล 17 agent**
 
