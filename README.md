@@ -2,7 +2,7 @@
 
 SEO and AISO (AI Search Optimization) toolkit for Claude Code, Claude Desktop and Cowork, Codex CLI, ChatGPT, Gemini CLI and Antigravity. 43 skills and 17 agents that check whether ChatGPT, Perplexity, Claude, Google AI Overviews, Gemini and 5 more AI answer platforms can reach, read and cite your website, run the classic SEO audits, fix what fails, and publish WordPress drafts. Every result is a checklist or a count, never a weighted score.
 
-Free lite edition of [RAINMOJO SO](https://rainmojo.com/) by [BIQDADDY](https://biqdaddy.com). Version 2.1.0.
+Free lite edition of [RAINMOJO SO](https://rainmojo.com/) by [BIQDADDY](https://biqdaddy.com). Version 2.1.1.
 
 [Install](#install) · [First run](#first-run) · [What is inside](#what-is-inside) · [How results look](#how-results-look) · [Requirements](#requirements) · [Privacy and license](#privacy-and-license) · [ภาษาไทย](#ภาษาไทย)
 
@@ -146,7 +146,7 @@ Support and questions: [biqdaddy.com/contact](https://biqdaddy.com/contact/) or 
 
 ชุดเครื่องมือ SEO และ AISO (AI Search Optimization) สำหรับ Claude Code, Claude Desktop และ Cowork, Codex CLI, ChatGPT, Gemini CLI และ Antigravity 43 สกิล 17 agent ตรวจว่า ChatGPT, Perplexity, Claude, Google AI Overviews, Gemini และอีก 5 แพลตฟอร์มคำตอบ AI เข้าถึง อ่าน และอ้างอิงเว็บของคุณได้ไหม ตรวจ SEO พื้นฐาน แก้จุดที่ไม่ผ่าน และส่งบทความขึ้น WordPress เป็นฉบับร่าง ทุกผลลัพธ์เป็นเช็กลิสต์หรือจำนวนนับ ไม่มีคะแนนถ่วงน้ำหนัก
 
-รุ่นฟรีของ [RAINMOJO SO](https://rainmojo.com/) โดย [BIQDADDY](https://biqdaddy.com) เวอร์ชัน 2.1.0
+รุ่นฟรีของ [RAINMOJO SO](https://rainmojo.com/) โดย [BIQDADDY](https://biqdaddy.com) เวอร์ชัน 2.1.1
 
 [ติดตั้ง](#ติดตั้ง) · [เริ่มใช้ครั้งแรก](#เริ่มใช้ครั้งแรก) · [มีอะไรข้างใน](#มีอะไรข้างใน) · [ผลลัพธ์หน้าตาเป็นยังไง](#ผลลัพธ์หน้าตาเป็นยังไง) · [สิ่งที่ต้องมี](#สิ่งที่ต้องมี) · [ความเป็นส่วนตัวและสิทธิ์การใช้](#ความเป็นส่วนตัวและสิทธิ์การใช้) · [English](#rainmojo-so-lite)
 
