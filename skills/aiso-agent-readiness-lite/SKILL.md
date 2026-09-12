@@ -6,10 +6,10 @@ description: >
   interactive roles and accessible names, clickable div-soup, ARIA conformance, form labels and
   autocomplete tokens, live regions, dialog focus containment, closed Shadow DOM, headless render
   integrity and the agent tool surface (WebMCP, /.well-known/ucp, agent cards), measured by
-  agent_readiness_lite.py (static HTML plus the Playwright accessibility tree). Produces 14 checks
-  per page answered PASS, FAIL, N/A or could not verify, with per-defect fixes; no score, no
-  weights, no gate. Sole owner of the accessibility-tree, ARIA, control-name and form-semantics
-  verdicts. Not for heading hierarchy (seo-heading-matrix-lite), SSR (aiso-technical-lite), robots
+  agent_readiness_lite.py (static HTML plus the Playwright accessibility tree). 14 checks per page
+  answered PASS, FAIL, N/A or could not verify, with per-defect fixes; no score, no weights, no
+  gate. Sole owner of the accessibility-tree, ARIA, control-name and form-semantics verdicts. Not
+  for heading hierarchy (seo-heading-matrix-lite), SSR (aiso-technical-lite), robots
   (aiso-crawlers-lite), llms.txt (aiso-llmstxt-lite) or JSON-LD (aiso-schema-lite): cite those,
   never re-measure. Not a WCAG conformance claim. (Lite edition.)
 allowed-tools:
