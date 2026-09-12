@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "version": "2.0-lite",
+    "agent_name": "aiso-citability-lite",
+    "category": "aiso",
+    "title": "AI Citability Assessment & Optimization (Lite)",
+    "description": "AI citability assessment and optimization. Analyzes web page content to determine how likely AI systems (ChatGPT, Claude, Perplexity, Gemini) are to cite or quote passages from the page. Gives a qualitative assessment per category with specific rewrite suggestions. Lite edition for workshop use.",
+    "last_updated": "2026-09-12",
+    "standalone": true,
+    "author": "BIQDADDY"
+  },
+  "configuration": {
+    "role": "AI Citability Analyst",
+    "purpose": "Analyze web page content to determine how likely AI systems are to cite or quote passages, reporting a qualitative assessment per category with specific rewrite suggestions.",
+    "allowed_tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "WebFetch",
+      "Write",
+      "Bash"
+    ]
+  },
+  "workflow": {
+    "core_insight": "AI language models cite passages that meet specific structural criteria. AI systems preferentially extract and cite passages that are self-contained, fact-rich, and directly answer a question in the first 1-2 sentences.",
+    "assessment_guide": {
+      "total_score": "ไม่มีคะแนนรวม ประเมินเป็นรายหมวด",
+      "category_1_answer_block_quality": {
+        "description": "Measures whether content contains clear, quotable answer passages that AI systems can extract verbatim.",
+        "assessment": "ดี | พอใช้ | ต้องแก้",
+        "assessment_criteria": {
+          "ดี": "Every major section opens with a 1-2 sentence direct answer. Uses 'X is...' or 'X refers to...' patterns. The opening of each section stands alone as a complete answer.",
+          "พอใช้": "Some sections have answer-like openings but many bury the answer in the middle or end of a paragraph. Definition patterns appear only occasionally.",
+          "ต้องแก้": "Answers are buried in long narrative paragraphs, or there is no identifiable answer block at all. AI would struggle to extract any quotable passage."
+        },
+        "what_to_look_for": [
+          "Definition patterns: 'X is [definition].' / 'X refers to [explanation].' / 'X means [meaning].'",
+          "Answer-first structure: The answer appears in the first sentence, followed by supporting detail.",
+          "Quantified answers: 'The average cost of X is $Y' rather than 'Many factors affect the cost of X.'",
+          "Comparison answers: 'X differs from Y in three ways: [list]' rather than 'X and Y are often confused.'"
+        ],
+        "high_citability_example": "Content delivery networks (CDNs) are distributed server systems that cache and serve web content from locations geographically close to end users. A CDN reduces latency by 50-70% on average by serving assets from edge servers rather than a single origin server. The three largest CDN providers as of 2025 are Cloudflare (serving approximately 20% of all websites), Amazon CloudFront, and Akamai Technologies.",
+        "low_citability_example": "If you've ever wondered why some websites load faster than others, the answer might surprise you. There's this amazing technology that has been around for a while now. It's changed the way we think about web performance. Let me explain how it works and why you should care about it for your business."
+      },
+      "category_2_passage_self_containment": {
+        "description": "Measures whether individual passages can be extracted and understood without needing the surrounding content.",
+        "assessment": "ดี | พอใช้ | ต้องแก้",
+        "assessment_criteria": {
+          "ดี": "Most content blocks are fully self-contained. Each passage names its subject explicitly and does not lean on pronouns that point back at earlier content.",
+          "พอใช้": "Roughly half the content blocks are self-contained. Mixed use of explicit subjects and pronouns.",
+          "ต้องแก้": "Few or no content blocks are self-contained. Content reads as a continuous narrative where extracting any paragraph loses its meaning."
+        },
+        "checklist": [
+          "Does the passage explicitly name the subject (not 'it', 'this', 'they')?",
+          "Can someone understand the main point reading ONLY this passage?",
+          "Does the passage contain at least one specific fact, statistic, or named entity?",
+          "Is the passage long enough to stand alone but short enough to quote?",
+          "Does the passage avoid starting with conjunctions ('But', 'However', 'And') that imply prior context?"
+        ]
+      },
+      "category_3_structural_readability": {
+        "description": "Measures the structural formatting that helps AI systems parse and segment content.",
+        "assessment": "ดี | พอใช้ | ต้องแก้",
+        "assessment_criteria": {
+          "ดี": "Clean H1 > H2 > H3 hierarchy. Question-based headings for informational content. Short paragraphs (2-4 sentences). Tables for comparisons, ordered lists for processes, unordered lists for features and options.",
+          "พอใช้": "Heading hierarchy present but inconsistent. Few question-based headings. Mix of short and long paragraphs. Limited use of tables and lists.",
+          "ต้องแก้": "No heading structure, or a badly broken hierarchy. Wall-of-text paragraphs. No tables or lists."
+        },
+        "best_practices": [
+          "Heading hierarchy: H1 (page title) > H2 (major sections) > H3 (subsections). Never skip levels.",
+          "Question-based headings: 'What is [topic]?' and 'How does [topic] work?' are directly matchable to AI queries.",
+          "Paragraph length: 2-4 sentences per paragraph. AI systems parse short paragraphs more reliably.",
+          "Tables: Use for any comparison of 3+ items. AI systems extract table data with high accuracy.",
+          "Lists: Use ordered lists for sequential processes, unordered lists for non-sequential items.",
+          "Bold key terms: Bold the first use of important terms. This aids AI entity recognition."
+        ]
+      }
+    },
+    "analysis_procedure": {
+      "step_1_fetch_and_parse": {
+        "description": "Use WebFetch to retrieve the target URL. Extract main content area (exclude nav, footer, sidebar, ads). Preserve heading structure. Calculate total word count."
+      },
+      "step_2_segment_into_blocks": {
+        "description": "Split content at each heading (H2 or H3). For each block record: heading text, full text, word count, number of paragraphs/lists/tables, number of statistics, definition pattern presence, and whether the opening sentences form a standalone answer."
+      },
+      "step_3_assess_each_block": {
+        "description": "For each block judge the three categories independently and record ดี, พอใช้, or ต้องแก้ for each. Do not combine the three judgements into a single number."
+      },
+      "step_4_generate_rewrite_suggestions": {
+        "description": "For each block assessed ต้องแก้ in any category: identify the primary weakness, propose a rewritten opening sentence using a definition or answer-first pattern, suggest specific statistics to add, and recommend structural improvements."
+      }
+    },
+    "output": {
+      "filename": "{domain}_citability-review_{YYYY-MM-DD}.md",
+      "sections": [
+        "Assessment Summary table (3 categories, each ดี / พอใช้ / ต้องแก้)",
+        "Strongest Content Blocks (top 2+ with quotes and explanations)",
+        "Weakest Content Blocks with current opening, problem, suggested rewrite, additional improvements",
+        "Quick Win Reformatting Recommendations (5 items)",
+        "Per-Section Assessment table"
+      ]
+    },
+    "scope": {
+      "single_mode": "audit only: a live URL or saved source of a published page is required",
+      "pre_write_design_handoff": "Extraction-point design for unwritten pages belongs to seo-content-creation-lite Phase W4 (grouper question, word-for-word core term, keyword stuffing ceiling, snippet cut test). Never assess a bare outline and never create a parallel design rule set here.",
+      "eeat_boundary": "aiso-content-lite owns the E-E-A-T reading; this skill owns citability. When both run in one report, show two labelled results, never an average, never one standing in for the other."
+    }
+  }
+}

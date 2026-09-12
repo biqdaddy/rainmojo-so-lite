@@ -1,0 +1,16 @@
+{
+  "_instructions": "Copy this file into the article package, replace reviewer and article_sha256 with the actual reviewer identity and current article.md SHA-256, then confirm every required checklist item.",
+  "reviewer": "replace-with-reviewer",
+  "article_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "checklist": {
+    "factual_accuracy": "passed",
+    "brand_voice": "passed",
+    "search_intent": "passed",
+    "seo_structure": "passed",
+    "internal_links": "passed",
+    "external_sources": "passed",
+    "grammar_and_readability": "passed",
+    "no_unverified_claims": "passed"
+  },
+  "notes": "Record concise evidence from the completed editorial review."
+}

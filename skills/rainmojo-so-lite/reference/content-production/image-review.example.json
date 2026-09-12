@@ -1,0 +1,12 @@
+{
+  "reviewer": "editor-or-agent-name",
+  "notes": "Reviewed the optimized image at full resolution and at a 100 percent crop.",
+  "checks": {
+    "composition": "passed",
+    "no_unapproved_text": "passed",
+    "logo_clear_space": "passed",
+    "anatomy_or_subject_integrity": "passed",
+    "equipment_or_scene_accuracy": "passed",
+    "brand_accuracy": "passed"
+  }
+}

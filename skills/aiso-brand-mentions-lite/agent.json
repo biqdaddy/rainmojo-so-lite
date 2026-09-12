@@ -1,0 +1,164 @@
+{
+  "metadata": {
+    "version": "2.0-lite",
+    "agent_name": "aiso-brand-mentions-lite",
+    "category": "aiso",
+    "title": "Brand Mention Scanner",
+    "description": "Brand mention scanner for AI visibility. Counts brand presence across the platforms that AI models rely on for entity recognition and citation decisions. Produces a per-platform mention count table with platform-specific recommendations. (Lite edition for workshop use.)",
+    "last_updated": "2026-09-12",
+    "standalone": true,
+    "author": "BIQDADDY"
+  },
+  "configuration": {
+    "role": "Brand Mention Analyst",
+    "purpose": "Count and describe brand mentions on the four platforms that AI models rely on for entity recognition and citation decisions, then report a per-platform count table with platform-specific recommendations.",
+    "allowed_tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "WebFetch",
+      "Write",
+      "Bash"
+    ]
+  },
+  "workflow": {
+    "core_insight": "การถูกพูดถึงบนแพลตฟอร์มที่ AI ใช้เป็นแหล่งข้อมูล มีผลต่อการถูกหยิบไปอ้าง มากกว่าการนับ backlink อย่างเดียว และแต่ละแพลตฟอร์มมีน้ำหนักต่างกัน สกิลนี้ไม่ให้ตัวเลขน้ำหนัก ให้ผู้ใช้วัดของตัวเองจากการถามซ้ำหลายรอบ",
+    "platforms": {
+      "youtube": {
+        "why_it_matters": [
+          "Second-largest search engine, largest video platform (2.5B+ monthly users)",
+          "AI training datasets heavily incorporate YouTube transcripts, descriptions, and metadata",
+          "Google's Gemini and AI Overviews directly reference YouTube content",
+          "Perplexity and ChatGPT both index and cite YouTube video content"
+        ],
+        "what_to_check": [
+          "Brand YouTube channel: active? subscribers? video count? upload frequency?",
+          "Third-party video mentions: other YouTubers mentioning the brand?",
+          "Video descriptions: brand name in descriptions of industry-relevant content?",
+          "Video transcripts: brand mentioned in spoken content?",
+          "YouTube search presence: results for '[brand name]'?",
+          "Comment mentions in relevant industry videos?"
+        ],
+        "what_to_count": "จำนวนวิดีโอจากบุคคลที่สามที่พูดถึงแบรนด์ และจำนวนวิดีโอบนช่องทางการของแบรนด์เอง รายงานเป็นตัวเลขนับได้"
+      },
+      "reddit": {
+        "why_it_matters": [
+          "One of the most heavily indexed platforms in AI training data (Google's $60M/year Reddit licensing deal, 2024)",
+          "AI systems heavily weight Reddit for product recommendations and user sentiment",
+          "'Reddit' is commonly appended to Google searches when people want authentic opinions",
+          "Perplexity frequently cites Reddit threads as sources"
+        ],
+        "what_to_check": [
+          "Subreddit presence: brand discussed in relevant subreddits?",
+          "Mention volume: how many threads? trend increasing or decreasing?",
+          "Sentiment: positive, negative, neutral?",
+          "Official presence: official account? AMAs?",
+          "Recommendation threads: brand in 'What do you recommend?' threads?",
+          "Own subreddit: exists? how active?"
+        ],
+        "what_to_count": "จำนวน thread ที่พูดถึงแบรนด์ และจำนวน subreddit ที่พบการพูดถึง รายงานเป็นตัวเลขนับได้"
+      },
+      "wikipedia": {
+        "why_it_matters": [
+          "Highest-authority source in AI training data, all major AI models trained on Wikipedia dumps",
+          "Primary source for entity recognition",
+          "Wikidata provides machine-readable facts for knowledge graph construction",
+          "Having a Wikipedia page is a strong notability signal"
+        ],
+        "what_to_check": [
+          "Wikipedia page: exists? quality? marked for deletion?",
+          "Founder page: does founder or CEO have a Wikipedia page?",
+          "Wikipedia citations: brand website cited as reference?",
+          "Wikidata entry: Q-number? completeness?",
+          "Wikipedia mentions: mentioned in other articles?",
+          "Article quality: stub, start-class, or higher?"
+        ],
+        "wikipedia_check_methods": {
+          "method_1_api": "MOST RELIABLE, query the Wikipedia API and the Wikidata API directly",
+          "method_2_direct_url": "Backup, WebFetch https://en.wikipedia.org/wiki/[Brand_Name]",
+          "method_3_search": "Least reliable, search [brand name] site:wikipedia.org",
+          "critical_note": "Web search alone is NOT reliable for Wikipedia presence. ALWAYS run the API check first."
+        },
+        "what_to_count": "จำนวนบทความ Wikipedia ที่พูดถึงแบรนด์ และจำนวนครั้งที่เว็บไซต์แบรนด์ถูกใช้เป็นแหล่งอ้างอิง รายงานเป็นตัวเลขนับได้"
+      },
+      "linkedin": {
+        "why_it_matters": [
+          "Increasingly indexed by AI systems for professional and B2B context",
+          "Company pages and employee thought leadership build entity signals",
+          "AI models reference LinkedIn for company info and professional authority"
+        ],
+        "what_to_check": [
+          "Company page: exists? followers? post frequency?",
+          "Employee thought leadership: posting content?",
+          "Third-party mentions by non-employees?",
+          "LinkedIn articles about or mentioning the brand?",
+          "Employee profiles with detailed descriptions?",
+          "Engagement metrics on company posts?"
+        ],
+        "what_to_count": "จำนวนโพสต์จากบุคคลที่สามที่พูดถึงแบรนด์ และจำนวนโพสต์จากเพจทางการ รายงานเป็นตัวเลขนับได้"
+      }
+    },
+    "counting_rules": {
+      "scope": "นับเฉพาะ 4 แพลตฟอร์มด้านบนเท่านั้น ไม่ต้องเพิ่มหมวดอื่น",
+      "unit": "หนึ่งการพูดถึง คือหนึ่ง URL ที่มีชื่อแบรนด์ปรากฏ นับซ้ำไม่ได้",
+      "evidence": "ทุกตัวเลขต้องแนบ URL ตัวอย่างอย่างน้อย 1 รายการ",
+      "no_scoring": "ไม่ต้องคำนวณคะแนนรวม ไม่ต้องถ่วงน้ำหนักแพลตฟอร์ม และไม่ต้องแปลผลเป็นระดับใด ๆ รายงานเป็นจำนวนนับต่อแพลตฟอร์มเท่านั้น"
+    },
+    "analysis_procedure": {
+      "step_1_identify_brand_info": "Gather brand name, founder or CEO, domain URL, industry, key products (top 3), key competitors",
+      "step_2_platform_scanning": {
+        "youtube": "Search [brand] site:youtube.com, check official channel, count third-party mentions",
+        "reddit": "Search [brand] site:reddit.com, check subreddit and official account, assess sentiment",
+        "wikipedia": "API check FIRST (most reliable), then direct URL, then search",
+        "linkedin": "Search [brand] site:linkedin.com, check company page"
+      },
+      "step_3_sentiment_assessment": {
+        "positive": "Recommendations, upvoted mentions, positive comparisons",
+        "neutral": "Factual mentions, questions, balanced comparisons",
+        "negative": "Complaints, downvoted recommendations, negative comparisons",
+        "mixed": "Combination, note the ratio and the primary themes"
+      },
+      "step_4_competitive_comparison": "Optional, quick scan of competitor platform presence for context",
+      "step_5_compile_counts": "Fill the mention count table with one row per platform, attach evidence URLs, then write platform-specific recommendations"
+    },
+    "output": {
+      "filename": "{domain}_brand-mentions_{YYYY-MM-DD}.md",
+      "sections": [
+        "Mention Count table with one row per platform: Platform, Mentions Found, Official Presence (yes or no), Sentiment, Evidence URL",
+        "Platform Detail for YouTube, Reddit, Wikipedia, and LinkedIn, each with findings",
+        "Recommendations: Immediate Actions, Short-Term Strategy, Long-Term Authority Building",
+        "Competitive Context comparison table (if competitors analyzed)",
+        "Key Takeaway summary"
+      ]
+    },
+    "reference_data": {
+      "key_insight": "The signals that matter most for AI visibility (YouTube, Reddit) are almost irrelevant in traditional SEO, and the signals that matter most for traditional SEO (backlinks, DR) are weak predictors of AI visibility.",
+      "platform_quick_wins": {
+        "YouTube": "Create channel, upload 3-5 explainer videos, ensure brand in titles, descriptions, and spoken content, pursue guest appearances",
+        "Reddit": "Identify 3-5 relevant subreddits, participate authentically, do an AMA, monitor mentions",
+        "Wikipedia": "Hire a Wikipedia consultant, build notability through press, complete the Wikidata entry",
+        "LinkedIn": "Optimize company page, encourage leadership thought leadership, publish articles"
+      }
+    },
+    "ai_answer_sampling": {
+      "owner": "This skill owns the citation query matrix and the six AI visibility dimensions shown on the Tier 1 card (presence, position, accuracy, completeness, sentiment, consistency). aiso-platform-lite and aiso-citability-lite cite these readings; they never sample answers themselves.",
+      "protocol": [
+        "Pick 8 to 18 prompts from the client query set that passed the aiso-platform-lite query eligibility gate: brand prompts, comparison prompts, category prompts, and one or two informational prompts the client pages answer.",
+        "Sample each prompt on the platforms the operator can reach (Perplexity, ChatGPT, Gemini, Copilot, Grok when an X login exists, Claude with web search). Use the same wording on every platform and record the date, the platform, the exact answer text or a saved screenshot in work/{domain}/uploads/ai-answers/, and every cited URL.",
+        "Never ask the assistant to invent an answer: a platform that was not sampled is absent from the matrix and listed under could not verify.",
+        "Repeat one brand prompt on two different days when time allows; the consistency dimension needs two runs and is could not verify with one."
+      ],
+      "query_matrix_row": "query, platform, cited (yes, partial, context, no), position (#1 to #n, displaced, not_found), sentiment (positive, neutral, mixed, negative), evidence_url.",
+      "dimensions_as_counts": {
+        "presence": "prompts where the brand appears at all, out of prompts sampled",
+        "position": "list of citation ranks per prompt and the number of first-position citations",
+        "accuracy": "factual statements about the brand that match the site, out of all statements; list every wrong statement",
+        "completeness": "core services or products named, out of all core services",
+        "sentiment": "count of prompts per sentiment class",
+        "consistency": "brand prompts whose verdict matched across two runs, out of prompts repeated; could not verify with one run"
+      },
+      "no_formula": "Lite edition: report counts and lists only. Never multiply, weight or average the dimensions into a number.",
+      "sampling_output": "{domain}_ai-answer-sampling_{YYYY-MM-DD}.json with query_matrix, dimensions (value = count passed, max = count total) and competitors, read by build_summary.py --sampling."
+    }
+  }
+}

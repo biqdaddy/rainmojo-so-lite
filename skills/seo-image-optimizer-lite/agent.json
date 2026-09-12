@@ -1,0 +1,31 @@
+{
+  "name": "seo-image-optimizer-lite",
+  "version": "1.0.0",
+  "edition": "lite",
+  "purpose": "Optimize images for the web: convert to WebP, resize to a target width, rename to SEO-friendly English filenames based on visual inspection, and strip EXIF metadata using short inline Python and Pillow snippets.",
+  "workflow": {
+    "phases": [
+      "ตรวจว่า Pillow ใช้ได้จริง ห้ามเดาผลแทนการรัน ถ้าใช้ไม่ได้หรือ host นี้รันคำสั่งไม่ได้ ห้ามจบงานเปล่า ให้ทำส่วนที่ยังทำได้ต่อคือเปิดดูภาพ ตั้งชื่อใหม่ เขียน alt text และส่งสคริปต์ให้ผู้ใช้ไปรันเอง",
+      "สแกนไฟล์ภาพทั้งหมดรวม subfolder ดูฟอร์แมต มิติ ขนาดไฟล์ และ EXIF แล้วสรุปเป็นระดับ ต้องแก้ หรือ ผ่าน",
+      "เปิดดูภาพจริงทีละไฟล์ ตั้งชื่ออังกฤษจากสิ่งที่เห็น แล้วทำตารางจับคู่ให้ผู้ใช้ดูก่อนแปลง",
+      "แปลงเป็น WebP ย่อตามสัดส่วน วางพื้นขาวให้ภาพโปร่งใส และลบ EXIF ด้วย Python inline ผ่าน Bash",
+      "สแกนโฟลเดอร์ปลายทางซ้ำเพื่อยืนยันผลจริง แล้วเขียนรายงานพร้อมตาราง alt text แนะนำ",
+      "เพิ่มบรรทัดลงตารางใน CHANGELOG.md ว่าวันที่ รันสกิลอะไร ได้ไฟล์อะไร"
+    ]
+  },
+  "output": "work/{domain}/(00-baseline|01-current)/{domain}_image-optimization_{YYYY-MM-DD}.md",
+  "images_output": "work/{domain}/03-content/images/",
+  "rules": [
+    "ห้ามตั้งชื่อไฟล์โดยไม่เปิดดูภาพจริงทีละไฟล์",
+    "ห้ามใช้ชื่อ generic เช่น image-1 หรือ photo-2 และห้ามมีอักษรไทย ช่องว่าง หรืออักขระพิเศษในชื่อไฟล์",
+    "ห้ามเขียนทับหรือลบไฟล์ต้นฉบับใน uploads/ ผลลัพธ์ต้องเป็นไฟล์ใหม่เสมอ",
+    "ห้ามขยายภาพให้ใหญ่กว่าต้นฉบับ ถ้าต้นฉบับเล็กกว่าที่ขอให้บอกตรง ๆ",
+    "ห้ามเดาตัวเลขขนาดไฟล์หรือมิติภาพ ทุกตัวเลขต้องมาจากผลรัน Python จริง",
+    "ห้ามให้คะแนนเป็นตัวเลข ให้บอกเป็นระดับ ต้องแก้ หรือ ผ่าน เท่านั้น",
+    "ถ้า Pillow ใช้ไม่ได้ หรือไฟล์เปิดไม่ได้ ให้บอกตรง ๆ แล้วแยกรายงาน ห้ามแต่งผลแทน",
+    "ทำได้บางส่วนต้องส่งส่วนนั้นเสมอ พร้อมติดป้ายว่าข้อไหนยืนยันแล้ว ข้อไหนต้องยืนยันเพิ่ม การใช้ข้อจำกัดเป็นข้ออ้างไม่ส่งงาน ไม่ใช่ความซื่อสัตย์",
+    "ถ้าดึงข้อมูลไม่สำเร็จให้เขียนว่า ตรวจไม่ได้ ห้ามเขียนว่า ไม่มี เช่นเปิดไฟล์ไม่ได้ห้ามสรุปว่าไม่มี EXIF",
+    "ถ้าบริบทไม่พอจะตั้งชื่อ ให้ถามผู้ใช้ ห้ามสมมติเอง"
+  ],
+  "notes": "Lite edition for the BIQDADDY AI Visibility Course. Self-contained: this skill folder holds only SKILL.md and agent.json, and all image processing runs from short inline Python and Pillow snippets through Bash."
+}

@@ -1,0 +1,96 @@
+{
+  "_owner": "content-production",
+  "_scope": "Decision guidance only. This file tells the reviewer what to judge and how to weight it inside the structured content review record that content_qa_passed already requires. It declares no new pipeline state, no new ledger column, no new status token, no new routing target, and no new gate mechanism. Where this file and the pipeline mechanics disagree, the mechanics win.",
+  "two_pass_review_of_model_drafted_sections": {
+    "why_two_passes": "Accuracy and completeness fail at very different rates, and omission is the dominant defect. A single combined read finds the false statement and misses the missing half. A draft that states nothing false while omitting half the brief clears a one-pass review.",
+    "pass_1_claim_walk": {
+      "question": "Is every factual claim in this section true?",
+      "procedure": [
+        "Walk the section claim by claim, in the order the claims appear",
+        "Mark each claim verified, wrong, or unverifiable",
+        "A verified mark requires a named source recorded next to the claim",
+        "Wrong means the named source contradicts the claim",
+        "Unverifiable means no source was found or the source could not be reached; write could not verify, never write absent or false"
+      ],
+      "output": "One row per claim: claim text, verdict, named source or could not verify."
+    },
+    "pass_2_expert_omission_audit": {
+      "question": "What would a subject-matter expert insist this piece must contain, and what of that is absent?",
+      "procedure": [
+        "Before rereading the draft, list what a practitioner in the field would require the piece to cover",
+        "Read the draft against that list",
+        "List what is absent, naming each missing item",
+        "Judge absence against the brief and the expert list together, not against the draft's own internal logic"
+      ],
+      "output": "One row per required item: item, present or absent, where it should sit."
+    },
+    "weighting": {
+      "rule": "Pass 2 is weighted above pass 1 in the gate.",
+      "consequence": "A section with a clean pass 1 and material absences in pass 2 does not pass review. The reviewer records the absences and returns the section for expansion.",
+      "rationale": "Omission is the dominant defect, and a one-pass accuracy review is exactly the review that lets it through."
+    },
+    "human_sign_off": {
+      "rule": "A named human signs off on both passes before the draft moves onward to publish.",
+      "record": "The sign-off carries a real person's name, the date, and an explicit statement that both pass 1 and pass 2 were reviewed. An unnamed sign-off, a role title alone, or a model-generated approval is not a sign-off.",
+      "binding": "The sign-off belongs to the same structured review record the existing pipeline binds to the current article SHA-256. Editing the article after sign-off invalidates it exactly as it invalidates the review."
+    }
+  },
+  "generative_source_of_record_blocklist": {
+    "statement": "For these topic classes a generative model must never be the source of record. Facts in these classes come from a live feed or from a human.",
+    "classes": [
+      "current product pricing",
+      "directions and routing",
+      "weather and other real-time data",
+      "live scores",
+      "YMYL topics",
+      "news"
+    ],
+    "gate_behaviour": "A block whose facts fall in a listed class fails the gate no matter how confident or well formed the draft reads. Fluency is not evidence. The failure mode is precisely that confident phrasing gives the reviewer no signal that anything is wrong.",
+    "clearing_the_block": "Replace the model-supplied values with values from the live feed or from the named human, and record which one supplied them. The block clears on the source of the values, not on a reread of the wording.",
+    "reviewer_note": "Do not attempt to grade confidence. A model-drafted price and a fed price look identical on the page; the only usable check is where the number came from."
+  },
+  "engine_attribution": {
+    "rule": "Record which engine produced a draft alongside the class check.",
+    "why": "Failure classes are engine-specific rather than shared. A blocklist hit pattern that holds for one engine does not transfer to another, and without the engine recorded the review history cannot be read.",
+    "record_shape": "engine name and version as reported at generation time, stored beside the blocklist verdict in the same review record.",
+    "unknown_engine": "If the producing engine cannot be established, write could not verify. Never assume the engine currently configured produced an older draft."
+  },
+  "outbound_link_qualification": {
+    "principle": "An outbound link is an endorsement and it affects the linking page's own standing. Linking to untrustworthy or topically unrelated sites can cost rankings. Linking to well-curated authoritative pages in the same field supports them.",
+    "qualification_questions": [
+      "Is the target trustworthy on its own terms?",
+      "Is the target topically related to this page?",
+      "Would this page be willing to be judged by this target?"
+    ],
+    "rel_assignment_by_reason": {
+      "rule": "Assign rel attributes by REASON, never by default and never as a blanket setting on all outbound links.",
+      "table": [
+        {
+          "reason": "advertising, paid placement, or any compensated link",
+          "rel": "sponsored, or nofollow"
+        },
+        {
+          "reason": "any link inside a user-generated area, such as comments or forum posts",
+          "rel": "ugc, or nofollow"
+        },
+        {
+          "reason": "a link the page must carry but does not endorse, such as a competitor, or a low-quality source cited only as evidence",
+          "rel": "nofollow"
+        },
+        {
+          "reason": "an editorially chosen, trustworthy, topically related source",
+          "rel": "no rel attribute; the endorsement is intended"
+        }
+      ],
+      "anti_pattern": "Applying nofollow to every outbound link to be safe. That discards the intended endorsement on the links that were the reason to cite in the first place, and it tells nothing apart about the ones that genuinely need it."
+    },
+    "review_record": "For each outbound link record: target URL, reason class, rel assigned, and topical-relation verdict. A link with no reason class recorded is not qualified."
+  },
+  "deference": {
+    "link_outreach": "Acquiring, pitching, and negotiating off-site links belongs to seo-backlink-strategy. This file governs only links placed outbound from the page being produced.",
+    "eeat_scoring": "E-E-A-T scoring stays with seo-content-audit.",
+    "writing_side_two_pass": "The drafting-side method for running the two passes while writing belongs to seo-content-creation. This file is the publish-blocking gate view of the same review.",
+    "images": "Image licensing metadata and its fields belong to seo-image-production.",
+    "ymyl_content_rules": "YMYL warning, disclaimer, and harm-prevention wording belongs to seo-content-audit and seo-content-enhancement. The blocklist entry here governs only where the facts may come from."
+  }
+}

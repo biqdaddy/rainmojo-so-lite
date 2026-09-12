@@ -1,0 +1,310 @@
+{
+  "metadata": {
+    "title": "Search Quality Evaluator Guidelines (Full Hybrid Model for SEO Tools)",
+    "date": "September 11, 2025",
+    "source_pdf": "searchqualityevaluatorguidelines.pdf",
+    "pages": 182,
+    "description": "A complete, structured JSON representation of the Search Quality Rater Guidelines. This hybrid model combines a hierarchical structure for contextual understanding with actionable checklists in English, designed for integration with SEO content creation and auditing tools."
+  },
+  "parts": [
+    {
+      "part_number": 1,
+      "title": "Page Quality Rating Guideline",
+      "sections": [
+        {
+          "section_number": "1.0",
+          "title": "Introduction to Page Quality Rating",
+          "page_number": 9,
+          "content_summary": "Introduces the concept of Page Quality (PQ) rating, which evaluates how well a webpage achieves its purpose. It outlines the necessary skills for a rater, including web experience, guideline knowledge, and practice.",
+          "evaluator_checklist": [
+            "Identify the primary goal of the page before rating.",
+            "Apply guidelines consistently, not personal preference.",
+            "Understand that PQ rating is about assessing purpose fulfillment."
+          ]
+        },
+        {
+          "section_number": "2.1",
+          "title": "Important Definitions",
+          "page_number": 9,
+          "content_summary": "Provides definitions for key terms used throughout the guidelines, such as Search Engine, User, Webpage, Website, Homepage, Content Creator, and Generative AI.",
+          "evaluator_checklist": [
+            "Distinguish between a 'webpage' (a single document) and a 'website' (a collection of pages).",
+            "Identify the 'content creator' and the 'website owner' as they may be different entities.",
+            "Recognize that major, independent sections of a site (e.g., finance.yahoo.com) can be considered separate 'websites' for rating purposes."
+          ]
+        },
+        {
+          "section_number": "2.2",
+          "title": "Understanding the Purpose of a Webpage",
+          "page_number": 10,
+          "content_summary": "Explains that the first step in PQ rating is to determine the page's purpose. Most pages are created to be helpful, but some are designed to make money with little effort or to harm users. Pages without a beneficial purpose are likely to be rated 'Lowest'.",
+          "evaluator_checklist": [
+            "First, identify the page's intended purpose (e.g., to inform, entertain, sell, etc.).",
+            "Assess if the purpose is beneficial to the user or if it's deceptive or harmful.",
+            "Common beneficial purposes include sharing information, personal experiences, media, selling products, or providing a platform for communication.",
+            "Remember that the page type does not determine its quality; a humor page can be as high-quality as an encyclopedia page."
+          ]
+        },
+        {
+          "section_number": "2.3",
+          "title": "Your Money or Your Life (YMYL) Topics",
+          "page_number": 11,
+          "content_summary": "Defines YMYL topics as those that could significantly impact a person's health, financial stability, or safety. Content on these topics requires the highest level of scrutiny for accuracy and trust.",
+          "evaluator_checklist": [
+            "Identify if the topic falls under YMYL categories: Health/Safety, Financial Security, Government/Civics & Society, or Other high-stakes topics.",
+            "Apply a stricter standard for E-E-A-T and factual accuracy for all YMYL content.",
+            "Check for clear attribution, author credentials, and verifiable sources.",
+            "Flag any advice or information that contradicts expert consensus and could cause harm."
+          ]
+        },
+        {
+          "section_number": "2.4",
+          "title": "Understanding Webpage Content",
+          "page_number": 13,
+          "content_summary": "Breaks down webpage content into Main Content (MC), Supplementary Content (SC), and Advertisements/Monetization (Ads). Distinguishing these parts is crucial for PQ rating.",
+          "evaluator_checklist": [
+            "Identify the Main Content (MC): The part of the page that directly achieves its purpose.",
+            "Identify Supplementary Content (SC): Content that improves user experience but isn't the primary focus (e.g., navigation links, related articles).",
+            "Identify Ads/Monetization: Content displayed for the purpose of generating revenue.",
+            "Assess if SC and Ads are distracting or interfere with the user's ability to consume the MC."
+          ]
+        },
+        {
+          "section_number": "2.5",
+          "title": "Understanding the Website",
+          "page_number": 15,
+          "content_summary": "Details the process of understanding the website as a whole, including finding the homepage and identifying who is responsible for the website and its content. This context is vital for reputation and E-E-A-T assessment.",
+          "evaluator_checklist": [
+            "Find the website's homepage to gather context.",
+            "Identify who is responsible for the website and who created the page's content.",
+            "Locate 'About Us', 'Contact', and customer service information, especially for YMYL or transactional sites.",
+            "Assess if the amount of information provided is adequate for the website's purpose."
+          ]
+        },
+        {
+          "section_number": "3.0",
+          "title": "Overall Page Quality Rating",
+          "page_number": 19,
+          "content_summary": "Outlines the high-level, three-step process for assigning a PQ rating: 1. Assess purpose and potential for harm. 2. If not harmful, assess how well the page achieves its purpose based on various factors. 3. Assign a rating on the Lowest to Highest scale.",
+          "evaluator_checklist": [
+            "Follow the structured rating process: Purpose -> Harm -> Fulfillment.",
+            "Use the full rating scale, including in-between ratings (e.g., Medium+).",
+            "Apply higher standards for YMYL topics concerning trust and accuracy.",
+            "Consider all PQ factors: MC quality, E-E-A-T, and reputation."
+          ]
+        },
+        {
+          "section_number": "3.2",
+          "title": "Quality of the Main Content",
+          "page_number": 21,
+          "content_summary": "Focuses on evaluating the Main Content (MC), a primary driver of the PQ rating. Quality is assessed based on the effort, originality, talent/skill, and factual accuracy invested in its creation.",
+          "evaluator_checklist": [
+            "Assess the effort invested in creating the MC.",
+            "Evaluate the originality of the content; is it unique or copied/summarized from other sources?",
+            "Judge the talent or skill demonstrated in the MC's creation.",
+            "For informational content, verify factual accuracy and consistency with expert consensus."
+          ]
+        },
+        {
+          "section_number": "3.3",
+          "title": "Reputation of the Website and Content Creators",
+          "page_number": 22,
+          "content_summary": "Emphasizes the mandatory requirement of researching the reputation of the website and content creators using independent, external sources. This is crucial for identifying untrustworthy sites and assessing E-E-A-T.",
+          "evaluator_checklist": [
+            "Conduct reputation research using independent sources (news articles, expert reviews, awards), not just the site's own claims.",
+            "For content creators, look for biographical information, credentials, and recognition within their field.",
+            "If no reputation information is found, do not assume low quality, but scrutinize other PQ factors more carefully, especially on YMYL topics.",
+            "Interpret customer reviews cautiously, considering the volume and content of reviews, not just the average score."
+          ]
+        },
+        {
+          "section_number": "3.4",
+          "title": "Experience, Expertise, Authoritativeness, and Trust (E-E-A-T)",
+          "page_number": 26,
+          "content_summary": "Introduces E-E-A-T as crucial rating considerations, with Trust as the central pillar. An untrustworthy page has low E-E-A-T regardless of other factors. Assessment comes from the site's claims, external reputation, and on-page evidence.",
+          "evaluator_checklist": [
+            "Assess Trust as the core factor; an untrustworthy page cannot be high quality.",
+            "Evaluate the creator's first-hand Experience, especially for non-formal topics.",
+            "Determine the creator's formal or informal Expertise in the subject matter.",
+            "Verify the site/creator's Authoritativeness from external, independent sources.",
+            "Check for conflicts of interest that could undermine trust."
+          ]
+        },
+        {
+          "section_number": "4.0",
+          "title": "Lowest Quality Pages",
+          "page_number": 29,
+          "content_summary": "Defines the criteria for 'Lowest' quality pages. These are pages that are untrustworthy, deceptive, harmful, or spammy. The section details a screening process to identify these pages.",
+          "evaluator_checklist": [
+            "Screen for a harmful or deceptive purpose first; if found, rate Lowest.",
+            "Check for characteristics of spam (e.g., auto-generated content, cloaking).",
+            "Verify if there is a complete lack of information about the website/creator for a YMYL topic.",
+            "Flag malicious behavior (phishing, malware downloads).",
+            "Rate as Lowest if the MC is deliberately obstructed or provides no value."
+          ]
+        },
+        {
+          "section_number": "4.6",
+          "title": "Spammy Webpages",
+          "page_number": 39,
+          "content_summary": "Details various spam techniques that warrant a Lowest rating. These pages are created to manipulate search rankings rather than help users. This includes hacked content, expired domain abuse, and scaled content abuse.",
+          "evaluator_checklist": [
+            "Check for hacked, defaced, or injected spam content.",
+            "Investigate for expired domain abuse (a high-reputation domain repurposed with low-quality, unrelated content).",
+            "Identify site reputation abuse (hosting low-quality third-party content to exploit the host's reputation).",
+            "Detect scaled content abuse (large amounts of auto-generated or unoriginal content with little to no value)."
+          ]
+        },
+        {
+          "section_number": "5.0",
+          "title": "Low Quality Pages",
+          "page_number": 59,
+          "content_summary": "Describes 'Low' quality pages, which do not achieve their purpose well due to a significant flaw, but are not as severely problematic as 'Lowest' pages. A single significant flaw is enough to warrant a Low rating.",
+          "evaluator_checklist": [
+            "Assess if the page has an unsatisfying amount of MC or poor MC quality.",
+            "Check for a lack of E-E-A-T appropriate for the topic.",
+            "Evaluate if Ads or SC are highly distracting or interrupt the user experience.",
+            "Look for a mildly negative reputation.",
+            "Check for an unsatisfying amount of information about the website/creator."
+          ]
+        },
+        {
+          "section_number": "6.0",
+          "title": "Medium Quality Pages",
+          "page_number": 68,
+          "content_summary": "Defines 'Medium' quality pages as having a beneficial purpose and achieving it adequately. They have no major issues but lack the characteristics of High or Highest quality pages. Many pages on the web fall into this category.",
+          "evaluator_checklist": [
+            "Confirm the page has a beneficial purpose and is not harmful.",
+            "Verify that the MC is created with adequate effort and skill.",
+            "Ensure the page has an adequate level of E-E-A-T for its purpose.",
+            "Check that reputation is not significantly negative.",
+            "Assess if the page is generally average and 'has nothing wrong, but is not special'."
+          ]
+        },
+        {
+          "section_number": "7.0",
+          "title": "High Quality Pages",
+          "page_number": 71,
+          "content_summary": "Outlines the criteria for 'High' quality pages. They must serve a beneficial purpose well and demonstrate at least one of the following: a high level of MC quality, a positive reputation, or a high level of E-E-A-T.",
+          "evaluator_checklist": [
+            "Verify the page achieves its beneficial purpose well.",
+            "Assess if the MC demonstrates a high level of effort, originality, and skill.",
+            "Confirm the website or creator has a positive reputation for the topic.",
+            "Ensure a high level of E-E-A-T is present for the page's purpose.",
+            "At least one of the above three criteria must be met for a High rating."
+          ]
+        },
+        {
+          "section_number": "8.0",
+          "title": "Highest Quality Pages",
+          "page_number": 77,
+          "content_summary": "Defines the standards for 'Highest' quality pages, which are the best of the best. They achieve their purpose exceptionally well and require a very high level of MC quality, a very positive reputation, or a very high level of E-E-A-T.",
+          "evaluator_checklist": [
+            "Confirm the page achieves its purpose exceptionally well.",
+            "Assess if the MC quality is 'very high' (e.g., original, in-depth reporting; unique, skilled artistic content).",
+            "Verify the website or creator has a 'very positive' reputation (e.g., considered an authority or one of the best sources).",
+            "Ensure a 'very high' level of E-E-A-T (e.g., the uniquely authoritative source for a topic).",
+            "At least one of the above three 'very high' criteria must be demonstrated."
+          ]
+        }
+      ]
+    },
+    {
+      "part_number": 2,
+      "title": "Understanding Search User Needs",
+      "sections": [
+        {
+          "section_number": "12.0",
+          "title": "Understanding Search Users, Queries, and Results",
+          "page_number": 94,
+          "content_summary": "Introduces the core concepts for Needs Met rating, explaining the relationship between the user, their query, the query interpretation, and the user's intent.",
+          "evaluator_checklist": [
+            "Analyze the query text to understand its possible meanings (interpretations).",
+            "Determine the user's likely goal or what they are trying to accomplish (user intent).",
+            "Consider the user's locale and location, as it can significantly change the intent (e.g., [football]).",
+            "Distinguish between query interpretations (what the words mean) and user intents (what the user wants to do)."
+          ]
+        }
+      ]
+    },
+    {
+      "part_number": 3,
+      "title": "Needs Met Rating Guideline",
+      "sections": [
+        {
+          "section_number": "13.0",
+          "title": "Rating Using the Needs Met Scale",
+          "page_number": 113,
+          "content_summary": "Details the Needs Met (NM) rating scale, which ranges from Fully Meets (FullyM) to Fails to Meet (FailsM). The rating assesses how helpful and satisfying a result is for the user's query and intent.",
+          "evaluator_checklist": [
+            "Use the FailsM to FullyM scale to rate how well a result satisfies the user intent.",
+            "Understand the specific criteria for FullyM (a specific, unambiguous query and a single, definitive result).",
+            "Highly Meets (HM) is for very helpful results and is the highest possible rating for most queries.",
+            "Rate based on the helpfulness of the result for a user in the specified locale."
+          ]
+        },
+        {
+          "section_number": "14.0",
+          "title": "The Relationship between Page Quality and Needs Met",
+          "page_number": 142,
+          "content_summary": "Explains the critical relationship between PQ and NM ratings. A low PQ page is generally not helpful and should receive a low NM rating (often FailsM). A high PQ page can still be useless (FailsM) if it doesn't match the query.",
+          "evaluator_checklist": [
+            "A page with a Lowest PQ rating should almost always be rated FailsM for Needs Met.",
+            "A page that is untrustworthy or has other undesirable characteristics (e.g., outdated) cannot receive a Highly Meets (HM) rating.",
+            "A high PQ page that is completely irrelevant to the query is useless and must be rated FailsM.",
+            "Remember: Needs Met depends on the query, while Page Quality does not."
+          ]
+        },
+        {
+          "section_number": "15.0",
+          "title": "Rating Porn, Foreign Language, and Did Not Load Results",
+          "page_number": 144,
+          "content_summary": "Provides specific instructions for using flags and assigning NM ratings for special cases: pornographic content, content in a foreign language, and pages that fail to load.",
+          "evaluator_checklist": [
+            "Apply the 'Porn' flag to all pornographic results, regardless of the query.",
+            "Rate uninvited porn as FailsM for non-porn queries.",
+            "Use the 'Foreign Language' flag if the content is not in the task language, a common local language, or English. Most flagged pages will be FailsM.",
+            "Use the 'Did Not Load' flag for technical errors preventing the page from loading. These results are always FailsM."
+          ]
+        },
+        {
+          "section_number": "18.0",
+          "title": "Needs Met Rating and Freshness",
+          "page_number": 158,
+          "content_summary": "Addresses the importance of content freshness for certain queries. For queries demanding recent information (e.g., 'breaking news', 'current stock price'), stale results are not helpful and should receive a low NM rating.",
+          "evaluator_checklist": [
+            "Identify if the query has a freshness need (e.g., news, recurring events, product models, current information).",
+            "For queries requiring freshness, check the publication or last updated date of the content.",
+            "Downgrade the Needs Met rating for stale or outdated content.",
+            "Recognize that some queries are 'timeless' and do not require fresh results (e.g., historical facts)."
+          ]
+        }
+      ]
+    }
+  ],
+  "appendices": [
+    {
+      "appendix_number": 1,
+      "title": "Using the Evaluation Platform",
+      "page_number": 175,
+      "content_summary": "Provides an overview and instructions for using the Rater Hub evaluation platform, including how to acquire tasks, use the rating interface, release tasks, and report duplicate results.",
+      "evaluator_checklist": [
+        "Follow project-specific instructions provided on the task page.",
+        "Understand how to acquire, rate, and submit tasks.",
+        "Know the process for releasing a task when unable to rate (e.g., lack of expertise, technical problem).",
+        "Learn the criteria for identifying and reporting duplicate results."
+      ]
+    },
+    {
+      "appendix_number": 2,
+      "title": "Guideline Change Log",
+      "page_number": 182,
+      "content_summary": "Summarizes the changes made to the guidelines over the past two years, including updates to YMYL definitions, spam policies, and refreshed examples.",
+      "evaluator_checklist": [
+        "Review the change log to stay current with the latest updates to the guidelines.",
+        "Note major updates, such as changes to spam policies or YMYL definitions, as they directly impact rating.",
+        "Understand that the guidelines are regularly updated to remain relevant."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "metadata": {
+    "version": "2.0-lite",
+    "agent_name": "aiso-content-lite",
+    "category": "aiso",
+    "title": "Content Quality & E-E-A-T Assessment (Lite)",
+    "description": "Content quality and E-E-A-T assessment for AI citability -- evaluate experience, expertise, authoritativeness, trustworthiness, and content structure. Reports a qualitative level per dimension, not a numeric score. Lite edition for workshop use.",
+    "last_updated": "2026-09-12",
+    "standalone": true,
+    "author": "BIQDADDY"
+  },
+  "configuration": {
+    "role": "Content Quality & E-E-A-T Analyst",
+    "purpose": "Evaluate content through E-E-A-T signals and AI citability, judging how well content demonstrates expertise and trust for AI citation.",
+    "allowed_tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "WebFetch",
+      "Write",
+      "Bash"
+    ]
+  },
+  "workflow": {
+    "purpose": "AI search platforms evaluate whether content deserves to be cited using E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness). Per Google's December 2025 Quality Rater Guidelines update, this now applies to ALL competitive queries.",
+    "eeat_framework": {
+      "assessment_scale": "ดี | พอใช้ | ต้องแก้ | ตรวจไม่ได้",
+      "instruction": "Judge each of the four dimensions separately using its two signals. There is no combined number, report the level for each dimension and explain the evidence behind it.",
+      "unverified_rule": "สัญญาณไหนที่ยังไม่ได้เห็นหลักฐานจริง ให้ลงว่า ตรวจไม่ได้ พร้อมบอกว่าขาดอะไร ห้ามลงว่า ต้องแก้ หรือ ไม่มี เพราะยังไม่ได้ยืนยัน และถึงจะมีบางมิติที่ ตรวจไม่ได้ ก็ยังต้องส่งรายงานของมิติที่เหลือ ห้ามยกเลิกทั้งงาน",
+      "experience": {
+        "description": "First-hand knowledge and direct involvement with the topic.",
+        "signals": {
+          "first_person_accounts": {
+            "check": "Does the author describe actually doing, using, or testing the thing?",
+            "assessment": "ดี if present and specific, พอใช้ if generic, ต้องแก้ if absent"
+          },
+          "specific_examples": {
+            "check": "Are there concrete named examples rather than generic advice?",
+            "assessment": "ดี if specific and unique, พอใช้ if somewhat specific, ต้องแก้ if generic"
+          }
+        },
+        "weak_signals": [
+          "Only summarizes other sources without new perspective",
+          "Generic advice ('It depends on your needs')",
+          "No mention of actual usage, testing, or involvement",
+          "Hedging language ('reportedly', 'supposedly')"
+        ]
+      },
+      "expertise": {
+        "description": "Demonstrated knowledge depth and professional competence.",
+        "signals": {
+          "author_credentials": {
+            "check": "Is there a named author with visible credentials or a bio?",
+            "assessment": "ดี if full credentials, พอใช้ if basic bio, ต้องแก้ if no author"
+          },
+          "data_backed_claims": {
+            "check": "Are the main claims supported by data or named sources?",
+            "assessment": "ดี if well-sourced, พอใช้ if some data, ต้องแก้ if unsupported"
+          }
+        }
+      },
+      "authoritativeness": {
+        "description": "Recognition by others as a credible source.",
+        "signals": {
+          "media_mentions": {
+            "check": "Is the brand or author mentioned by media or industry outlets?",
+            "assessment": "ดี if media coverage, พอใช้ if industry mentions only, ต้องแก้ if none"
+          },
+          "topical_coverage": {
+            "check": "Does the site cover this topic thoroughly rather than in one isolated page?",
+            "assessment": "ดี if thorough cluster, พอใช้ if a few related pages, ต้องแก้ if isolated"
+          }
+        }
+      },
+      "trustworthiness": {
+        "description": "Signals that content and publisher are reliable and transparent.",
+        "signals": {
+          "contact_info": {
+            "check": "Is there reachable contact information for the publisher?",
+            "assessment": "ดี if full contact details, พอใช้ if email only, ต้องแก้ if none"
+          },
+          "https_valid_cert": {
+            "check": "Is the site served over HTTPS with a valid certificate and no mixed content?",
+            "assessment": "ดี if valid, ต้องแก้ if not"
+          }
+        }
+      }
+    },
+    "content_quality_metrics": {
+      "content_depth": {
+        "instruction": "ดูว่าเนื้อหาตอบคำถามของหน้านั้นจนจบไหม รายงานเป็น ครอบคลุม | พอตอบได้ | บางเกินไป",
+        "note": "หน้าแต่ละแบบมีความยาวที่เหมาะสมต่างกัน ให้ตัดสินจากความครบของคำตอบและเทียบกับหน้าที่ตอบคำถามเดียวกัน ห้ามตั้งจำนวนคำขั้นต่ำเป็นเกณฑ์"
+      },
+      "readability": {
+        "instruction": "อ่านแล้วเข้าใจในรอบเดียวไหม ประโยคยาวจนต้องย้อนอ่านซ้ำไหม ย่อหน้าใหญ่จนหาคำตอบไม่เจอไหม รายงานเป็น อ่านง่าย | พออ่านได้ | อ่านยาก ห้ามคำนวณคะแนนความอ่านง่ายและห้ามตั้งเกณฑ์ตัวเลขขึ้นเอง"
+      },
+      "paragraph_structure": [
+        "หนึ่งย่อหน้าหนึ่งความคิด",
+        "ขึ้นต้นด้วยข้อสรุป แล้วค่อยขยาย",
+        "มีหลักฐานหรือตัวอย่างรองรับ",
+        "ตัดออกมาย่อหน้าเดียวแล้วยังเข้าใจได้"
+      ],
+      "heading_structure": [
+        "One H1 per page",
+        "H2 for major sections",
+        "H3 for subsections",
+        "No skipped levels",
+        "Descriptive headings",
+        "Question-based where appropriate"
+      ],
+      "internal_linking": "มีลิงก์ไปหน้าที่เกี่ยวข้องจริงในเนื้อหา ข้อความลิงก์บอกได้ว่าปลายทางคืออะไร หน้าในหัวข้อเดียวกันเชื่อมถึงกันเป็นคลัสเตอร์ ไม่มีหน้าสำคัญที่ไม่มีลิงก์เข้าเลย ห้ามตั้งจำนวนลิงก์ขั้นต่ำเป็นเกณฑ์ และดูจากไฟล์ HTML ดิบเท่านั้น เพราะ WebFetch ตัด href ทิ้ง"
+    },
+    "ai_content_assessment": {
+      "low_quality_signals": [
+        "Generic phrasing ('In today's fast-paced world...')",
+        "No original insight, only rephrases widely available info",
+        "Lack of first-hand experience",
+        "Perfect but empty structure",
+        "No specific examples",
+        "Repetitive conclusions",
+        "Hedging overload without specifics",
+        "Missing human voice",
+        "Filler paragraphs",
+        "No data or sources"
+      ],
+      "high_quality_signals": [
+        "Original data (surveys, experiments, benchmarks)",
+        "Specific examples (named products, companies, dates, numbers)",
+        "Contrarian or nuanced views backed by reasoning",
+        "First-person experience",
+        "Updated information and current data",
+        "Expert opinion with professional judgment",
+        "Practical, actionable recommendations",
+        "Trade-offs acknowledged"
+      ]
+    },
+    "freshness_assessment": {
+      "levels": {
+        "ใหม่": "อัปเดตล่าสุดใกล้ปัจจุบัน ข้อมูลยังตรงกับสถานการณ์วันนี้",
+        "ยังใช้ได้": "ผ่านมาสักพักแล้วแต่เนื้อหายังไม่ล้าสมัย",
+        "ควรทบทวน": "ผ่านมานานจนตัวเลข ราคา หรือกฎเกณฑ์ในหน้าน่าจะเปลี่ยนไปแล้ว",
+        "ไม่แสดงวันที่": "หน้าไม่แสดงวันเผยแพร่หรือวันอัปเดต ทั้งคนและระบบ AI จึงประเมินความสดของข้อมูลไม่ได้",
+        "ตรวจไม่ได้": "ยังไม่ได้เห็นซอร์สจริง จึงยังไม่รู้ว่ามีวันที่หรือไม่"
+      },
+      "instruction": "ตัดสินจากว่าเนื้อหายังตรงกับความจริงวันนี้ไหม ไม่ใช่จากการนับเดือน ห้ามตั้งช่วงเวลาเป็นเกณฑ์ตายตัว วันที่มักอยู่ใน meta หรือ JSON-LD ใน head ให้ Grep จากไฟล์ HTML ดิบ ถ้ายังไม่ได้ไฟล์นั้นให้ลงว่า ตรวจไม่ได้ ห้ามลงว่า ไม่แสดงวันที่"
+    },
+    "topical_authority": {
+      "assessment": [
+        "Content breadth",
+        "Content depth",
+        "Topic clustering",
+        "Content gaps",
+        "Competitor comparison"
+      ],
+      "levels": {
+        "ครบคลัสเตอร์": "มีหน้าครอบคลุมทั้งหัวข้อหลักและคำถามที่คนถามต่อ และหน้าเหล่านั้นเชื่อมถึงกัน",
+        "กำลังสร้าง": "มีหลายหน้าในหัวข้อเดียวกันแล้ว แต่ยังขาดคำถามสำคัญบางข้อ",
+        "เพิ่งเริ่ม": "มีไม่กี่หน้า ยังไม่เห็นโครงคลัสเตอร์",
+        "หน้าเดี่ยว": "มีหน้าเดียวลอย ไม่มีหน้าอื่นในหัวข้อเดียวกันรองรับ"
+      },
+      "instruction": "ตัดสินจากความครบของหัวข้อที่ครอบคลุม ไม่ใช่จากการนับจำนวนหน้า ห้ามตั้งจำนวนหน้าเป็นเกณฑ์"
+    },
+    "overall_assessment": {
+      "method": "ไม่มีคะแนนรวม รายงานระดับของแต่ละมิติ (Experience, Expertise, Authoritativeness, Trustworthiness) พร้อมหลักฐานประกอบ และระบุ Topical Authority level แยกต่างหาก",
+      "reporting_rule": "For every dimension marked พอใช้ or ต้องแก้, state the missing signal and the specific fix. Never present a single combined grade for the page."
+    },
+    "output": {
+      "filename": "{domain}_ai-content_{YYYY-MM-DD}.md",
+      "sections": [
+        "E-E-A-T Assessment table (4 dimensions, each ดี / พอใช้ / ต้องแก้)",
+        "Topical Authority Level",
+        "Pages Analyzed table (URL, Word Count, Readability, Structure)",
+        "E-E-A-T Detailed Findings per dimension",
+        "Content Quality Issues with rewrite suggestions",
+        "AI Content Concerns with examples",
+        "Freshness Assessment table",
+        "Improvement Recommendations: Quick Wins, Content Gaps, Author/E-E-A-T Improvements"
+      ],
+      "ownership_boundaries": {
+        "citability": {
+          "owner": "aiso-citability-lite",
+          "rule": "That skill owns the citability reading, the most and least citable passage tables and the rewrite suggestions. This skill prints no Citability column and no Citability Assessment section; cite the other skill's result or say it was not run."
+        },
+        "content_gaps": {
+          "owner": "seo-content-gap-analysis-lite",
+          "rule": "The Content Gaps bullet lists per-page E-E-A-T gaps found while assessing this page set only; the competitive gap deliverable belongs to the other skill."
+        }
+      }
+    }
+  }
+}

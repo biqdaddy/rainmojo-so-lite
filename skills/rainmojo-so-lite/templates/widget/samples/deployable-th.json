@@ -1,0 +1,65 @@
+{
+  "schema": "rainmojo.tier1.summary/1",
+  "mode": "deployable",
+  "meta": {
+    "skill": "seo-schema",
+    "client": "Demo Aesthetic Clinic",
+    "domain": "demo-aesthetic.example.invalid",
+    "generated_at": "2026-09-11T15:10:00+07:00",
+    "lang": "th",
+    "run_id": "20260911-1510"
+  },
+  "headline": {
+    "kicker": "ไฟล์พร้อมใช้",
+    "title": "JSON-LD Organization และ FAQPage สำหรับหน้าแรก"
+  },
+  "deployables": [
+    {
+      "filename": "schema-home.json",
+      "language": "json",
+      "content": "{\n  \"@context\": \"https://schema.org\",\n  \"@graph\": [\n    {\"@type\": \"MedicalClinic\", \"@id\": \"https://demo-aesthetic.example.invalid/#org\", \"name\": \"Demo Aesthetic Clinic\", \"sameAs\": [\"https://www.facebook.com/demo\", \"https://www.instagram.com/demo\"]},\n    {\"@type\": \"FAQPage\", \"@id\": \"https://demo-aesthetic.example.invalid/#faq\", \"mainEntity\": []}\n  ]\n}",
+      "path": "clients/demo-aesthetic.example.invalid/schema/home.json"
+    }
+  ],
+  "diff": {
+    "label": "title tag หน้าแรก",
+    "before": "Demo Aesthetic Clinic | คลินิกความงาม",
+    "after": "Demo Aesthetic Clinic คลินิกความงามและเลเซอร์ กรุงเทพ",
+    "score_before": 52,
+    "score_after": 78
+  },
+  "checklist": [
+    {
+      "task": "วาง JSON-LD ใน head ของหน้าแรก",
+      "owner": "Dev",
+      "priority": "สูง",
+      "eta": "1 วัน"
+    },
+    {
+      "task": "ตรวจด้วย Rich Results Test",
+      "owner": "Dev",
+      "priority": "สูง",
+      "eta": "1 วัน"
+    },
+    {
+      "task": "เขียนคำถาม FAQ 5 ข้อ",
+      "owner": "Content",
+      "priority": "กลาง",
+      "eta": "3 วัน",
+      "done": false
+    }
+  ],
+  "handoff": {
+    "tier2_label": "ชุด schema ทั้งเว็บ",
+    "tier2_path": "clients/demo-aesthetic.example.invalid/deploy/schema-bundle.json",
+    "formats": [
+      "JSON"
+    ]
+  },
+  "next_steps": [
+    {
+      "label": "ตรวจ schema หลัง deploy",
+      "prompt": "/rainmojo-so-lite:aiso-schema-lite demo-aesthetic.example.invalid --validate"
+    }
+  ]
+}

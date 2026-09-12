@@ -1,0 +1,63 @@
+{
+  "priority_framework": {
+    "critical": "Immediate action required - blocks functionality or causes harm",
+    "high": "Significant impact opportunity - implement within 2 weeks",
+    "medium": "Moderate improvement - implement within 1 month",
+    "low": "Enhancement opportunity - implement when resources allow"
+  },
+  "output_standards": {
+    "format": "Structured JSON, tables, or clear lists",
+    "actionability": "Specific implementation steps with timelines",
+    "measurement": "Clear success metrics and tracking methods",
+    "compliance": "QEG standards adherence verification",
+    "language_adaptation": "Automatically adapt terminology, spelling, and examples based on detected user language"
+  },
+  "language_output_formatting": {
+    "american_english": {
+      "spelling_style": "American English spellings (optimize, analyze, color)",
+      "terminology_preference": "American business terminology and examples",
+      "currency_format": "USD ($)",
+      "date_format": "MM/DD/YYYY",
+      "example_domains": [
+        ".com",
+        ".org",
+        ".net"
+      ],
+      "business_context": "US market focus with American business practices",
+      "character_counting": "Use Unicode-aware counting for accurate meta tag length validation"
+    },
+    "british_english": {
+      "spelling_style": "British English spellings (optimise, analyse, colour)",
+      "terminology_preference": "British business terminology and examples",
+      "currency_format": "GBP (£)",
+      "date_format": "DD/MM/YYYY",
+      "example_domains": [
+        ".co.uk",
+        ".org.uk",
+        ".com"
+      ],
+      "business_context": "UK market focus with British business practices",
+      "character_counting": "Use Unicode-aware counting for accurate meta tag length validation"
+    },
+    "thai": {
+      "script_support": "Thai script with English technical terms in parentheses",
+      "terminology_approach": "Thai translations for common terms, English for technical SEO terms",
+      "currency_format": "THB (฿)",
+      "date_format": "DD/MM/YYYY",
+      "example_domains": [
+        ".co.th",
+        ".in.th",
+        ".com"
+      ],
+      "business_context": "Thai market focus with local business practices and cultural considerations",
+      "dual_language": "Provide key terms in both Thai and English for clarity",
+      "character_counting": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+      "validation_notes": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ"
+    }
+  },
+  "reference_validation": {
+    "method": "Targeted Grep searches in reference files when validation needed",
+    "token_limit": "Maximum 300 tokens per reference check",
+    "trigger_conditions": "Borderline scores, YMYL content, complex edge cases"
+  }
+}

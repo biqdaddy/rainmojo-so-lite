@@ -1,0 +1,67 @@
+{
+  "_owner": "seo-content-creation",
+  "_scope": "Database-sourced sibling page sets: per-location, per-branch, per-store, per-variant, per-model page families produced from one structured record set. Additive to the W1 to W7 write-time phases; replaces nothing. Applies whenever more than one page is generated from the same template against different records.",
+  "when_this_applies": {
+    "triggers": [
+      "A page set where every member shares a template and differs only by the entity it describes",
+      "Location pages, branch pages, service-area pages, product-variant pages, model pages, per-plan pages",
+      "Any request phrased as 'generate the same page for each of these'"
+    ],
+    "does_not_apply_to": "Single standalone articles, and pillar or cluster pages whose bodies are individually briefed. Those follow W1 to W7 only."
+  },
+  "rule_1_record_is_the_only_fact_source": {
+    "statement": "Every material fact on a sibling page comes only from the structured record for that entity. The model supplies sentence construction and ordering. It never supplies a fact.",
+    "material_fact_classes": [
+      "address, phone, opening hours, holiday hours",
+      "services offered, products stocked, brands carried",
+      "staff names, credentials, languages spoken",
+      "prices, capacity, parking, accessibility features",
+      "service radius, coverage area, delivery terms"
+    ],
+    "missing_field_handling": "A field absent from the record is omitted from the page. Never write a plausible value, never carry a value across from a sibling record, and never soften an absent value into a vague phrase such as 'flexible hours' or 'a wide range of services'. Record the omission as could not verify in the generation log.",
+    "failure_mode_prevented": "Generation over an incomplete record set invents hours, staff, and offerings for entities the record set holds no data for, and the invented values read exactly as confidently as the real ones."
+  },
+  "rule_2_hand_authored_exemplar": {
+    "statement": "Before generating the set, one page is written by hand end to end and supplied to the generator as an explicit output exemplar.",
+    "exemplar_requirements": [
+      "It is a real page for a real record in the set, not a mock",
+      "It passes W1 to W7 on its own before it is used as an exemplar",
+      "It is supplied as the structural target: heading order, section purposes, answer formats per heading, link slots",
+      "It is supplied together with its own source record so the generator can see which slot each field filled"
+    ],
+    "instruction_to_generator": "Match the structure of the exemplar. Fill every slot from this entity's own record. Do not add sections the exemplar does not have and do not drop sections it does have.",
+    "failure_mode_prevented": "Without an exemplar the generator invents a different structure per entity, and the set stops being comparable page to page."
+  },
+  "rule_3_no_shared_phrasing": {
+    "statement": "A standing instruction is carried in every generation call: sibling pages must not repeat each other's phrasing. Shared structure is required, shared sentences are forbidden.",
+    "what_may_repeat": "Heading text where the heading is a fixed question, schema field names, legal or safety wording that must stay verbatim, and the brand voice register.",
+    "what_may_not_repeat": "Body sentences, intro paragraphs, section openers, list item phrasing, closing paragraphs, and meta descriptions.",
+    "check": "Compare each generated page against every other page already generated in the same set. Flag any body sentence that appears in more than one page. Rewrite the later occurrence from that page's own record rather than paraphrasing the earlier one.",
+    "failure_mode_prevented": "Without this instruction the set comes out as boilerplate clones with the entity name swapped, which reads as duplicate content across the whole family."
+  },
+  "rule_4_field_by_field_verification": {
+    "statement": "Before any sibling page moves to publish, verify its facts field by field back against its own source record. Not against the exemplar, not against a sibling, and not against the aggregate export.",
+    "procedure": [
+      "Build one verification row per material fact on the page",
+      "Each row carries: the field name, the value as written on the page, the value in that entity's record, and a match verdict",
+      "A verdict is match, mismatch, or not in record",
+      "A mismatch is corrected on the page, never corrected in the record to fit the page",
+      "A not in record verdict means the sentence carrying it is removed, because rule 1 says the record is the only source"
+    ],
+    "cross_entity_check": "Confirm the record identifier on the verification sheet equals the record identifier the page was generated from. A page verified against the wrong sibling record passes a check it should fail."
+  },
+  "pass_criteria": {
+    "exemplar_present": "One hand-authored page exists in the set and was supplied to the generator",
+    "invented_facts": "Count of page facts with a not in record verdict equals 0",
+    "mismatches": "Count of mismatch verdicts equals 0",
+    "repeated_sentences": "Count of body sentences appearing in more than one page in the set equals 0",
+    "verification_coverage": "Every generated page has its own completed verification sheet bound to its own record identifier"
+  },
+  "deference": {
+    "publish_gates_and_status": "Whether a verified sibling page may move onward, and every production status token, belongs to content-production. This file produces the verification evidence; it does not declare production status.",
+    "eeat_scoring": "E-E-A-T scoring of the finished pages stays with seo-content-audit.",
+    "internal_link_plan": "The sitewide link plan between siblings and their parent belongs to seo-internal-linking. W7 governs only where a link sits inside the page being written.",
+    "location_strategy": "Which locations warrant a page at all, and the local listing work behind them, belongs to seo-local-seo.",
+    "images": "Image briefs, licensing, and metadata fields for these pages belong to seo-image-production."
+  }
+}

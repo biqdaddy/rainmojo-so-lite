@@ -1,0 +1,738 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rainmojo-so-lite/tier1-summary/1.0",
+  "title": "RAINMOJO SO Tier 1 summary contract",
+  "description": "Canonical data every skill or agent emits at the end of a run. present.py renders it as a host widget fragment, a standalone HTML card, or Markdown. Tier 2 (the unified 19-tab report) is never derived from this file; this file only points to it.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "mode",
+    "meta",
+    "headline",
+    "handoff",
+    "next_steps"
+  ],
+  "properties": {
+    "schema": {
+      "const": "rainmojo.tier1.summary/1"
+    },
+    "mode": {
+      "type": "string",
+      "description": "One of the seven response modes. next_steps is a footer that every mode carries.",
+      "enum": [
+        "quick_fact",
+        "howto",
+        "comparison",
+        "troubleshoot",
+        "audit",
+        "deployable"
+      ]
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "skill",
+        "generated_at",
+        "lang"
+      ],
+      "properties": {
+        "skill": {
+          "type": "string",
+          "description": "skill or agent key, e.g. aiso-ai-visibility"
+        },
+        "client": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "generated_at": {
+          "type": "string",
+          "description": "ISO-8601 with offset"
+        },
+        "lang": {
+          "type": "string",
+          "enum": [
+            "th",
+            "en"
+          ]
+        },
+        "run_id": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "primary": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            },
+            "accent": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            },
+            "accent_ink": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$"
+            }
+          },
+          "description": "Only the three brand-override tokens; status colours never follow brand"
+        }
+      }
+    },
+    "headline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title"
+      ],
+      "properties": {
+        "kicker": {
+          "type": "string",
+          "description": "small label above the title, sentence case"
+        },
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "type": "string"
+        }
+      }
+    },
+    "tldr": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 3,
+      "description": "quick_fact mode: two-line answer box lines"
+    },
+    "bullets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 5,
+      "description": "quick_fact mode: three supporting bullets"
+    },
+    "score": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "max",
+        "status",
+        "status_label"
+      ],
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ok",
+            "warning",
+            "critical",
+            "info"
+          ]
+        },
+        "status_label": {
+          "type": "string",
+          "description": "e.g. Strong but at risk"
+        },
+        "grade": {
+          "type": "string"
+        },
+        "delta": {
+          "type": "number",
+          "description": "change versus previous run, signed"
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "description": "sparkline points, oldest first"
+        }
+      }
+    },
+    "summary": {
+      "type": "string",
+      "description": "executive summary, 2-3 sentences, no em dash, no pipe"
+    },
+    "dimensions": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "label",
+          "value",
+          "max",
+          "status"
+        ],
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          },
+          "max": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "warning",
+              "critical",
+              "info"
+            ]
+          },
+          "tooltip": {
+            "type": "string",
+            "description": "one-sentence definition of the dimension"
+          },
+          "history": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "platforms": {
+      "type": "array",
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "label",
+          "score",
+          "status",
+          "crawler_access"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "score": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "null when the platform could not be scored"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "warning",
+              "critical",
+              "info"
+            ]
+          },
+          "crawler_access": {
+            "type": "string",
+            "enum": [
+              "allowed",
+              "blocked",
+              "partial",
+              "unverifiable",
+              "not_checked"
+            ]
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "query_matrix": {
+      "type": "array",
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "query",
+          "cited",
+          "position"
+        ],
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "cited": {
+            "type": "string",
+            "enum": [
+              "yes",
+              "partial",
+              "context",
+              "no"
+            ]
+          },
+          "position": {
+            "type": "string",
+            "description": "#1, #2, displaced, not_found"
+          },
+          "sentiment": {
+            "type": "string",
+            "enum": [
+              "positive",
+              "neutral",
+              "mixed",
+              "negative"
+            ]
+          },
+          "evidence_url": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "competitors": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "score"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "tagline": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number"
+          },
+          "max": {
+            "type": "number"
+          },
+          "is_client": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "key_risk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "body"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "warning",
+            "critical"
+          ]
+        }
+      }
+    },
+    "root_cause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "body"
+      ],
+      "description": "troubleshoot mode: the real cause",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "symptom": {
+          "type": "string"
+        }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "maxItems": 12,
+      "description": "howto mode and troubleshoot quick fixes",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title",
+          "do"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "do": {
+            "type": "string"
+          },
+          "expect": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "columns",
+        "rows",
+        "recommendation"
+      ],
+      "properties": {
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "cells"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "cells": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "impact": {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ]
+              },
+              "effort": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              }
+            }
+          }
+        },
+        "recommendation": {
+          "type": "string",
+          "description": "the decisive line: recommendation for you"
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title",
+          "body",
+          "impact"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "impact": {
+            "type": "string",
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "effort": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "owner": {
+            "type": "string",
+            "description": "Dev, Content, Marketing, Client"
+          },
+          "eta": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "checklist": {
+      "type": "array",
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "task",
+          "owner"
+        ],
+        "properties": {
+          "task": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string"
+          },
+          "eta": {
+            "type": "string"
+          },
+          "done": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "diff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "before",
+        "after"
+      ],
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "before": {
+          "type": "string"
+        },
+        "after": {
+          "type": "string"
+        },
+        "score_before": {
+          "type": "number"
+        },
+        "score_after": {
+          "type": "number"
+        }
+      }
+    },
+    "deployables": {
+      "type": "array",
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "filename",
+          "language",
+          "content"
+        ],
+        "properties": {
+          "filename": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "mockup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface",
+        "query",
+        "answer_excerpt"
+      ],
+      "description": "Live AI / SERP mockup block",
+      "properties": {
+        "surface": {
+          "type": "string",
+          "description": "google_aio, perplexity, chatgpt"
+        },
+        "query": {
+          "type": "string"
+        },
+        "answer_excerpt": {
+          "type": "string"
+        },
+        "cited_sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "client_cited": {
+          "type": "boolean"
+        }
+      }
+    },
+    "roles": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Role-based segmentation, each a short list of lines",
+      "properties": {
+        "executive": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "developer": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "content": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "transparency": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "crawled_at": {
+          "type": "string"
+        },
+        "user_agents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "guidelines": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "could_not_verify": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tier2_label"
+      ],
+      "properties": {
+        "tier2_path": {
+          "type": "string",
+          "description": "client-confined path returned by client_workspace.py route"
+        },
+        "tier2_label": {
+          "type": "string"
+        },
+        "tier2_url": {
+          "type": "string",
+          "description": "artifact URL when one was published"
+        },
+        "formats": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "next_steps": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "prompt"
+        ],
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string",
+            "description": "the exact slash command or message to send"
+          }
+        }
+      }
+    }
+  }
+}

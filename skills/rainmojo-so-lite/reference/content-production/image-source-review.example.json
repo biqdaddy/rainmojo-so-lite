@@ -1,0 +1,24 @@
+{
+  "_instructions": "Copy this file into the article package for one manifest item. Replace the identity, dimensions, reviewer, and provenance values with the exact current raw source evidence before recording approval.",
+  "reviewer": "replace-with-reviewer",
+  "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "source_width": 0,
+  "source_height": 0,
+  "provenance": {
+    "source_type": "generated",
+    "provider": "replace-with-provider",
+    "source_url": "",
+    "rights_record": "replace-with-rights-basis",
+    "license_record": "",
+    "generation_notes": "replace-with-generation-or-source-notes"
+  },
+  "checklist": {
+    "source_matches_approved_brief": "passed",
+    "source_identity_verified": "passed",
+    "provenance_complete": "passed",
+    "rights_confirmed": "passed",
+    "sufficient_resolution": "passed",
+    "no_unapproved_text_or_logo": "passed"
+  },
+  "notes": "Record concise evidence from the full-resolution source review."
+}

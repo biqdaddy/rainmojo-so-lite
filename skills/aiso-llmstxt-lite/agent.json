@@ -1,0 +1,198 @@
+{
+  "metadata": {
+    "version": "2.0-lite",
+    "agent_name": "aiso-llmstxt-lite",
+    "category": "aiso",
+    "title": "llms.txt Analysis & Generation",
+    "description": "Analyzes and generates llms.txt files, the emerging standard for helping AI systems understand website structure and content. Can validate existing llms.txt files or generate new ones from scratch by crawling the site. (Lite edition for workshop use.)",
+    "last_updated": "2026-09-12",
+    "standalone": true,
+    "author": "BIQDADDY"
+  },
+  "configuration": {
+    "role": "llms.txt Specialist",
+    "purpose": "Handle everything related to the llms.txt standard, analyze existing files or generate new ones to help AI systems understand a site's structure and content.",
+    "allowed_tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "WebFetch",
+      "Write",
+      "Bash"
+    ]
+  },
+  "workflow": {
+    "why_llmstxt_matters": {
+      "description": "A convention proposed by Jeremy Howard in September 2024 that lets a site hand AI systems a curated Markdown index. Analogous to robots.txt but describes what is most useful rather than what is off limits. Cheap to produce, so it stays a deploy file; it is not a visibility lever.",
+      "benefits": [
+        "Faster AI comprehension from a single file instead of crawling dozens of pages, for any reader that opens it",
+        "Controlled narrative: the site chooses which pages and facts appear first",
+        "Higher citation accuracy where a reader uses it: the correct authoritative page is named explicitly",
+        "Low cost: generated in minutes from the sitemap and client profile"
+      ],
+      "evidence_status_2026": {
+        "verdict": "adoption evidence: low",
+        "facts": [
+          "Google's AI features documentation states that no new machine-readable files or AI text files are needed to appear in AI Overviews or AI Mode; Google's Gary Illyes said Google does not use llms.txt (Search Central Live, 2025)",
+          "Ahrefs (2026): of about 38,000 domains with a valid llms.txt, 97 percent received zero requests for the file in May 2026; 28 percent of 137,000 studied domains publish one",
+          "SE Ranking (2025-11-07, 300,000 domains): no statistically significant correlation between having llms.txt and how often a domain is cited in AI answers",
+          "No major platform (OpenAI, Anthropic, Perplexity, Google, Meta, Microsoft, Apple) has committed to reading it"
+        ],
+        "consequence": "llms.txt is a hygiene item on every platform card and in the page checklist; it is never the reason a site is or is not cited.",
+        "reporting_rule": "Every llms.txt verdict in a card, report or recommendation carries the badge: adoption evidence low, hygiene item. Never describe it as read by Claude, ChatGPT or Perplexity.",
+        "sources": [
+          "https://developers.google.com/search/docs/appearance/ai-features",
+          "https://www.seroundtable.com/google-llms-txt-39698.html",
+          "https://ahrefs.com/blog/what-is-llms-txt/",
+          "https://seranking.com/blog/llms-txt/"
+        ]
+      }
+    },
+    "specification": {
+      "file_location": "https://example.com/llms.txt (root of domain)",
+      "format": "Markdown with specific conventions",
+      "required_elements": {
+        "title": "# Site Name, first line, H1 format, official business or site name",
+        "description": "> Brief description, blockquote format, under 200 characters, factual and specific",
+        "main_sections": "At least one H2 section (## Docs, ## Products, ## Services, and so on)"
+      },
+      "page_entry_format": "- [Page Title](URL): Description of page content (10-30 words, absolute URLs, ordered by importance, 10-30 entries total)",
+      "recommended_sections": {
+        "Docs": "Primary documentation or key pages",
+        "Optional": "Secondary pages worth knowing about",
+        "API": "API documentation",
+        "Blog": "Blog or news content",
+        "Products": "Product catalog",
+        "Services": "Service offerings",
+        "About": "Company information",
+        "Resources": "Educational or reference content",
+        "Legal": "Legal documents",
+        "Contact": "Contact information"
+      },
+      "key_facts_section": "Recommended, founded year, headquarters, customer count, key products, industry classification",
+      "contact_section": "Recommended, website, email, support, phone, address"
+    },
+    "llms_full_txt": {
+      "description": "Extended version at /llms-full.txt",
+      "differences": {
+        "length": "150-500+ lines (vs 50-150 for llms.txt)",
+        "page_entries": "30-100+ pages (vs 10-30)",
+        "descriptions": "30-100 words per entry with key facts",
+        "sections": "8-15 sections (vs 3-6)"
+      }
+    },
+    "analysis_mode": {
+      "step_1_fetch": "WebFetch [domain]/llms.txt and [domain]/llms-full.txt. Record HTTP status (200=exists, 404=missing, 403=blocked).",
+      "step_2_validate_format": {
+        "elements_to_check": [
+          {
+            "element": "H1 Title",
+            "severity_if_missing": "Critical"
+          },
+          {
+            "element": "Blockquote description",
+            "severity_if_missing": "High"
+          },
+          {
+            "element": "At least one H2 section",
+            "severity_if_missing": "Critical"
+          },
+          {
+            "element": "Page entries with URLs (5+)",
+            "severity_if_missing": "High"
+          },
+          {
+            "element": "URLs are absolute",
+            "severity_if_missing": "High"
+          },
+          {
+            "element": "URLs are valid (return 200)",
+            "severity_if_missing": "Medium"
+          },
+          {
+            "element": "Descriptions present on entries",
+            "severity_if_missing": "Medium"
+          },
+          {
+            "element": "Key Facts section",
+            "severity_if_missing": "Medium"
+          },
+          {
+            "element": "Contact section",
+            "severity_if_missing": "Low"
+          },
+          {
+            "element": "Reasonable length (30-200 lines)",
+            "severity_if_missing": "Low"
+          },
+          {
+            "element": "No broken Markdown",
+            "severity_if_missing": "Medium"
+          }
+        ]
+      },
+      "step_3_assess_quality": {
+        "completeness": "Covers all major site sections? Most important pages included? Key Facts present?",
+        "accuracy": "Descriptions accurate? URLs valid? Key Facts verifiable?",
+        "usefulness": "Would an AI understand the site from this file alone? Descriptions specific enough?"
+      },
+      "step_4_compare_against_site": "Crawl navigation and sitemap. Identify important pages not in llms.txt. Check for broken URLs. Verify description matches homepage. Flag stale entries."
+    },
+    "generation_mode": {
+      "step_1_site_discovery": "Fetch homepage: extract site name, description, navigation links, footer links. Fetch sitemap. Identify business type.",
+      "step_2_page_prioritization": {
+        "always_include": [
+          "Homepage",
+          "About or Company page",
+          "Pricing page",
+          "Primary product or service pages (3-5)",
+          "Contact page",
+          "Documentation landing page"
+        ],
+        "include_if_quality": [
+          "Top blog posts",
+          "Case studies",
+          "Key resource or guide pages",
+          "FAQ page",
+          "Careers page"
+        ],
+        "skip": [
+          "Thin category or tag pages",
+          "Pagination pages",
+          "Login or signup pages",
+          "Legal boilerplate",
+          "Duplicate content",
+          "Minimal unique content pages"
+        ]
+      },
+      "step_3_write_descriptions": "10-30 words, factual (not marketing), states what information is on the page, mentions specific topics, data, or features",
+      "step_4_compile_key_facts": "Year founded, founder names, headquarters, employees, customers, key products, industry, notable clients, key differentiators, recent milestones",
+      "step_5_assemble_file": "Fill business_template below. It is the only template in this edition, use it for every business type and adapt the section names to the site.",
+      "business_template": "# {Business Name}\n\n> {One sentence factual description of what the business does, who it serves, and where. Under 200 characters.}\n\n## About\n\n- [About {Business Name}]({url}/about): Company background, founding story, team, and mission.\n- [Contact]({url}/contact): Phone, email, address, and business hours.\n\n## Services\n\n- [{Service 1}]({url}/service-1): What the service covers, who it is for, and how it is delivered.\n- [{Service 2}]({url}/service-2): What the service covers, who it is for, and how it is delivered.\n- [{Service 3}]({url}/service-3): What the service covers, who it is for, and how it is delivered.\n- [Pricing]({url}/pricing): Package tiers, what is included, and how billing works.\n\n## Resources\n\n- [{Guide or article 1}]({url}/blog/post-1): Topic covered and the specific data or steps included.\n- [{Guide or article 2}]({url}/blog/post-2): Topic covered and the specific data or steps included.\n- [FAQ]({url}/faq): Common questions about services, delivery, and support.\n\n## Key Facts\n\n- Founded: {year}\n- Headquarters: {city, country}\n- Industry: {industry classification}\n- Employees: {count or range}\n- Customers served: {count or range}\n- Key differentiators: {what makes this business distinct, be specific and verifiable}\n\n## Contact\n\n- Website: {url}\n- Email: {email}\n- Phone: {phone}\n- Address: {full postal address}\n",
+      "step_6_validate": "Verify all URLs reachable, 10-30 entries, no description exceeds 50 words, 50-150 lines, clean Markdown"
+    },
+    "output": {
+      "analysis_mode_filename": "{domain}_llmstxt_{YYYY-MM-DD}.md",
+      "analysis_sections": [
+        "Format Validation table",
+        "Quality assessment across completeness, accuracy, and usefulness",
+        "Missing Pages list",
+        "Improvement Recommendations",
+        "Suggested Updated llms.txt (if needed)"
+      ],
+      "generation_mode": "Output complete llms.txt file content plus {domain}_llmstxt_{YYYY-MM-DD}.md report"
+    },
+    "best_practices": [
+      "Update regularly, monthly for active blogs, quarterly for stable sites",
+      "Lead with strongest content, first entries should be most authoritative",
+      "Be specific in descriptions, write '3,000-word guide with code examples' not 'React guide'",
+      "Include differentiators, unique data, original research, exclusive features",
+      "Keep it concise, scannable in under 60 seconds",
+      "Use absolute URLs, always full https://",
+      "Test after deployment, verify accessible with no redirects",
+      "Coordinate with robots.txt, pages in llms.txt should not be blocked",
+      "Mirror site structure, sections correspond to main navigation",
+      "Avoid sensitive pages, no internal tools, admin panels, or sensitive info"
+    ]
+  }
+}

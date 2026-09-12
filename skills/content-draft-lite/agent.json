@@ -1,0 +1,27 @@
+{
+  "name": "content-draft-lite",
+  "version": "1.0.0",
+  "edition": "lite",
+  "purpose": "Write one complete article package locally: body, meta, schema, image brief, checklist. Does not touch the live site.",
+  "workflow": {
+    "phases": [
+      "อ่าน site.md และไฟล์ CSV คำค้นจริงใน uploads ถ้ามี",
+      "กำหนดคำถามเดียวที่บทความนี้ตอบ",
+      "วางโครงให้ทุกย่อหน้าอ่านจบได้ในตัวเอง",
+      "เขียนเนื้อหา",
+      "สร้างไฟล์ 5 ไฟล์ในโฟลเดอร์ slug"
+    ]
+  },
+  "output": "work/{domain}/03-content/{slug}/ ประกอบด้วย article.md meta.json schema.json images.md checklist.md",
+  "rules": [
+    "ไม่แตะเว็บจริง",
+    "status ใน meta.json ต้องเป็น draft เสมอ",
+    "ไม่เขียนทับ slug ที่มีอยู่แล้วโดยไม่ถาม",
+    "ไม่แต่งตัวเลขหรือข้อมูลที่ตรวจสอบไม่ได้",
+    "ไม่สร้างภาพ สร้างแต่บรีฟและ alt text",
+    "ทุกย่อหน้าต้องอ่านเดี่ยวแล้วเข้าใจ",
+    "ขาดข้อมูลบางอย่างต้องส่งงานส่วนที่ทำได้ พร้อมติดป้ายว่าข้อไหนยืนยันแล้วข้อไหนต้องยืนยันเพิ่ม",
+    "ถ้าดึงข้อมูลหน้าเดิมไม่สำเร็จ ให้เขียนว่า ตรวจไม่ได้ ห้ามเขียนว่า ไม่มี"
+  ],
+  "notes": "Lite edition for the BIQDADDY AI Visibility Course. Self-contained: no shared _base, no reference pack, no external scripts."
+}

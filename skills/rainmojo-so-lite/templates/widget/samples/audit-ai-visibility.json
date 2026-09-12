@@ -1,0 +1,90 @@
+{
+  "schema": "rainmojo.tier1.summary/1",
+  "mode": "audit",
+  "meta": {
+    "skill": "aiso-ai-visibility",
+    "client": "Demo Aesthetic Clinic",
+    "domain": "demo-aesthetic.example.invalid",
+    "generated_at": "2026-09-11T14:30:00+07:00",
+    "lang": "en",
+    "run_id": "20260911-1430",
+    "brand": { "primary": "#B5697F", "accent": "#C8A24B", "accent_ink": "#9A7A2E" }
+  },
+  "headline": {
+    "kicker": "AI visibility report",
+    "title": "AI visibility report for Demo Aesthetic Clinic",
+    "subtitle": "demo-aesthetic.example.invalid"
+  },
+  "score": {
+    "value": 46,
+    "max": 100,
+    "status": "warning",
+    "status_label": "Visible but fragile",
+    "grade": "C",
+    "delta": 6,
+    "history": [31, 34, 38, 40, 46]
+  },
+  "summary": "The clinic is cited for its own brand name on ChatGPT and Perplexity but is absent from every comparison and best-of query in its category. Crawler access is open for the six documented search crawlers, while the answer blocks that AI engines lift are missing on all twelve service pages.",
+  "dimensions": [
+    { "key": "presence", "label": "Presence", "value": 7.5, "max": 10, "status": "ok", "tooltip": "Share of tracked queries where the brand appears at all", "history": [5, 6, 6.5, 7, 7.5] },
+    { "key": "position", "label": "Position", "value": 4.0, "max": 10, "status": "warning", "tooltip": "Average citation rank when the brand appears" },
+    { "key": "accuracy", "label": "Accuracy", "value": 8.0, "max": 10, "status": "ok", "tooltip": "Facts AI engines state about the brand match the site" },
+    { "key": "completeness", "label": "Completeness", "value": 3.5, "max": 10, "status": "critical", "tooltip": "How much of the service range AI answers actually mention" },
+    { "key": "sentiment", "label": "Sentiment", "value": 6.5, "max": 10, "status": "warning", "tooltip": "Tone of AI answers that mention the brand" },
+    { "key": "consistency", "label": "Consistency", "value": 5.0, "max": 10, "status": "warning", "tooltip": "Same answer across engines and repeated runs" }
+  ],
+  "platforms": [
+    { "id": "google_aio", "label": "Google AI Overviews", "score": 28, "status": "critical", "crawler_access": "allowed", "note": "No FAQ blocks, no author byline" },
+    { "id": "gemini", "label": "Gemini", "score": 32, "status": "critical", "crawler_access": "allowed", "note": "Knowledge Graph entity incomplete" },
+    { "id": "chatgpt", "label": "ChatGPT", "score": 42, "status": "warning", "crawler_access": "allowed", "note": "Bing indexed, no IndexNow" },
+    { "id": "perplexity", "label": "Perplexity", "score": 45, "status": "warning", "crawler_access": "allowed", "note": "Strongest quick win" },
+    { "id": "claude", "label": "Claude", "score": 30, "status": "critical", "crawler_access": "allowed", "note": "No definitional answer blocks" },
+    { "id": "copilot", "label": "Copilot", "score": 38, "status": "critical", "crawler_access": "allowed", "note": "Not registered in Bing WMT" },
+    { "id": "meta_ai", "label": "Meta AI", "score": 35, "status": "critical", "crawler_access": "partial", "note": "meta-webindexer not addressed in robots.txt" },
+    { "id": "apple_intelligence", "label": "Apple Intelligence", "score": 40, "status": "warning", "crawler_access": "allowed", "note": "Applebot allowed, no nosnippet conflicts" },
+    { "id": "grok", "label": "Grok", "score": 22, "status": "critical", "crawler_access": "unverifiable", "note": "No X presence, crawler undocumented" },
+    { "id": "deepseek", "label": "DeepSeek", "score": null, "status": "info", "crawler_access": "unverifiable", "note": "Crawler undocumented, scored on content signals only next run" },
+    { "id": "qwen", "label": "Qwen", "score": 26, "status": "critical", "crawler_access": "unverifiable", "note": "No Chinese or bilingual pages" }
+  ],
+  "query_matrix": [
+    { "query": "best aesthetic clinic in Bangkok", "platform": "ChatGPT", "cited": "no", "position": "not_found", "sentiment": "neutral" },
+    { "query": "Demo Aesthetic Clinic reviews", "platform": "Perplexity", "cited": "yes", "position": "#1", "sentiment": "positive" },
+    { "query": "is Demo Aesthetic Clinic legit", "platform": "ChatGPT", "cited": "yes", "position": "#2", "sentiment": "mixed" },
+    { "query": "laser skin treatment cost Bangkok", "platform": "Google AIO", "cited": "context", "position": "displaced", "sentiment": "neutral" },
+    { "query": "alternatives to Demo Aesthetic Clinic", "platform": "Perplexity", "cited": "partial", "position": "#3", "sentiment": "negative" }
+  ],
+  "competitors": [
+    { "name": "Demo Aesthetic Clinic", "tagline": "Aesthetic and laser", "score": 46, "max": 100, "is_client": true },
+    { "name": "Rival Clinic A", "tagline": "Dermatology chain", "score": 71, "max": 100 },
+    { "name": "Rival Clinic B", "tagline": "Laser specialists", "score": 58, "max": 100 },
+    { "name": "Rival Clinic C", "tagline": "Boutique clinic", "score": 33, "max": 100 }
+  ],
+  "key_risk": {
+    "severity": "critical",
+    "title": "Key risk: competitors own every comparison query",
+    "body": "Across 18 tracked comparison and best-of prompts the clinic appears in 2. Rival Clinic A is cited in 14, largely from its comparison tables and dated price pages. Until the service pages carry answer blocks and current prices, AI engines will keep recommending competitors for the highest-intent queries."
+  },
+  "actions": [
+    { "title": "Publish a definitional answer block on all 12 service pages", "body": "One short paragraph under each H1 that states what the treatment is, who it is for, and the price range, followed by a comparison table.", "impact": "high", "effort": "medium", "owner": "Content", "eta": "2 weeks" },
+    { "title": "Add Organization, MedicalClinic and FAQPage JSON-LD", "body": "One @graph with @id cross references and sameAs to Facebook, Instagram, Google Business Profile and Wikidata.", "impact": "high", "effort": "low", "owner": "Dev", "eta": "1 week" },
+    { "title": "Register Bing Webmaster Tools and IndexNow", "body": "ChatGPT and Copilot ground on the Bing index. Submit the sitemap and enable IndexNow so refreshed prices reach the index within hours.", "impact": "high", "effort": "low", "owner": "Dev", "eta": "3 days" },
+    { "title": "Open access for meta-webindexer and confirm Applebot", "body": "Add explicit Allow rules for the documented search crawlers and keep training crawlers as a separate decision.", "impact": "medium", "effort": "low", "owner": "Dev", "eta": "1 day" }
+  ],
+  "transparency": {
+    "crawled_at": "2026-09-11T13:55:00+07:00",
+    "user_agents": ["RainmojoBot/1.0", "GPTBot/1.4 (robots.txt simulation)"],
+    "guidelines": ["Google Search Quality Rater Guidelines 2025", "GEO benchmark (KDD 2024)"],
+    "could_not_verify": ["Grok crawler access (xAI publishes no crawler documentation)", "DeepSeek crawler access (no documented user agent)", "Qwen crawler access (community-observed token only)"],
+    "sources": ["robots.txt", "12 service pages", "Bing and Google SERP samples for 18 prompts"]
+  },
+  "handoff": {
+    "tier2_path": "clients/demo-aesthetic.example.invalid/reports/seo-audits/demo-aesthetic.example.invalid_report_2026-09-11.html",
+    "tier2_label": "Open the full 19-tab audit report",
+    "formats": ["HTML", "PDF", "Markdown"]
+  },
+  "next_steps": [
+    { "label": "Generate the JSON-LD bundle", "prompt": "/rainmojo-so-lite:seo-schema-lite demo-aesthetic.example.invalid" },
+    { "label": "Write the 12 answer blocks", "prompt": "/rainmojo-so-lite:aiso-citability-lite demo-aesthetic.example.invalid --rewrite" },
+    { "label": "Compare against last month", "prompt": "/rainmojo-so-lite:compare-lite demo-aesthetic.example.invalid" }
+  ]
+}

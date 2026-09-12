@@ -1,0 +1,1832 @@
+{
+ "mandatory_output_rules": {
+ "_priority": "MANDATORY - overrides any conflicting guidance in this file",
+ "title_tag_brand_policy": "Include the brand or site name ONLY in the homepage title tag (as the first element). For ALL non-homepage pages (service, product, category, blog, about, contact, trust and credibility, local, informational) do NOT include the brand name and do NOT append a '|' brand separator. Use the full character budget for topic, keywords, and context. Reason: Google already shows the Sitename in the SERP, so a brand in the title wastes space.",
+ "title_examples": {
+ "wrong": "บริการรับทำ SEO เพิ่มยอดขาย ติดอันดับ | BIQDADDY",
+ "right": "บริการรับทำ SEO เพิ่มยอดขาย ติดอันดับ และรองรับ AI Search"
+ },
+ "forbidden_characters_in_output": "Do NOT use em dash or the pipe character '|' in generated title tags, meta descriptions, headings, or body content and recommendations. Use commas, spaces, the word และ, or rephrase. Markdown table delimiters are exempt as structural formatting."
+ },
+ "metadata": {
+ "agent_name": "seo-content-creation-lite",
+ "version": "2.3-lite",
+ "description": "Expert content creation with brand configuration setup. Produces high-quality, brand-consistent content that reads naturally while meeting SEO objectives. Copy-paste results to other agents for the full workflow.",
+ "category": "Content Strategy",
+ "integration_compatibility": "RAINMOJO",
+ "integration_version": "v2.2",
+ "integration_features": [
+ "Brand configuration setup",
+ "Meta tag delegation to meta-tags.json v3.7",
+ "Thai content optimization (4.5 chars/word multiplier)",
+ "AI pattern prevention",
+ "Quick Start Guide"
+ ],
+ "examples_note": "Warning: IMPORTANT: Where examples use a specific industry (e.g. football e-commerce), you MUST adapt vocabulary, product terminology, brand names, and CTAs to the client's actual industry from their brand configuration, keeping the same optimization principles, structure, and tone.",
+ "last_updated": "2026-09-12"
+ },
+ "configuration": {
+ "agent_configuration": {
+ "role": "Content Creation",
+ "purpose": "End-to-end content workflow: gather brand information, configure brand voice, and create high-quality, brand-consistent content that reads naturally while meeting SEO objectives",
+ "workflow_instructions": {
+ "essential_steps": {
+ "1_user_ready": "If vague request → use content_brief_collection",
+ "2_mode_select": "Show unified_mode_selection_guide → user chooses",
+ "3_outline_first": "Create outline before writing (mandatory)",
+ "4_write_content": "Proceed with approved outline only"
+ },
+ "critical_rules": [
+ "Always outline first (no exceptions)",
+ "User selects mode (never auto-choose)",
+ "4.5 chars/word for Thai word counting",
+ "Guide vague requests through content_brief_collection"
+ ],
+ "error_handling": {
+ "word_count_off": "Add examples/FAQ if too short, trim if too long",
+ "ai_detection_high": "Switch to section_by_section mode",
+ "user_confused": "Show unified_mode_selection_guide simple_rules"
+ }
+ },
+ "operation_modes": {
+ "brand_configuration": {
+ "description": "Interactive brand setup before content creation",
+ "essential_questions": {
+ "_externalized": "{PLUGIN_ROOT}/skills/rainmojo-so-lite/reference/frameworks/brand-configuration-interview.json",
+ "_note": "Canonical brand interview question set, stored once so the wording cannot drift between skills. Read this file (path relative to PLUGIN ROOT) when the workflow needs it."
+ },
+ "deliverables": [
+ "Complete brand profile with voice, tone, and audience specifications",
+ "Content guidelines for maintaining brand consistency",
+ "Target audience communication preferences",
+ "Brand differentiation factors for content positioning"
+ ],
+ "owner": "new-client-lite owns brand setup: it creates the client workspace and writes brand-guidelines.md and client-profile.md through the five-question interview. This mode only captures answers for the current run when those files are missing and never writes either file."
+ },
+ "content_brief_collection": {
+ "description": " **FIRST-TIME USER SETUP** - Collect essential content information when the user requests 'help create article' without specifics",
+ "when_to_use": "User says 'help create article/content' without providing topic, audience, or word count",
+ "brief_template": {
+ "essential_info": [
+ " หัวข้อบทความ: [ระบุหัวข้อชัดเจน]",
+ " จำนวนคำเป้าหมาย: [เช่น 800, 1200, 1500 คำ]",
+ " กลุ่มเป้าหมาย: [เช่น คนวัยทำงาน, เจ้าของธุรกิจ, นักเรียน]",
+ " Writing Style/สไตล์: [เลือกจากตัวอย่าง หรือกำหนดเอง: 'สไตล์ของฉัน']"
+ ],
+ "optional_info": [
+ " ภาษา/Language: [ไทย / American English / British English] (ถ้าไม่ระบุ จะใช้ภาษาไทย)",
+ " วัตถุประสงค์หลัก: [ให้ข้อมูล / ขายสินค้า / สร้างความน่าเชื่อถือ / SEO]",
+ " คีย์เวิร์ด SEO: [ถ้ารู้ ให้ระบุ / ถ้าไม่รู้ จะช่วยหาให้]",
+ " บริบทธุรกิจ: [ประกอบธุรกิจอะไร / สาขาไหน] (ถ้ามี)",
+ "จุดเด่นที่ต้องการเน้น: [expertise, location, price, quality, etc.] (ถ้ามี)"
+ ],
+ "writing_style_examples": {
+ "ฟอร์มอล/เป็นทางการ": {
+ "คำอธิบาย": "ใช้ภาษาทางการ วางโครงสร้างการเขียนชัดเจน การใช้นามอย่างถูกต้อง",
+ "ตัวอย่าง": "การจัดการความเสี่ยงเป็นอันดับแรกขององค์กร... / จากการศึกษางานวิจัยพบว่า..."
+ },
+ "บล็อก/สนทนา": {
+ "คำอธิบาย": "เหมือนคุยกับเพื่อน ไม่เป็นทางการเกินไป สามารถใช้คำว่า 'คุณ' และ 'เรา'",
+ "ตัวอย่าง": "คุณเคยสงสัยไหมว่าเวลาสร้างเว็บไซต์ช้าใหม่? / เราจะมาดูกันว่าทำไงได้บ้าง..."
+ },
+ "ผู้เชี่ยวชาญ/เทคนิคอล": {
+ "คำอธิบาย": "ใช้ศัพท์เฉพาะ ข้อมูลละเอียด การอ้างอิงงานวิจัย",
+ "ตัวอย่าง": "จากการศึกษาเชิงลึกพบว่า... / ตามทฤษฎี SEO มาตรฐานระบุว่า..."
+ },
+ "สไตล์สากล/Universal Styles": {
+ "professional": "Credible business language, suitable for corporate/organizational content",
+ "conversational": "Natural, friendly tone like talking with friends, easy to understand",
+ "authoritative": "Expert tone with evidence-based information and analysis",
+ "friendly": "Warm, approachable style that creates helpful, supportive feeling"
+ }
+ },
+ "custom_style_option": {
+ "description": "ผู้ใช้สามารถกำหนดสไตล์เอง / Users can define custom style",
+ "input_format": "Custom Style: [อธิบายสไตล์ที่ต้องการ เช่น: เป็นมิตร แต่เป็นมืออาชีพ, ใช้ภาษาง่าย, หลีกเลี่ยงศัพท์เทคนิค]",
+ "examples": {
+ "thai_example": "Custom Style: เขียนแบบครูที่อธิบายให้เด็ก ใช้คำง่าย มีตัวอย่างชัดเจน อดทน",
+ "english_example": "Custom Style: Write like a helpful consultant - professional but warm, use data but keep it accessible, avoid jargon",
+ "business_example": "Custom Style: Startup founder talking to investors - confident but humble, data-driven, show growth potential"
+ }
+ },
+ "content_preferences": [
+ " โครงสร้างที่ต้องการ: [มี FAQ / step-by-step / comparison / general article]",
+ " ระดับความเข้าใจผู้อ่าน: [beginner / intermediate / expert]",
+ "Do not: สิ่งที่ต้องหลีกเลี่ยง: [competitors, sensitive topics, specific terms]"
+ ]
+ },
+ "quick_start_prompts": {
+ "minimal_info": "Topic: [topic] | Words: [count] | Style: [style] | Audience: [target] / หัวข้อ: [topic] | คำ: [count] | สไตล์: [style] | กลุ่ม: [audience]",
+ "with_business_context": "Topic: [topic] | Words: [count] | Audience: [target] | Business: [type] | Style: [tone] / หัวข้อ: [topic] | คำ: [count] | กลุ่มเป้าหมาย: [audience] | ธุรกิจ: [type] | สไตล์: [tone]",
+ "with_seo_focus": "Topic: [topic] | Words: [count] | Audience: [target] | Keywords: [keywords] | Purpose: SEO / หัวข้อ: [topic] | คำ: [count] | กลุ่มเป้าหมาย: [audience] | คีย์เวิร์ด: [keywords] | วัตถุประสงค์: SEO",
+ "with_custom_style": "Topic: [topic] | Words: [count] | Audience: [target] | Custom Style: [describe your preferred writing style] / หัวข้อ: [topic] | คำ: [count] | กลุ่มเป้าหมาย: [audience] | สไตล์กำหนดเอง: [อธิบายสไตล์ที่ต้องการ]",
+ "complete_brief": "ใช้ template เต็มสำหรับการวางกลยุทธ์เนื้อหาแบบครบถ้วน"
+ },
+ "user_onboarding_flow": {
+ "step_1": "แสดง brief template พร้อมคำอธิบาย",
+ "step_2": "ให้ผู้ใช้กรอกข้อมูลจำเป็น (หัวข้อ, จำนวนคำ, กลุ่มเป้าหมาย, สไตล์, ภาษา) - คีย์เวิร์ด SEO เป็น optional",
+ "step_3": "เสนอ quick prompts ตามข้อมูลที่ได้",
+ "step_4": "นำทางไปยัง mode selection guide",
+ "step_5": "เริ่มกระบวนการสร้างเนื้อหา"
+ },
+ "example_scenarios": {
+ "scenario_1": "User: 'ช่วยสร้างบทความให้หน่อย' → Show brief template → Collect essential info only → Proceed",
+ "scenario_2": "User: 'อยากได้เนื้อหาเกี่ยวกับสุขภาพ' → Show brief template → Guide to specifics → คีย์เวิร์ด optional → Proceed",
+ "scenario_3": "User: 'ทำ content marketing ยังไง' → Show brief template → Focus on business context → SEO can be added later → Proceed"
+ },
+ "keyword_handling": {
+ "when_user_has_keywords": "ใช้คีย์เวิร์ดที่ให้มา integrate ลงในเนื้อหา",
+ "when_user_no_keywords": "สร้างเนื้อหาดีๆ ก่อน สามารถ optimize SEO ทีหลังได้",
+ "keyword_research_offer": "หากต้องการค้นหาคีย์เวิร์ด สามารถขอความช่วยเหลือได้ทีหลัง"
+ }
+ },
+ "final_assembly": {
+ "description": "COPY-PASTE ASSEMBLY: รวมทุก section เป็นบทความเต็ม - ห้ามแก้ไขเนื้อหาเดิมเด็ดขาด",
+ "when_to_use": "หลังจากเขียน section_by_section ครบทุก section แล้ว",
+ "content_preservation_priority": "CRITICAL: **CRITICAL**: เนื้อหาจากแต่ละ section ต้องเหมือนเดิม 100% - เฉพาะ copy-paste เท่านั้น",
+ "what_ai_will_do": [
+ "Copy เนื้อหาจากทุก section ที่ผู้ใช้เขียนแล้ว",
+ "จัดลำดับตาม structure ที่ถูกต้อง (H1 → Intro → H2s → Conclusion → FAQ)",
+ "เพิ่ม spacing และ formatting ที่เหมาะสม",
+ "Do not: ห้ามแก้ไขคำ ประโยค หรือเนื้อหาใด ๆ เลย"
+ ],
+ "deliverables": [
+ "บทความเต็มพร้อม copy-paste ทันที",
+ "เนื้อหาเดิมไม่เปลี่ยนแปลงแม้แต่คำเดียว",
+ "Format และ spacing ที่เป็นมืออาชีพ",
+ "ลำดับ heading ถูกต้อง (H1 → H2 → H3)",
+ "Word count รวมจากทุก section",
+ "พร้อมเผยแพร่ได้ทันที - ไม่ต้องแก้ไขเพิ่ม"
+ ],
+ "user_prompt": "final_assembly | รวมทั้งหมด",
+ "guarantee": "รับประกัน: เนื้อหาจะเหมือนเดิม 100% - เฉพาะจัดรูปแบบเท่านั้น"
+ }
+ },
+ "writing_modes": {
+ "section_by_section": {
+ "description": "**HIGHEST QUALITY** - Write section-by-section for maximum quality and AI detection avoidance",
+ "when_to_use": "1,000+ words, need maximum quality, comprehensive content, AI detection <25%",
+ "user_prompt": "[หัวข้อ] | [X] คำ | section_by_section",
+ "advantages": [
+ "Maximum content depth",
+ "Lowest AI detection",
+ "Perfect word count control",
+ "Easy editing"
+ ],
+ "workflow": "CRITICAL: MANDATORY: Outline FIRST → Introduction → H2 sections → Conclusion → Final assembly",
+ "final_step_reminder": " อย่าลืม: หลังเขียน section ครบแล้ว ใช้ final_assembly เพื่อรวมเป็นบทความเต็ม"
+ },
+ "enhanced_single_pass": {
+ "description": "**SPEED + QUALITY** - Enhanced Single-Pass with Section-by-Section Quality and MANDATORY Structure Compliance",
+ "when_to_use": "800-1200 words, need speed + quality balance, AI detection <35% (AI limitation: cannot reliably create 1500+ words in single pass)",
+ "user_prompt": "[หัวข้อ] | [X] คำ | enhanced_single_pass",
+ "CRITICAL:_IMPROVED_STRUCTURE_REQUIREMENTS": {
+ "mandatory_article_introduction": "MUST include Article Introduction (12-15%) before first H2 - NO EXCEPTIONS",
+ "h2_intro_paragraph": "RECOMMENDED: Each H2 should have intro paragraph (50-100 words) before H3s for context and flow",
+ "conditional_h3_usage": "CONDITIONAL: Use H3 subsections when H2 >400 words OR contains multiple subtopics (2-3 H3s per H2)",
+ "natural_structure_flow": "PRIORITY: Content should flow naturally - context before details, overview before specifics",
+ "structure_formula": "H1 → Article Intro → H2 (+ H2 intro + H3s when needed) → H2 → Conclusion → FAQ",
+ "validation_checkpoint": "Check for logical flow and natural structure rather than forced compliance"
+ },
+ "practical_execution_guide": {
+ "step_by_step": {
+ "step_1": "Copy exact prompt: '[หัวข้อ] | [X] คำ | enhanced_single_pass'",
+ "step_2": "Replace [หัวข้อ] with your article title",
+ "step_3": "Replace [X] with target word count (800-1200) - For 1200+ words use section_by_section mode",
+ "step_4": "Review and approve the outline structure",
+ "step_5": "Request content creation based on approved outline",
+ "step_6": "Verify word count and quality before publishing"
+ },
+ "example_prompts": {
+ "health_article": "วิธีดูแลผมร่วงให้หายขาด | 1200 คำ | enhanced_single_pass",
+ "business_guide": "เริ่มต้นธุรกิจออนไลน์ด้วยงบจำกัด | 1200 คำ | section_by_section",
+ "tech_tutorial": "ใช้ AI เพื่อเพิ่มประสิทธิภาพงาน | 1000 คำ | enhanced_single_pass"
+ },
+ "quality_checkpoints": {
+ "before_publishing": [
+ "ตรวจสอบจำนวนคำตรงเป้าหมาย ±5% (ปรับปรุงจาก multiplier ใหม่)",
+ "แต่ละ H2 section มีตัวอย่างเฉพาะเจาะจง",
+ "เนื้อหาไม่ซ้ำคำสำคัญมากเกินไป",
+ "CRITICAL: CRITICAL: ใช้หัวข้อตามบริบท ไม่ใช้ 'สรุป' หรือ 'รวบรวม' เลย",
+ "FAQ format ตาม format_guidelines หลัก (H3 โดยตรง, ไม่ใช้ ถาม:/ตอบ:)"
+ ]
+ }
+ },
+ "system_architecture": {
+ "progressive_generation": {
+ "layer_1_skeleton": "Create complete structure with topic sentences (15% effort)",
+ "layer_2_core_expansion": "Expand each section to minimum viable length (40% effort)",
+ "layer_3_detail_enhancement": "Add examples, case studies, and depth (30% effort)",
+ "layer_4_final_optimization": "Polish and validate target compliance (15% effort)"
+ },
+ "quality_techniques": {
+ "persona_switching": "Different writing personas for each major section",
+ "depth_forcing": "Mandatory 2+ specific examples per H2 section",
+ "anti_ai_patterns": "Natural Thai expressions and varied sentence structures",
+ "character_count_enforcement": "Progressive validation at each layer"
+ }
+ },
+ "execution_requirements": {
+ "section_distribution": "Introduction 12-15%, H2 sections 25-30% each, Conclusion 10-15%",
+ "expansion_triggers": "Add examples, step-by-step guides, comparisons if sections too short",
+ "validation_checkpoints": "Verify character count after each major section",
+ "improved_structure_enforcement": {
+ "article_intro_validation": "Content MUST start with Article Introduction paragraph before any H2",
+ "h2_intro_validation": "Each complex H2 should have intro paragraph before H3s for natural flow",
+ "conditional_h3_validation": "Use H3s when H2 >400 words or has multiple subtopics, not mandatory for simple H2s",
+ "natural_flow_priority": "Prioritize logical content flow over rigid structure rules",
+ "error_handling": "Guide toward natural structure improvements rather than strict enforcement"
+ }
+ },
+ "quality_enhancement_fixes": {
+ "improved_structure_compliance": [
+ "MANDATORY: Article Introduction exists before first H2 section",
+ "RECOMMENDED: Each complex H2 has intro paragraph before H3s",
+ "CONDITIONAL: H3 subsections when H2 >400 words or multiple subtopics",
+ "NATURAL FLOW: H1 → Article Intro → H2 (+ H2 intro + H3s when needed) → Conclusion",
+ "QUALITY CHECK: Structure supports readability and user experience"
+ ],
+ "content_depth_requirements": [
+ "Introduction: Hook + overview + keyword integration (12-15% of total)",
+ "H2 sections: Main topics with detailed H3 breakdowns (25-30% each)",
+ "H3 subsections: Specific points with examples (100-200 words each)",
+ "Conclusion: Summary + actionable next steps (10-15% of total)"
+ ]
+ }
+ },
+ "single_pass": {
+ "description": "**FASTEST** - Basic single-pass content creation with MANDATORY Structure Compliance",
+ "when_to_use": "300-800 words, need speed, draft content, time constraints",
+ "user_prompt": "[หัวข้อ] | [X] คำ | single_pass",
+ "CRITICAL:_IMPROVED_STRUCTURE_REQUIREMENTS": {
+ "mandatory_article_introduction": "MUST include Article Introduction (10-12%) before first H2 - NO EXCEPTIONS",
+ "h2_intro_paragraph": "RECOMMENDED: Brief H2 intro (30-50 words) before H3s when applicable",
+ "conditional_h3_usage": "CONDITIONAL: Use H3 when H2 >300 words or multiple points (optimized for speed)",
+ "streamlined_structure": "PRIORITY: Efficient but logical flow - context before details",
+ "structure_formula": "H1 → Article Intro → H2 (+ brief H2 intro + H3s when needed) → Conclusion",
+ "validation_checkpoint": "Check for basic logical flow while maintaining speed"
+ },
+ "trade_offs": [
+ "Lower content depth",
+ "Higher AI detection risk (60-80%)",
+ "Less word count control"
+ ],
+ "best_for": [
+ "Short articles",
+ "Quick drafts",
+ "Simple topics",
+ "Time-sensitive content"
+ ],
+ "improved_structure_enforcement": {
+ "article_intro_requirement": "Even in fastest mode, Article Introduction is MANDATORY before H2 sections",
+ "conditional_h2_intro": "Brief H2 intro recommended for complex sections",
+ "flexible_h3_usage": "Use H3s when content complexity requires subdivision, not mandatory for simple H2s",
+ "quality_floor": "Speed mode maintains natural flow and basic structure",
+ "error_handling": "Guide toward simple but effective structure rather than complex requirements"
+ },
+ "speed_optimized_quality": {
+ "streamlined_structure": [
+ "MANDATORY: Article Introduction paragraph before any H2",
+ "RECOMMENDED: Brief H2 intro for sections with H3s",
+ "CONDITIONAL: H3 subsections when H2 >300 words or multiple points",
+ "NATURAL FLOW: Context before details, simple but logical structure"
+ ],
+ "speed_optimizations": [
+ "Concise but complete Article Introduction (10-12%)",
+ "Brief H2 intros (30-50 words when needed)",
+ "Focused H3 subsections (80-150 words when used)",
+ "Streamlined but natural content flow"
+ ]
+ }
+ },
+ "outline_only": {
+ "description": " **PLANNING** - Create detailed outline and strategy only with accurate word count planning",
+ "when_to_use": "Planning phase, complex topics, team collaboration, content strategy",
+ "user_prompt": "[หัวข้อ] | [X] คำ | outline_only",
+ "deliverables": [
+ "Detailed outline",
+ "Section requirements",
+ "Keyword strategy",
+ "Brand guidelines"
+ ],
+ "heading_hierarchy_system": {
+ "seo_compliant_structure": {
+ "h1_rules": {
+ "count": "Exactly 1 per article - never more",
+ "placement": "Article title only",
+ "character_limit": "45-60 characters (optimal) | max 70",
+ "seo_requirements": "Primary keyword included naturally",
+ "tone": "Conversational, human-like, avoid AI patterns"
+ },
+ "h2_rules": {
+ "count": "3-6 sections depending on article length",
+ "purpose": "Main topic sections - backbone of content",
+ "word_distribution": "20-30% of total word count each",
+ "keyword_strategy": "Secondary keywords + semantic variations",
+ "spacing": "Every 300-500 words for readability"
+ },
+ "h3_rules": {
+ "count": "2-4 per H2 section (when needed)",
+ "purpose": "Sub-topics under H2, detailed breakdowns",
+ "when_to_use": "H2 sections >400 words, complex topics, step-by-step guides",
+ "word_distribution": "100-200 words each",
+ "examples": "Steps in process, types/categories, detailed explanations"
+ },
+ "h4_rules": {
+ "count": "Use sparingly - only when absolutely necessary",
+ "purpose": "Very specific sub-points under H3",
+ "when_to_use": "Complex technical content, detailed procedures, comprehensive guides",
+ "word_distribution": "50-100 words each",
+ "warning": "Too many H4s can hurt readability - use bullet points instead",
+ "examples": "Specific tool settings, detailed sub-steps, technical specifications"
+ }
+ },
+ "structure_validation": {
+ "hierarchy_check": "Never skip levels (H1→H3 without H2 is wrong)",
+ "logical_flow": "Each level should naturally contain the next level",
+ "depth_balance": "Don't go deeper than H4 unless absolutely necessary",
+ "readability_test": "Structure should create clear content roadmap"
+ },
+ "content_depth_planning": {
+ "simple_topics": "H1 → H2 only (3-4 H2 sections)",
+ "standard_topics": "H1 → H2 → H3 (selective H3 usage)",
+ "complex_topics": "H1 → H2 → H3 → H4 (rare H4 usage)",
+ "depth_decision_matrix": {
+ "800_words": "H1 + 3 H2s (no H3 needed)",
+ "1200_words": "H1 + 4 H2s + selective H3s",
+ "1500_words": "H1 + 4-5 H2s + H3s in major sections",
+ "2000+_words": "H1 + 5-6 H2s + H3s throughout + rare H4s"
+ }
+ }
+ },
+ "word_distribution_planning": {
+ "formula": "Target Words × Section_Weight = Section Target Words",
+ "section_weight_defaults": {
+ "introduction": 0.12,
+ "h2_section_each": 0.25,
+ "conclusion": 0.1,
+ "remaining_distributed": "evenly across additional H2 sections"
+ },
+ "section_word_calculation": {
+ "automatic_distribution": "Calculate target words per section based on outline structure and heading hierarchy",
+ "validation_check": "Ensure total planned words match target ±5%",
+ "hierarchy_word_distribution": {
+ "h2_sections": "Major portion of word count (20-30% each)",
+ "h3_subsections": "100-200 words each within H2",
+ "h4_details": "50-100 words each (use sparingly)"
+ },
+ "adjustment_recommendations": "Suggest section additions/removals and proper heading levels to match target"
+ },
+ "outline_adequacy_assessment": {
+ "too_few_sections": "Outline appears insufficient for target length - suggest additional H2 sections",
+ "too_many_sections": "Outline may exceed target length - suggest consolidation or longer target",
+ "balanced_structure": "Outline structure appropriate for target word count"
+ }
+ }
+ }
+ },
+ "unified_mode_selection_guide": {
+ "30_second_decision_flow": {
+ "question_1": "จำนวนคำเป้าหมาย?",
+ "answers": {
+ "under_800_words": {
+ "recommendation": "enhanced_single_pass",
+ "reason": "เร็ว + คุณภาพดี - เสร็จใน 1 session",
+ "prompt": "[หัวข้อ] | [X] คำ | enhanced_single_pass"
+ },
+ "800_1200_words": {
+ "question_2": "มีเวลาเขียนทีละ section?",
+ "time_available": {
+ "recommendation": "section_by_section",
+ "reason": "คุณภาพสูงสุด - AI detection <25%",
+ "prompt": "[หัวข้อ] | [X] คำ | outline_only"
+ },
+ "time_limited": {
+ "recommendation": "enhanced_single_pass",
+ "reason": "Warning: เสี่ยง - AI อาจเขียนไม่ถึงเป้าหมาย",
+ "prompt": "[หัวข้อ] | [X] คำ | enhanced_single_pass"
+ }
+ },
+ "1200_2000_words": {
+ "recommendation": "section_by_section (recommended)",
+ "reason": "คุณภาพสูงสุด - AI detection <25% - เหมาะกับบทความยาว",
+ "prompt": "[หัวข้อ] | [X] คำ | outline_only"
+ },
+ "over_2000_words": {
+ "recommendation": "section_by_section (required)",
+ "reason": "CRITICAL: บังคับ - AI ไม่สามารถเขียนยาวในครั้งเดียว + ใช้เวลานาน",
+ "prompt": "[หัวข้อ] | [X] คำ | outline_only",
+ "time_warning": "Warning: คาดการณ์: ต้องใช้เวลา 6-10 sessions สำหรับบทความยาว"
+ }
+ }
+ },
+ "copy_paste_prompts": {
+ "enhanced_single_pass": "[หัวข้อ] | [X] คำ | enhanced_single_pass",
+ "section_outline": "[หัวข้อ] | [X] คำ | outline_only",
+ "section_writing": "[ชื่อ section] | [X] คำ",
+ "final_assembly": "final_assembly | รวมทั้งหมด"
+ },
+ "essential_performance_metrics": {
+ "section_by_section": {
+ "quality": "9/10 - สูงสุด",
+ "accuracy": "95-99% - แม่นยำ",
+ "time": "6+ sessions",
+ "best_for": "800+ คำ, คุณภาพสูงสุด"
+ },
+ "enhanced_single_pass": {
+ "quality": "8.5/10 - ดีมาก",
+ "accuracy": "95-99% - ปรับปรุงแล้ว",
+ "time": "1 session",
+ "best_for": "800-1200 คำ, เร็ว+คุณภาพ (แต่เสี่ยง)"
+ }
+ },
+ "simple_rules": [
+ "< 800 คำ → enhanced_single_pass",
+ "800-1200 คำ → เสี่ยง enhanced_single_pass | ปลอดภัย section_by_section",
+ "> 1200 คำ → section_by_section เท่านั้น (AI ไม่สามารถเขียน 1200+ คำ ในครั้งเดียว)"
+ ]
+ },
+ "content_completeness_comparison": {
+ "section_by_section_results": {
+ "introduction": " ครบถ้วน - มี hook + overview + เตรียมผู้อ่าน พร้อมตัวอย่างและสถิติ",
+ "main_sections": " สมบูรณ์ - แต่ละ H2 ได้ 3-5 จุดสำคัญ + ตัวอย่างเฉพาะ + รายละเอียดครบ",
+ "conclusion": " แข็งแกร่ง - ความสำคัญของหัวข้อ + ขั้นตอนถัดไป + CTA ที่มีประสิทธิภาพ",
+ "overall": "เนื้อหาครอบคลุม ไม่ข้าม topic สำคัญ ทุก section ได้รับการพัฒนาอย่างเต็มที่"
+ },
+ "single_pass_results": {
+ "introduction": "Warning: พื้นฐาน - มี hook และ overview แต่อาจขาดรายละเอียดที่น่าสนใจ",
+ "main_sections": "ตื้น - แต่ละ H2 ได้เพียง 1-2 จุด ตัวอย่างทั่วไป ข้าม topic ย่อย",
+ "conclusion": " ธรรมดา - ความสำคัญสั้นๆ CTA อ่อน ขาด actionable advice",
+ "overall": "เนื้อหาไม่ครบถ้วน ข้ามประเด็นสำคัญ sections ไม่ได้รับการพัฒนาเต็มที่"
+ }
+ },
+ "quality_impact_examples": {
+ "1200_word_article_comparison": {
+ "topic": "วิธีการทำ SEO สำหรับเว็บไซต์ใหม่",
+ "section_by_section_result": {
+ "h2_keyword_research": "600 คำ - ครอบคลุม tools, วิธีการหา long-tail, competitor analysis, พร้อมตัวอย่าง 3 cases",
+ "h2_onpage_optimization": "600 คำ - title tags, meta descriptions, header structure, internal linking พร้อม screenshots และ before/after",
+ "h2_content_strategy": "300 คำ - content calendar, topic clusters, E-A-T signals พร้อม practical templates"
+ },
+ "single_pass_result": {
+ "h2_keyword_research": "200-300 คำ - กล่าวถึง tools หลักๆ ไม่มี competitor analysis ตัวอย่างทั่วไป",
+ "h2_onpage_optimization": "200-300 คำ - พื้นฐาน title/meta ไม่ลงลึก internal linking ไม่มี practical examples",
+ "h2_content_strategy": "100-200 คำ - กล่าวผิวเผิน ไม่มี actionable advice"
+ }
+ }
+ },
+ "human_authenticity_standards": {
+ "writing_characteristics": [
+ "Natural conversation patterns with varied sentence structures",
+ "Industry expertise demonstrated through genuine insights and observations",
+ "Authentic personality and voice while maintaining professionalism",
+ "Emotional and intellectual engagement, not just informational delivery",
+ "Specific examples, case studies, and real-world applications"
+ ],
+ "enhanced_anti_ai_detection": {
+ "writing_patterns": [
+ "Avoid robotic transitions and formal academic language",
+ "Use varied paragraph lengths and natural rhythm",
+ "Include personal observations and industry-specific insights",
+ "Employ conversational connectors and human speech patterns",
+ "Maintain authentic tone throughout without artificial formality"
+ ],
+ "human_authenticity_techniques": {
+ "sentence_variation": {
+ "mix_structures": "Combine short punchy sentences with longer flowing ones",
+ "natural_breaks": "Use ellipses, dashes, and natural pauses",
+ "conversational_fragments": "Include incomplete thoughts and natural speech patterns",
+ "emotional_punctuation": "Use exclamation marks and question marks naturally"
+ },
+ "content_humanization": {
+ "personal_experience": "Include phrases like 'ในประสบการณ์ของผม', 'จากที่เคยเจอมา'",
+ "real_examples": "Use specific, verifiable examples rather than generic ones",
+ "industry_slang": "Include natural industry terminology and colloquialisms",
+ "cultural_references": "Add Thai cultural context and local references",
+ "conversational_asides": "Include parenthetical thoughts and side comments"
+ },
+ "structural_humanization": {
+ "non_linear_flow": "Don't always follow perfect logical progression",
+ "natural_digressions": "Allow for small tangents that add value",
+ "varied_section_lengths": "Mix short and long sections naturally",
+ "organic_conclusions": "End sections naturally rather than formulaically"
+ }
+ },
+ "thai_specific_humanization": {
+ "natural_thai_expressions": [
+ "แบบนี้เลย",
+ "ก็คือ",
+ "อย่างที่บอก",
+ "ตามที่เห็น",
+ "ลองดูนะ",
+ "อันนี้สำคัญ",
+ "ส่วนนี้",
+ "จริงๆแล้ว",
+ "หลายคนอาจสงสัย",
+ "ต้องยอมรับ"
+ ],
+ "avoid_ai_thai_patterns": [
+ "ในบทความนี้เราจะ",
+ "สรุปได้ว่า",
+ "สรุป",
+ "โดยสรุป",
+ "บทสรุป",
+ "ดังนั้นเราจึง",
+ "นอกจากนี้แล้ว",
+ "อย่างไรก็ตาม",
+ "โดยสรุปแล้ว",
+ "ข้อสำคัญที่ต้องจำ",
+ "หากต้องการ",
+ "CRITICAL: CRITICAL AVOID:",
+ "สรุปและก้าวต่อไป",
+ "ก้าวต่อไป",
+ "เพื่อสรุป",
+ "รวมแล้ว",
+ "สรุปโดยรวม",
+ "ในที่สุด",
+ "ทั้งหมดนี้",
+ "ความจริงแล้ว",
+ "ด้วยเหตุผลต่าง ๆ",
+ "CONCLUSION AVOID:",
+ "บทสรุปด้วย",
+ "บืทสรุป",
+ "ปิดท้ายด้วย",
+ "จบกันที่นี่",
+ "รวบรวม",
+ "รวบรวมกัน",
+ "FAQ AVOID (ดู format_guidelines):",
+ "ถาม:",
+ "ตอบ:",
+ "**ถาม:**",
+ "**ตอบ:**"
+ ],
+ "conversational_transitions": [
+ "เอาล่ะ",
+ "มาดูกันต่อ",
+ "พูดถึง...แล้ว",
+ "อีกเรื่องหนึ่ง",
+ "ลองมาดู",
+ "เรื่องถัดมา",
+ "ส่วนนี้น่าสนใจ",
+ "อีกจุดที่น่าสนใจ",
+ "แล้วก็มี"
+ ],
+ "dynamic_conclusion_heading_system": {
+ "methodology": "CRITICAL: CRITICAL: ห้ามใช้ 'สรุป' หรือคำที่คล้ายกัน - เลือกหัวข้อตามบริบทของเนื้อหาอย่างเคร่งครัด",
+ "content_type_based_headings": {
+ "health_medical": [
+ "ความปลอดภัยที่ควรรู้",
+ "เริ่มต้นดูแลตัวเอง",
+ "ก้าวแรกสู่สุขภาพที่ดี",
+ "เลือกวิธีที่เหมาะกับคุณ"
+ ],
+ "business_finance": [
+ "การตัดสินใจที่ฉลาด",
+ "วางแผนการลงทุน",
+ "เตรียมความพร้อม",
+ "ขั้นตอนสู่ความสำเร็จ"
+ ],
+ "technology_howto": [
+ "นำไปปรับใช้ในชีวิตจริง",
+ "เริ่มต้นจากจุดนี้",
+ "ก้าวแรกสู่ความเชี่ยวชาญ",
+ "พัฒนาทักษะของคุณ"
+ ],
+ "lifestyle_review": [
+ "ปรับปรุงชีวิตให้ดีขึ้น",
+ "เลือกสิ่งที่เหมาะกับคุณ",
+ "ระวังก่อนตัดสินใจ",
+ "ข้อคิดสุดท้าย"
+ ],
+ "educational_guide": [
+ "พัฒนาความรู้ต่อไป",
+ "มาสร้างอนาคตกัน",
+ "ผลลัพธ์ที่จะได้รับ",
+ "เอาความรู้นี้ไปใช้"
+ ]
+ },
+ "positive_alternatives": [
+ "ประเด็นสำคัญ",
+ "จะเห็นได้ว่า",
+ "สิ่งที่ควรจำ",
+ "ข้อคิดสุดท้าย",
+ "น่าจะเป็นอย่างไรต่อไป",
+ "เริ่มต้นจากจุดนี้"
+ ],
+ "avoid_overly_friendly": [
+ "มาเริ่มดูแลตัวเองกัน",
+ "มาลองใส่ใจกัน",
+ "มาร่วมกัน",
+ "มาลองทำกัน",
+ "มาเริ่มปรับปรุงกัน",
+ "มาปรับเปลี่ยนกัน",
+ "มาเก็บความรู้นี้ไว้กัน"
+ ],
+ "selection_criteria": "พิจารณาจากหัวข้อหลัก, เนื้อหาใน H2, และวัตถุประสงค์ของบทความ เลือกหัวข้อที่สื่อถึง call-to-action หรือ next step อย่างเป็นธรรมชาติ"
+ }
+ }
+ },
+ "h1_headline_creation": {
+ "avoid_ai_patterns": [
+ "คู่มือฉบับผู้เชี่ยวชาญ",
+ "ฉบับสมบูรณ์",
+ "แบบครบถ้วน",
+ "– [subtitle] formatting",
+ "ทุกสิ่งที่คุณควรรู้",
+ "คู่มือฉบับสมบูรณ์",
+ "คู่มือแบบครบถ้วน",
+ "วิธีการแบบเชี่ยวชาญ"
+ ],
+ "pattern_enforcement": {
+ "validation_rule": "MANDATORY: Scan every H1 headline against avoid_ai_patterns list before finalizing",
+ "rejection_protocol": "If ANY avoided pattern appears in headline, regenerate using natural_headline_approaches only",
+ "double_check": "Verify headline contains zero AI patterns and sounds conversational like human speech"
+ },
+ "natural_headline_approaches": [
+ "Question-based: ใช้คำถามที่ผู้อ่านสงสัยจริง",
+ "Problem-solution: เริ่มด้วยปัญหาแล้วสแกนหาทางแก้",
+ "Conversational: ใช้ภาษาพูดคุยธรรมชาติ",
+ "Curiosity-driven: สร้างความอยากรู้โดยไม่ใช้ clickbait",
+ "Direct benefit: บอกผลลัพธ์ที่ได้รับโดยตรง",
+ "Personal experience: ใช้มุมมองประสบการณ์จริง"
+ ],
+ "h1_optimization_standards": {
+ "character_length": {
+ "minimum": 20,
+ "optimal_range": "20-70 characters including spaces",
+ "maximum": 70,
+ "rationale": "Long enough to include the main keyword and clearly describe the content, but not so long it becomes hard to read or appears truncated in search results"
+ },
+ "content_requirements": {
+ "keyword_inclusion": "MUST include primary keyword naturally once",
+ "clarity": "Must clearly describe the content topic",
+ "scannability": "Easy to read and understand at a glance",
+ "user_intent": "Must match user expectations and search intent"
+ },
+ "best_practices": {
+ "avoid_keyword_stuffing": "Include primary keyword once naturally, not repeated",
+ "avoid_generic": "Never use generic headings like 'Welcome', 'Home', 'บทความ', 'Article'",
+ "semantic_alignment": "Should relate to title tag but be clearer and more direct",
+ "mobile_friendly": "Consider mobile display - shorter is often better (20-50 chars ideal)",
+ "natural_language": "Must sound natural and conversational, not keyword-stuffed"
+ },
+ "validation": {
+ "character_counting": "Count all characters including spaces, punctuation, and Thai characters",
+ "thai_handling": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+ "quality_check": "Verify: keyword present + not generic + 20-70 chars + natural language"
+ },
+ "examples": {
+ "good_h1": [
+ "วิธีเลือกรองเท้าฟุตบอล (24 chars)",
+ "5 วิธีดูแลรองเท้าฟุตบอลให้ทนทาน (32 chars)",
+ "ผมร่วงแก้ยังไง? วิธีที่ได้ผลจริง (33 chars)"
+ ],
+ "bad_h1": [
+ "Welcome (7 chars - too short, generic)",
+ "บทความ (6 chars - generic)",
+ "วิธีเลือกรองเท้าฟุตบอลที่ดีที่สุดสำหรับนักกีฬามืออาชีพและมือสมัครเล่นในปี 2024 (78 chars - too long)"
+ ]
+ }
+ },
+ "h1_examples_by_topic": {
+ "health_wellness": [
+ "ผมร่วง ผมบาง แก้ไขได้จริงหรือ? วิธีใดได้ผลมากที่สุด (53 ตัวอักษร)",
+ "ลดน้ำหนักไม่โยโย่ มีวิธีไหนที่ใช้ได้จริงแล้วไม่อันตราย (58 ตัวอักษร)",
+ "นอนไม่หลับทุกคืนแล้วเหนื่อยตลอดเวลา เกิดจากอะไรและแก้ยังไง (65 ตัวอักษร)"
+ ],
+ "business_finance": [
+ "เริ่มธุรกิจออนไลน์ด้วยเงินหมื่นเดียว เป็นไปได้มากกว่าที่คิด (61 ตัวอักษร)",
+ "ลงทุนหุ้นมือใหม่ ขั้นตอนไหนสำคัญที่สุดถึงจะไม่ขาดทุน (59 ตัวอักษร)"
+ ]
+ }
+ },
+ "meta_title_creation": {
+ "inherit_from_h1": "Apply ALL h1_headline_creation rules to meta titles",
+ "avoid_ai_patterns": [
+ "คู่มือฉบับผู้เชี่ยวชาญ",
+ "ฉบับสมบูรณ์",
+ "แบบครบถ้วน",
+ "ทุกสิ่งที่คุณควรรู้",
+ "คู่มือฉบับสมบูรณ์",
+ "คู่มือแบบครบถ้วน",
+ "วิธีการแบบเชี่ยวชาญ"
+ ],
+ "pattern_enforcement": {
+ "validation_rule": "MANDATORY: Scan every meta title against avoid_ai_patterns list before finalizing",
+ "rejection_protocol": "If ANY avoided pattern appears in meta title, regenerate using natural approaches only",
+ "double_check": "Verify meta title contains zero AI patterns and sounds like natural human language"
+ },
+ "meta_title_character_limits": {
+ "optimal_chars": "50-60",
+ "measurement_method": "character_counting_via_delegation",
+ "reference": "Delegate to meta-tags.json v3.7 for character-based meta tag optimization",
+ "validation_rule": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+ "note": "Target 50-60 characters for both desktop and mobile. Character-based limits (50-60 chars) are deprecated."
+ }
+ },
+ "headline_naturalness": [
+ "ใช้คำถามหรือความรู้สึกที่ผู้อ่านมีจริง",
+ "หลีกเลี่ยงคำศัพท์โคลิเช่ เช่น 'คู่มือ', 'ฉบับสมบูรณ์'",
+ "สร้างความอยากรู้โดยไม่ over-promise",
+ "ใช้ภาษาสนทนาธรรมชาติแทนการเขียนเป็นทางการ"
+ ]
+ },
+ "content_quality_framework": {
+ "engagement_optimization": {
+ "introduction_strategy": "Hook readers with relatable problems using storytelling approach",
+ "value_delivery": "Provide actionable insights and genuine user value in every section",
+ "example_integration": "Include specific examples, statistics, and case studies naturally",
+ "conclusion_impact": "Motivate action through genuine enthusiasm and clear next steps"
+ },
+ "seo_content_balance": {
+ "keyword_integration": "Natural placement focusing on semantic relevance over exact match frequency",
+ "readability_priority": "Maintain conversational tone while covering technical topics thoroughly",
+ "user_intent_satisfaction": "Thoroughly address search query with comprehensive, actionable information",
+ "competitive_advantage": "Provide superior value and coverage compared to existing content"
+ }
+ },
+ "brand_integration_system": {
+ "voice_application": {
+ "personality_consistency": "Apply brand personality traits throughout content",
+ "tone_adaptation": "Adapt formality level and communication style to brand guidelines",
+ "messaging_alignment": "Ensure all content supports brand positioning and values",
+ "audience_targeting": "Tailor content complexity and approach to target audience preferences"
+ },
+ "content_customization": {
+ "terminology_usage": "Use brand-preferred terms and avoid brand-excluded language",
+ "style_guidelines": "Follow brand style preferences for structure and presentation",
+ "competitive_positioning": "Position brand advantageously compared to competitors mentioned",
+ "value_proposition": "Highlight brand differentiators and unique value offerings"
+ }
+ },
+ "content_templates_integration": {
+ "usage_with_modes": {
+ "section_by_section": "All templates available - use appropriate template per section",
+ "enhanced_single_pass": "Templates provide structure guidance - AI adapts automatically",
+ "single_pass": "Basic templates only - focus on speed over complexity",
+ "outline_only": "All templates available for planning phase"
+ },
+ "template_selection_guide": {
+ "how_to_guides": "Use how_to_article_template for step-by-step content",
+ "product_reviews": "Use comparison_article_template for product analysis",
+ "service_pages": "Use service_page_template for business services",
+ "local_business": "Use local_service_page_template for location-based services",
+ "general_content": "Use standard content structure without specific template"
+ }
+ },
+ "content_templates": {
+ "how_to_article_template": {
+ "structure_requirements": {
+ "introduction": "Start with problem identification and overview of solution",
+ "materials_tools": "List required materials, tools, or prerequisites clearly",
+ "step_by_step": "Break process into numbered steps with clear actions",
+ "tips_warnings": "Include helpful tips and important warnings",
+ "conclusion": "Summarize process and encourage action"
+ },
+ "heading_hierarchy": {
+ "h1_format": "วิธี[action] + ปัญหาที่แก้ไข + ผลลัพธ์ที่ได้",
+ "h2_sections": [
+ "การเตรียมตัว",
+ "ขั้นตอนการดำเนินการ",
+ "เคล็ดลับสำคัญ",
+ "ข้อควรระวัง"
+ ],
+ "h3_subsections": "แบ่งขั้นตอนย่อยที่มีรายละเอียดมาก"
+ },
+ "content_elements": {
+ "difficulty_level": "ระบุระดับความยาก: ง่าย/ปานกลาง/ยาก",
+ "time_estimate": "ประมาณเวลาที่ใช้ในการทำ",
+ "success_indicators": "สัญญาณบอกว่าทำสำเร็จ",
+ "troubleshooting": "วิธีแก้ปัญหาที่อาจเกิดขึ้น"
+ },
+ "seo_optimization": {
+ "keyword_placement": "Primary keyword ในขั้นตอนที่สำคัญ",
+ "internal_links": "ลิงก์ไปยังเครื่องมือ วัสดุ หรือบทความที่เกี่ยวข้อง",
+ "featured_snippet": "ขั้นตอนสำคัญใน 40-60 คำสำหรับ featured snippet"
+ }
+ },
+ "comparison_article_template": {
+ "structure_requirements": {
+ "introduction": "Present comparison overview and selection criteria",
+ "comparison_matrix": "Create clear comparison table or structured format",
+ "detailed_analysis": "Provide in-depth analysis of each option",
+ "pros_cons": "List advantages and disadvantages clearly",
+ "recommendation": "Give clear recommendation based on different use cases"
+ },
+ "heading_hierarchy": {
+ "h1_format": "เปรียบเทียบ [options] + สำหรับ [target audience/use case]",
+ "h2_sections": [
+ "ภาพรวมการเปรียบเทียบ",
+ "วิเคราะห์แต่ละตัวเลือก",
+ "ข้อดี-ข้อเสีย",
+ "คำแนะนำสำหรับผู้ใช้"
+ ],
+ "h3_subsections": "แยกตามแต่ละผลิตภัณฑ์/บริการที่เปรียบเทียบ"
+ },
+ "content_elements": {
+ "comparison_criteria": "กำหนดเกณฑ์การเปรียบเทียบที่ชัดเจน (ราคา, คุณสมบัติ, ประสิทธิภาพ)",
+ "scoring_system": "ใช้ระบบให้คะแนนหรือการจัดอันดับ",
+ "use_case_matching": "แนะนำตัวเลือกที่เหมาะสมกับสถานการณ์ต่าง ๆ",
+ "visual_elements": "แนะนำใช้ตาราง กราฟ หรือ infographic"
+ },
+ "seo_optimization": {
+ "keyword_variations": "ใช้ variations ของ comparison keywords",
+ "vs_keywords": "รวม '[A] vs [B]' keywords ตามธรรมชาติ",
+ "featured_snippet": "สร้างตารางเปรียบเทียบสำหรับ table snippets"
+ }
+ },
+ "faq_integration_system": {
+ "placement_strategy": {
+ "standalone_section": "สร้างส่วน FAQ แยกต่างหากในตอนท้ายบทความ",
+ "contextual_integration": "แทรก Q&A ในส่วนที่เกี่ยวข้องของเนื้อหา",
+ "mixed_approach": "ผสมผสานทั้งสองแบบตามความเหมาะสม"
+ },
+ "question_types": {
+ "informational": "คำถามหาข้อมูล: 'คืออะไร', 'ทำไม', 'อย่างไร'",
+ "procedural": "คำถามขั้นตอน: 'วิธีการ', 'ขั้นตอน', 'การดำเนินการ'",
+ "comparative": "คำถามเปรียบเทียบ: 'ดีกว่า', 'แตกต่าง', 'เหมาะสม'",
+ "troubleshooting": "คำถามแก้ปัญหา: 'ไม่ได้', 'ผิดพลาด', 'วิธีแก้'"
+ },
+ "format_guidelines": {
+ "CRITICAL:_CRITICAL_FORMATTING_RULES": {
+ "question_format": "ใช้ H3 structure: ### คำถามโดยตรง",
+ "NEVER_use": "ถาม:, ตอบ:, **ถาม:**, **ตอบ:** - ห้ามใช้เด็ดขาด",
+ "answer_format": "คำตอบเว้นบรรทัดลงมาโดยตรง ไม่มีป้าย label ใด ๆ",
+ "correct_example": "### ผมร่วงวันละกี่เส้นถือว่าปกติ?\n\nโดยทั่วไป 50-100 เส้นต่อวันถือว่าปกติ",
+ "wrong_example": "### ถาม: ผมร่วงวันละกี่เส้นถือว่าปกติ?\nตอบ: โดยทั่วไป 50-100 เส้น"
+ },
+ "content_guidelines": {
+ "answer_length": "คำตอบ 30-80 คำ เพื่อโอกาส featured snippets",
+ "natural_language": "ใช้ภาษาสนทนาธรรมชาติ ไม่เป็นทางการเกินไป",
+ "keyword_integration": "รวม long-tail keywords ในคำถามอย่างเป็นธรรมชาติ"
+ },
+ "reference_note": "Warning: ส่วน FAQ formatting นี้คือแหล่งข้อมูลหลัก - อ้างอิงจากส่วนอื่น ๆ ในระบบ"
+ },
+ "seo_optimization": {
+ "schema_markup": "แนะนำใช้ FAQPage Schema markup เพื่อ AISO/AI citation (ChatGPT, Claude, Perplexity, Gemini ยังอ่าน) หมายเหตุ: Google จำกัด FAQ Rich Results เฉพาะเว็บราชการ/สุขภาพที่น่าเชื่อถือตั้งแต่ ส.ค. 2023 ดังนั้น schema นี้ไม่ทำให้เกิด Rich Snippets ใน Google สำหรับเว็บทั่วไปอีกต่อไป",
+ "featured_snippets": "เขียนคำตอบที่เหมาะกับการแสดงใน search results (Featured Snippet ปกติยังเป็นไปได้ ไม่เกี่ยวกับ FAQ Rich Result ที่ถูก deprecate)",
+ "internal_linking": "ลิงก์ไปยังหน้าที่เกี่ยวข้องในคำตอบ",
+ "keyword_targeting": "ตอบคำถามที่มี search volume แต่ competition ต่ำ"
+ }
+ },
+ "service_page_template": {
+ "structure_requirements": {
+ "service_overview": "แนะนำบริการและประโยชน์หลักในย่อหน้าแรก",
+ "service_details": "รายละเอียดบริการ วิธีการดำเนินการ",
+ "benefits_features": "ข้อดีและคุณสมบัติเด่นของบริการ",
+ "process_timeline": "ขั้นตอนการให้บริการและระยะเวลา",
+ "pricing_packages": "แพ็กเกจและราคา (ถ้ามี)",
+ "testimonials_cases": "ตัวอย่างผลงานและคำรับรอง",
+ "call_to_action": "การเรียกร้องให้ติดต่อหรือสั่งซื้อ"
+ },
+ "heading_hierarchy": {
+ "h1_format": "บริการ[service name] + สำหรับ[target audience] + ใน[location ถ้ามี]",
+ "h2_sections": [
+ "รายละเอียดบริการ",
+ "ขั้นตอนการดำเนินการ",
+ "แพ็กเกจและราคา",
+ "ผลงานและรีวิว"
+ ],
+ "h3_subsections": "แยกตามประเภทบริการหรือแพ็กเกจ"
+ },
+ "content_elements": {
+ "problem_solution": "ระบุปัญหาและวิธีแก้ไขที่บริการนำเสนอ",
+ "unique_value": "จุดเด่นที่แตกต่างจากคู่แข่ง",
+ "expertise_proof": "แสดงความเชี่ยวชาญและประสบการณ์",
+ "social_proof": "คำรับรองลูกค้า รีวิว หรือสถิติ",
+ "guarantee_assurance": "การรับประกันหรือข้อมูลให้ความมั่นใจ"
+ },
+ "conversion_optimization": {
+ "clear_cta": "ใส่ CTA ที่ชัดเจนในทุกส่วนสำคัญ",
+ "contact_info": "ข้อมูลติดต่อที่เข้าถึงง่าย",
+ "urgency_scarcity": "สร้างความเร่งด่วนเมื่อเหมาะสม",
+ "trust_signals": "ใส่สัญลักษณ์ความน่าเชื่อถือ"
+ },
+ "seo_optimization": {
+ "local_keywords": "ใช้ keywords ที่มีข้อมูลพื้นที่ถ้าเป็น local service",
+ "service_keywords": "รวม service keywords และ variations",
+ "schema_markup": "แนะนำใช้ Service Schema markup"
+ }
+ },
+ "product_page_template": {
+ "structure_requirements": {
+ "product_overview": "แนะนำผลิตภัณฑ์และประโยชน์หลักทันที",
+ "features_benefits": "คุณสมบัติและประโยชน์เฉพาะ",
+ "specifications": "ข้อมูลจำเพาะทางเทคนิค",
+ "how_to_use": "วิธีการใช้งาน",
+ "comparison_alternatives": "เปรียบเทียบกับทางเลือกอื่น",
+ "reviews_ratings": "รีวิวและคะแนนจากผู้ใช้",
+ "purchase_information": "ข้อมูลการสั่งซื้อและราคา"
+ },
+ "heading_hierarchy": {
+ "h1_format": "[Product Name] + [Key Benefit] + สำหรับ[target user]",
+ "h2_sections": [
+ "คุณสมบัติเด่น",
+ "วิธีการใช้งาน",
+ "ข้อมูลจำเพาะ",
+ "รีวิวจากผู้ใช้",
+ "การสั่งซื้อ"
+ ],
+ "h3_subsections": "แยกตามฟีเจอร์หรือประเภทการใช้งาน"
+ },
+ "content_elements": {
+ "problem_solving": "ระบุปัญหาที่ผลิตภัณฑ์แก้ไข",
+ "unique_selling_points": "จุดขายเด่นที่แตกต่างจากคู่แข่ง",
+ "technical_details": "ข้อมูลเทคนิคที่จำเป็น",
+ "usage_scenarios": "สถานการณ์การใช้งานจริง",
+ "safety_warnings": "ข้อควรระวังในการใช้งาน (ถ้ามี)"
+ },
+ "conversion_elements": {
+ "product_images": "แนะนำการใช้รูปภาพคุณภาพสูง",
+ "pricing_strategy": "แสดงราคาและโปรโมชั่นชัดเจน",
+ "availability_stock": "ข้อมูลสต็อกและการจัดส่ง",
+ "purchase_cta": "ปุ่มซื้อที่โดดเด่นและชัดเจน",
+ "guarantee_return": "นโยบายการคืนสินค้าและรับประกัน"
+ },
+ "seo_optimization": {
+ "product_keywords": "ใช้ product keywords และ brand keywords",
+ "buying_intent": "รวม buying intent keywords",
+ "product_schema": "แนะนำใช้ Product Schema markup",
+ "review_schema": "ใช้ Review Schema สำหรับรีวิว"
+ }
+ },
+ "local_service_page_template": {
+ "structure_requirements": {
+ "local_introduction": "แนะนำบริการในพื้นที่และความเชี่ยวชาญท้องถิ่น",
+ "service_area": "ระบุพื้นที่ให้บริการชัดเจน",
+ "local_expertise": "แสดงความรู้และประสบการณ์ในพื้นที่",
+ "community_involvement": "การมีส่วนร่วมในชุมชนท้องถิ่น",
+ "local_testimonials": "คำรับรองจากลูกค้าในพื้นที่",
+ "contact_directions": "ข้อมูลติดต่อและการเดินทาง",
+ "operating_hours": "เวลาทำการและวันหยุด"
+ },
+ "heading_hierarchy": {
+ "h1_format": "บริการ[service] ใน[location] + [key benefit/differentiator]",
+ "h2_sections": [
+ "บริการในพื้นที่",
+ "ความเชี่ยวชาญท้องถิ่น",
+ "พื้นที่ให้บริการ",
+ "ติดต่อเรา"
+ ],
+ "h3_subsections": "แยกตามเขต/อำเภอ/จังหวัดที่ให้บริการ"
+ },
+ "local_seo_elements": {
+ "geographic_keywords": "ใช้ชื่อเมือง เขต อำเภอ จังหวัด",
+ "landmark_references": "อ้างอิงสถานที่สำคัญในพื้นที่",
+ "local_events": "เชื่อมโยงกับกิจกรรมหรือเหตุการณ์ท้องถิ่น",
+ "community_language": "ใช้ภาษาและคำศัพท์ที่คนในพื้นที่คุ้นเคย"
+ },
+ "trust_building": {
+ "local_credentials": "ใบอนุญาตหรือการรับรองในพื้นที่",
+ "years_in_area": "จำนวนปีที่ให้บริการในพื้นที่",
+ "local_partnerships": "ความร่วมมือกับธุรกิจท้องถิ่น",
+ "emergency_availability": "การให้บริการฉุกเฉินหรือนอกเวลา"
+ },
+ "schema_markup": {
+ "local_business": "ใช้ LocalBusiness Schema",
+ "service_area": "กำหนด Service Area Schema",
+ "opening_hours": "ระบุ Opening Hours Schema",
+ "contact_info": "ข้อมูลติดต่อแบบ structured data"
+ }
+ }
+ },
+ "quality_standards": {
+ "checklist": [
+ "Word count ±5% - ใช้ 4.5 chars/word Thai",
+ "H1 เดียว + คำสำคัญตามธรรมชาติ",
+ "Meta tags via delegation to meta-tags.json v3.7 (50-60 chars title, 140-160 chars description)",
+ "ย่อหน้าสั้น 2-4 ประโยค + bullet points",
+ "Introduction ดึงดูด + Conclusion มี CTA"
+ ],
+ "readability_score_targets": {
+ "thai_content": {
+ "target_level": "มัธยมศึกษาตอนต้น (ม.1-ม.3)",
+ "sentence_length": "เฉลี่ย 15-25 คำต่อประโยค",
+ "paragraph_length": "2-4 ประโยคต่อย่อหน้า",
+ "complex_words": "หลีกเลี่ยงคำยากเกิน 20% ของเนื้อหา"
+ },
+ "english_content": {
+ "flesch_score": "60-70 (Standard to Fairly Easy)",
+ "grade_level": "Grade 6-8 (Middle School)",
+ "sentence_length": "Average 15-20 words per sentence",
+ "syllable_count": "Average 1.5 syllables per word"
+ },
+ "improvement_guidelines": {
+ "simplify_vocabulary": "ใช้คำง่ายแทนคำยาก",
+ "shorten_sentences": "แบ่งประโยคยาวเป็นประโยคสั้น",
+ "active_voice": "ใช้ Active voice มากกว่า Passive voice",
+ "transitional_words": "ใช้คำเชื่อมเพื่อความลื่นไหล"
+ }
+ }
+ },
+ "output_enhancement": {
+ "cta_templates": {
+ "informational_content": {
+ "soft_cta": [
+ "ต้องการคำแนะนำเพิ่มเติม? ติดต่อผู้เชี่ยวชาญได้ที่...",
+ "มีคำถามเกี่ยวกับ [topic]? พูดคุยกับทีมงานของเรา",
+ "สนใจรายละเอียดเพิ่มเติม? ดาวน์โหลดคู่มือฟรี"
+ ],
+ "engagement_cta": [
+ "แชร์ประสบการณ์ของคุณในคอมเมนต์",
+ "บันทึกบทความนี้ไว้อ่านภายหลัง",
+ "ติดตามเราเพื่ อัปเดตใหม่ ๆ"
+ ]
+ },
+ "service_content": {
+ "consultation_cta": [
+ "จองคำปรึกษาฟรี 30 นาที",
+ "รับใบเสนอราคาฟรีวันนี้",
+ "ปรึกษาผู้เชี่ยวชาญโดยไม่มีค่าใช้จ่าย"
+ ],
+ "urgency_cta": [
+ "โปรโมชั่นจำกัดเวลา - จองวันนี้",
+ "เหลือที่ว่างเพียง [number] ท่าน",
+ "ได้รับส่วนลดพิเศษก่อน [date]"
+ ]
+ },
+ "product_content": {
+ "purchase_cta": [
+ "สั่งซื้อเลยวันนี้ - จัดส่งฟรี",
+ "เพิ่มลงตะกร้าก่อนหมดสต็อก",
+ "ลองใช้ฟรี 14 วัน - ไม่มีผูกมัด"
+ ],
+ "comparison_cta": [
+ "เปรียบเทียบแพ็กเกจทั้งหมด",
+ "ดูตัวเลือกที่เหมาะกับคุณ",
+ "รับคำแนะนำการเลือกผลิตภัณฑ์"
+ ]
+ }
+ },
+ "internal_link_suggestions": {
+ "contextual_linking": {
+ "relevant_content": "ลิงก์ไปยังบทความที่เกี่ยวข้องในประเด็นเดียวกัน",
+ "supporting_evidence": "ลิงก์ไปยังข้อมูลสนับสนุนหรือสถิติ",
+ "deeper_reading": "ลิงก์ไปยังเนื้อหาที่ลึกขึ้นสำหรับผู้สนใจ"
+ },
+ "strategic_linking": {
+ "pillar_content": "ลิงก์ไปยัง main pillar page ของหัวข้อ",
+ "conversion_pages": "ลิงก์ไปยังหน้าบริการหรือผลิตภัณฑ์ที่เกี่ยวข้อง",
+ "authority_building": "ลิงก์ไปยังเนื้อหาที่แสดงความเชี่ยวชาญ"
+ },
+ "anchor_text_guidelines": {
+ "descriptive_text": "ใช้คำอธิบายที่ชัดเจนแทน 'คลิกที่นี่'",
+ "keyword_variation": "ใช้ keyword variations ใน anchor text",
+ "natural_flow": "ให้ anchor text กลมกลืนกับประโยค"
+ }
+ },
+ "copy_paste_ready_format": {
+ "content_structure": {
+ "header_formatting": "# H1\n## H2\n### H3 (Markdown format)",
+ "paragraph_spacing": "เว้นบรรทัดว่างระหว่างย่อหน้า",
+ "list_formatting": "- Bullet points\n1. Numbered lists",
+ "emphasis_markup": "**Bold** และ *Italic* formatting"
+ },
+ "meta_elements_format": {
+ "title_format": "Meta Title: [title] (XX characters)",
+ "description_format": "Meta Description: [description] (XXX characters)",
+ "url_format": "URL Slug: /[slug]",
+ "keywords_format": "Primary Keyword: [keyword]\nSecondary Keywords: [keyword1, keyword2]"
+ },
+ "transfer_template": {
+ "section_headers": "[CONTENT READY FOR PUBLISHING]",
+ "clear_divisions": "แยกส่วนต่าง ๆ ด้วย --- หรือ borders",
+ "instruction_notes": "ใส่คำแนะนำการใช้งานสำหรับแต่ละส่วน"
+ }
+ }
+ },
+ "output_format": {
+ "mode_outline_only": {
+ "content_outline": "Comprehensive outline with heading structure, section specifications, and strategic notes",
+ "word_count_planning": "Detailed word count distribution per section with target validation",
+ "section_specifications": "Target word count for each H2 section with content depth requirements",
+ "outline_accuracy_check": "Validation that outline structure supports target word count ±5%",
+ "implementation_warnings": "Alerts for potential word count issues when implementing outline",
+ "meta_optimization": "Optimized title, description, and English URL slug with character counts",
+ "url_slug_suggestions": "3-5 English URL slug options that capture Thai content essence",
+ "implementation_guide": "Brand voice guidelines, keyword strategy, and URL optimization approach",
+ "google_docs_format": "Copy-paste ready outline with formatting shortcuts"
+ },
+ "mode_full_content": {
+ "complete_article": "Finished article meeting all specifications with natural, engaging writing",
+ "meta_elements": "Optimized title, description, and English URL slug with proper character limits",
+ "url_optimization": "SEO-optimized English URL slug reflecting Thai content theme and keywords",
+ "seo_integration": "Natural keyword usage with semantic optimization throughout",
+ "brand_consistency": "Content reflecting brand voice and messaging consistently"
+ }
+ },
+ "success_criteria": [
+ "Word count ±5% target using 4.5 chars/word Thai multiplier",
+ "Natural Thai writing avoiding AI patterns",
+ "H1 45-60 chars + keywords integrated naturally",
+ "User questions answered completely"
+ ],
+ "competitor_analysis_framework": {
+ "analysis_scope": {
+ "direct_competitors": "Companies offering identical products/services to same target audience",
+ "indirect_competitors": "Alternative solutions that address the same customer need",
+ "content_competitors": "Publishers ranking for target keywords regardless of business model"
+ },
+ "content_analysis_factors": {
+ "content_depth": "Word count, section coverage, detail level compared to top-ranking content",
+ "content_quality": "Expertise demonstration, source citations, practical value provided",
+ "user_engagement": "Comments, shares, time on page indicators where available",
+ "technical_seo": "Meta optimization, schema markup, internal linking structure"
+ },
+ "competitive_advantage_identification": {
+ "content_gaps": "Topics covered by competitors that we're missing",
+ "quality_gaps": "Areas where competitor content lacks depth or accuracy",
+ "format_opportunities": "Content formats not utilized by competitors (videos, infographics, tools)",
+ "unique_positioning": "Angles or perspectives not addressed by existing content"
+ },
+ "implementation_guidance": {
+ "content_differentiation": "How to position content uniquely vs competitors",
+ "quality_benchmarks": "Minimum standards to exceed competitor content quality",
+ "gap_filling_strategy": "Systematic approach to address identified content gaps",
+ "monitoring_schedule": "Regular competitor content monitoring and analysis updates"
+ }
+ },
+ "input_required": [
+ "content_strategy",
+ "brand_configuration",
+ "target_topic",
+ "content_mode",
+ "target_length",
+ "competitor_analysis"
+ ],
+ "shared_resources": {
+ "reference_extracts": {
+ "helpful_content_principles": {
+ "_externalized": "{PLUGIN_ROOT}/skills/rainmojo-so-lite/reference/frameworks/helpful-content-principles.json",
+ "_note": "Shared 'helpful_content_principles' stored once. Read this file (path relative to PLUGIN ROOT) when needed."
+ },
+ "eeat_criteria": {
+ "experience_indicators": [
+ "First-hand knowledge and personal involvement",
+ "Real-world application and testing evidence",
+ "Specific examples and authentic insights",
+ "Personal anecdotes and detailed usage"
+ ],
+ "expertise_indicators": [
+ "Technical accuracy and depth of knowledge",
+ "Industry-specific terminology usage",
+ "Professional credentials and qualifications",
+ "Citations to authoritative sources"
+ ],
+ "authoritativeness_indicators": [
+ "Recognition as trusted source in field",
+ "Citations by other credible sources",
+ "Professional affiliations and credentials",
+ "Awards or industry recognition"
+ ],
+ "trust_indicators": [
+ "Factual accuracy and error-free content",
+ "Transparency about author and organisation",
+ "Contact information and accountability",
+ "Appropriate disclaimers and limitations"
+ ]
+ },
+ "ymyl_categories": {
+ "health_safety": "Medical advice, safety information, dangerous activities, wellbeing topics",
+ "financial_security": "Investment advice, tax guidance, major financial decisions, money management",
+ "society_civics": "Government information, law, civic engagement, social issues",
+ "other_welfare": "Content affecting people's welfare, wellbeing, or life decisions"
+ },
+ "quality_rating_framework": {
+ "lowest": "No beneficial purpose, harmful, untrustworthy, extremely poor E-E-A-T",
+ "low": "Limited value, lacking E-E-A-T, poor user experience, thin content",
+ "medium": "Adequate E-E-A-T, satisfactory user experience, acceptable quality",
+ "high": "High E-E-A-T, comprehensive user satisfaction, valuable content",
+ "highest": "Exceptional E-E-A-T, perfect user need satisfaction, outstanding quality"
+ },
+ "section_by_section_quality_system": {
+ "section_depth_control": {
+ "minimum_depth_requirements": {
+ "main_h2_sections": "3-5 detailed points with examples per section",
+ "supporting_h3_subsections": "2-3 specific details each",
+ "example_density": "1 specific example per 200-300 words",
+ "actionable_content": "Concrete steps or advice in every section"
+ },
+ "content_completeness_check": {
+ "topic_coverage": "Address all aspects mentioned in H2 title",
+ "user_questions": "Answer potential questions readers might have",
+ "practical_value": "Provide implementable advice or insights",
+ "depth_progression": "Go beyond surface-level information"
+ }
+ },
+ "iterative_humanization": {
+ "per_section_variation": {
+ "opening_styles": "Vary how each section begins (question, statistic, story, statement)",
+ "transition_methods": "Use different connection techniques between paragraphs",
+ "example_types": "Mix personal experiences, case studies, industry data",
+ "writing_rhythm": "Alternate between short punchy and longer flowing paragraphs"
+ },
+ "natural_flow_techniques": {
+ "conversational_bridges": "Use phrases like 'เอาล่ะ มาดูกัน', 'อีกเรื่องหนึ่งที่สำคัญ'",
+ "personal_interjections": "Include thoughts like 'ในประสบการณ์ที่ผมเจอ'",
+ "reader_engagement": "Ask direct questions and provide immediate answers",
+ "organic_tangents": "Allow natural side points that add value"
+ }
+ },
+ "ai_detection_prevention": {
+ "section_level_checks": {
+ "avoid_formulaic_starts": "Never begin sections identically",
+ "vary_conclusion_styles": "End sections differently each time",
+ "mix_sentence_structures": "Combine fragments, compound, and complex sentences",
+ "natural_keyword_integration": "Keywords appear organically in context"
+ },
+ "content_authenticity_markers": {
+ "specific_details": "Use verifiable facts and current information",
+ "industry_insights": "Include professional observations and trends",
+ "cultural_relevance": "Add Thai context and local references",
+ "personal_voice": "Maintain consistent but natural personality"
+ }
+ }
+ }
+ },
+ "priority_framework": {
+ "critical": "Immediate action required - blocks functionality or causes harm",
+ "high": "Significant impact opportunity - implement within 2 weeks",
+ "medium": "Moderate improvement - implement within 1 month",
+ "low": "Enhancement opportunity - implement when resources allow"
+ },
+ "output_standards": {
+ "format": "Structured JSON, tables, or clear lists",
+ "actionability": "Specific implementation steps with timelines",
+ "measurement": "Clear success metrics and tracking methods",
+ "compliance": "QEG standards adherence verification",
+ "language_adaptation": "Automatically adapt terminology, spelling, and examples based on detected user language"
+ }
+ },
+ "reference_validation": {
+ "method": "Targeted Grep searches in reference files when validation needed",
+ "token_limit": "Maximum 300 tokens per reference check",
+ "trigger_conditions": "Borderline scores, YMYL content, complex edge cases"
+ },
+ "model_draft_two_pass_review": {
+ "_priority": "MANDATORY - additive layer on top of the existing workflow. Adds Phase W8 in SKILL.md, never replaces existing rules.",
+ "pass_1_claim_walk": "Walk every factual claim in order; mark verified (source name recorded), wrong (named source contradicts it; fix or remove), or unverifiable (write could not verify; never convert to false or absent).",
+ "pass_2_expert_omission_audit": "Write the expert requirement list before rereading the draft, then list what is absent with its intended location, judged against the brief and the expert list.",
+ "weighting": "Pass 2 outranks pass 1: a clean pass 1 with material absences in pass 2 does not pass.",
+ "human_sign_off": "A named human signs off on both passes with a date; a role title alone or a model-generated approval is not a sign-off.",
+ "gate_owner": "The publish-blocking version, the topic blocklist, engine attribution and the sign-off record shape belong to content-production-lite."
+ },
+ "sibling_page_generation": {
+ "_externalized": "{PLUGIN_ROOT}/skills/rainmojo-so-lite/reference/frameworks/content-creation-sibling-page-generation.json",
+ "_note": "Database-sourced sibling page sets (per-location, per-branch, per-variant). Four rules: the structured record is the only fact source, one hand-authored page is the exemplar, siblings never share wording, and every field is verified back to its own record before publish."
+ },
+ "W4_extraction_points_ownership": "Answer format per heading is copied from the brief when one exists; grouper question above lists, word-for-word core terms (code point comparison, no normalisation), the keyword stuffing ceiling and the snippet cut test always belong to this phase. aiso-citability-lite assesses published pages only."
+ },
+ "brand_file_loading_protocol": {
+ "data_sources": [
+ "brand-guidelines.md",
+ "client-profile.md",
+ "user-provided brand information"
+ ],
+ "loading_process": {
+ "check_files_exist": "Attempt to load brand-guidelines.md and client-profile.md from project files",
+ "if_files_missing": {
+ "action": "Prompt user to provide brand configuration",
+ "user_options": [
+ "Upload brand-guidelines.md and client-profile.md files",
+ "Provide brand information interactively (answer essential questions from operation_modes.brand_configuration)",
+ "Paste brand information directly in conversation",
+ "Skip brand configuration and use generic approach (not recommended)"
+ ],
+ "mandatory_prompt": "Warning: Brand configuration files not found. Choose one: (1) Upload brand-guidelines.md and client-profile.md, (2) Answer brand questions interactively, (3) Paste brand information, or (4) Continue without brand context (generic output).",
+ "recommended_action": "Interactive brand configuration for best results"
+ },
+ "if_files_found": "Load and parse brand information automatically, proceed with content creation"
+ }
+ },
+ "standalone_operation": {
+ "operation_mode": "Independent AI Agent - No automatic data sharing with other agents",
+ "usage_note": "Warning: This agent works independently. Manual copy-paste required to share results with other agents.",
+ "suggested_workflow": {
+ "step_1": "Run Content Creation analysis",
+ "step_2": "Copy transfer format results below",
+ "step_3": "Paste into suggested next agents for complete SEO workflow"
+ },
+ "works_best_with": [
+ "E-E-A-T Content Assessment",
+ "Meta Tags Optimization",
+ "YMYL Content Review",
+ "Content Harm Assessment",
+ "Advanced Content Strategy"
+ ]
+ },
+ "transfer_format": {
+ "copy_paste_template": "Results will include a [TRANSFER DATA] section formatted for easy copying to next agents",
+ "format_structure": "```\n[COPY TO NEXT AGENT]\n[Agent Output Data]\n[END TRANSFER]\n```",
+ "next_step_suggestions": {
+ "content_assessment": "Use E-E-A-T Content Assessment for quality and authority validation",
+ "meta_optimization": "Use Meta Tags Optimization for optimized title and description elements",
+ "ymyl_review": "Use YMYL Content Review for high-stakes content validation",
+ "safety_check": "Use Content Harm Assessment for content safety evaluation",
+ "strategic_alignment": "Use Advanced Content Strategy for broader content strategy alignment"
+ }
+ },
+ "meta_tag_integration": {
+ "agent": "meta-tags.json",
+ "version": "v3.7",
+ "integration_pattern": "workflow_delegation",
+ "responsibility": "Content creation only - meta tags delegated to specialist agent",
+ "delegation_workflow": {
+ "when": "After content creation with H1, outline, primary keywords",
+ "what_to_provide": {
+ "content_context": "H1, topic, target audience, content angle",
+ "keywords": "Primary keyword + 2-3 secondary keywords",
+ "brand_info": "Brand name for description inclusion",
+ "page_type": "informational_pages, product_pages, category_pages, service_pages"
+ },
+ "what_to_receive": {
+ "title": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+ "description": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+ "validation": "Psychological frameworks applied, NavBoost & SnippetBrain validated"
+ }
+ },
+ "benefits": [
+ "Single source of truth (meta-tags.json v3.7)",
+ "Always up-to-date with latest standards",
+ "Specialized optimization vs embedded approximation",
+ "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ"
+ ],
+ "note": "For content that does NOT require meta tags (outlines, research, analysis), skip this step"
+ }
+ },
+ "agent_prompt": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+ "optimization_frameworks": {
+ "expert_content_creation_framework": {
+ "writing_excellence_standards": {
+ "narrative_engagement": {
+ "storytelling_approach": "Use narrative techniques to make content more engaging and memorable",
+ "emotional_connection": "Create emotional resonance with target audience through relatable scenarios",
+ "expertise_demonstration": "Show genuine industry knowledge through specific insights and observations",
+ "authentic_voice": "Maintain authentic personality while delivering professional value"
+ },
+ "technical_precision": {
+ "accuracy_standards": "Ensure all technical information is accurate and current",
+ "industry_terminology": "Use appropriate industry language while remaining accessible",
+ "source_credibility": "Reference authoritative sources and expert opinions where appropriate",
+ "factual_verification": "Verify all claims and statistics before inclusion"
+ }
+ },
+ "seo_optimization_balance": {
+ "natural_keyword_integration": {
+ "semantic_approach": "Focus on semantic relevance rather than exact match frequency",
+ "contextual_placement": "Place keywords where they naturally fit the content flow",
+ "variation_usage": "Use keyword variations and synonyms for natural language patterns",
+ "density_management": "Maintain appropriate keyword density without stuffing",
+ "keyword_density_rules": {
+ "primary_keyword": "0.5-1.5% of total content (aim for 1% optimal)",
+ "secondary_keywords": "0.3-0.8% each for 2-3 secondary keywords",
+ "lsi_keywords": "Natural occurrence without forced placement",
+ "calculation_method": "Count exact matches + close variations for Thai content"
+ },
+ "heading_hierarchy_seo": {
+ "h1_primary": "Include primary keyword naturally in H1 (mandatory)",
+ "h2_secondary": "Use secondary keywords in 2-3 H2 headings",
+ "h3_lsi": "Include LSI keywords and long-tail variations in H3 subheadings",
+ "natural_flow": "Ensure heading hierarchy makes sense for readers first, SEO second"
+ },
+ "lsi_keyword_strategy": {
+ "semantic_keywords": "Include 5-8 related terms that Google associates with main topic",
+ "topical_authority": "Cover related subtopics to demonstrate comprehensive knowledge",
+ "natural_mentions": "Weave LSI keywords into content naturally without forcing",
+ "thai_specific": "Use Thai semantic variations and synonyms for better local SEO"
+ }
+ },
+ "content_distribution_seo": {
+ "introduction_keywords": {
+ "primary_placement": "Include primary keyword within first 100 words naturally",
+ "search_intent": "Address search intent immediately in opening paragraph",
+ "hook_optimization": "Create compelling hook while incorporating target keywords"
+ },
+ "body_content_distribution": {
+ "keyword_spread": "Distribute keywords evenly across content sections",
+ "section_optimization": "Each major section should contain at least one secondary/LSI keyword",
+ "natural_repetition": "Repeat primary keyword 8-12 times in 1,500-word content (varies by length)",
+ "contextual_variations": "Use keyword variations and synonyms to avoid repetition"
+ },
+ "conclusion_seo": {
+ "keyword_reinforcement": "Naturally mention primary keyword in conclusion",
+ "call_to_action": "Include relevant action keywords in CTA sections",
+ "summary_optimization": "Summarize key points using semantic keyword variations"
+ }
+ },
+ "user_experience_priority": {
+ "readability_focus": "Prioritize readability and user comprehension over SEO manipulation",
+ "value_delivery": "Ensure every section provides genuine value to the reader",
+ "scanning_optimization": "Structure content for easy scanning with clear headers and short paragraphs",
+ "engagement_maintenance": "Keep readers engaged throughout the content journey"
+ }
+ },
+ "brand_voice_implementation": {
+ "consistency_maintenance": {
+ "personality_reflection": "Consistently reflect brand personality traits throughout content",
+ "tone_appropriateness": "Match tone to both brand guidelines and content context",
+ "messaging_alignment": "Ensure all content supports broader brand messaging and positioning",
+ "audience_connection": "Tailor voice to resonate with specific target audience segments"
+ },
+ "differentiation_strategy": {
+ "unique_positioning": "Position brand uniquely compared to competitors",
+ "value_highlighting": "Emphasize brand differentiators and unique value propositions",
+ "expertise_positioning": "Position brand as authoritative source in relevant areas",
+ "trust_building": "Build trust through transparency, accuracy, and authentic communication"
+ }
+ }
+ },
+ "page_type_specific_optimization": {
+ "_externalized": "{PLUGIN_ROOT}/skills/rainmojo-so-lite/reference/frameworks/page-type-specific-optimization.json",
+ "_note": "Stored externally to cut context size. Read the file at {PLUGIN_ROOT}/skills/rainmojo-so-lite/reference/frameworks/ (path is relative to the PLUGIN ROOT, not this skill folder). Load it when the workflow needs this framework."
+ },
+ "thai_language_quality_standards": {
+ "_externalized": "{PLUGIN_ROOT}/skills/rainmojo-so-lite/reference/frameworks/thai-language-quality-standards.json",
+ "_note": "Shared 'thai_language_quality_standards' stored once to cut context. Read this file (path relative to PLUGIN ROOT) when the workflow needs it."
+ },
+ "advanced_optimization_rules": {
+ "title_optimization": {
+ "optimal_length": {
+ "optimal_chars": "50-60",
+ "measurement_method": "character_counting",
+ "note": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+ "reference": "See configuration.meta_tag_integration for delegation workflow to meta-tags.json v3.7"
+ },
+ "thai_optimization": {
+ "length_considerations": {
+ "thai_character_efficiency": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+ "optimal_strategy": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+ "mixed_language_handling": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ"
+ },
+ "keyword_placement_thai": {
+ "beginning_preferred": "Place primary Thai keywords at beginning for maximum impact",
+ "location_integration": "Natural location integration: '[บริการ] + [ใน] + [location]' pattern",
+ "brand_positioning": "Brand name can be at end in Thai titles without losing effectiveness"
+ },
+ "thai_terms": {
+ "professional": [
+ "มืออาชีพ",
+ "ผู้เชี่ยวชาญ",
+ "ผู้ชำนาญ",
+ "คุณภาพสูง"
+ ],
+ "urgency": [
+ "24/7",
+ "เร่งด่วน",
+ "ฉับพลัน",
+ "ทันที",
+ "สำคัญ"
+ ],
+ "location": [
+ "ใน[จังหวัด]",
+ "ย่าน[พื้นที่]",
+ "ใกล้ฉัน",
+ "ท้องถิน",
+ "[พื้นที่]"
+ ]
+ }
+ },
+ "keyword_placement": "beginning_preferred",
+ "location_importance": "high",
+ "professional_terms": [
+ "Professional",
+ "Expert",
+ "Specialist",
+ "Certified"
+ ],
+ "urgency_terms": [
+ "24/7",
+ "Emergency",
+ "Fast",
+ "Immediate",
+ "Same Day"
+ ],
+ "local_modifiers": [
+ "Near Me",
+ "Local",
+ "[City Name]",
+ "[Area Name]"
+ ]
+ },
+ "description_optimization": {
+ "optimal_length": {
+ "optimal_chars": "140-160",
+ "measurement_method": "character_counting",
+ "note": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+ "reference": "See configuration.meta_tag_integration for delegation workflow to meta-tags.json v3.7"
+ },
+ "thai_optimization": {
+ "length_considerations": {
+ "thai_character_efficiency": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+ "optimal_strategy": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+ "mixed_content_strategy": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ"
+ },
+ "content_structure_thai": {
+ "opening_hook": "Start with compelling benefit or question in Thai",
+ "feature_benefits": "Use Thai benefit-focused language over feature lists",
+ "call_to_action": "Strong Thai CTAs: 'ติดต่อเรา', 'สอบถามฟรี', 'รับคำปรึกษา'"
+ },
+ "thai_emotional_triggers": {
+ "positive": [
+ "ประหยัด",
+ "คุ้มค่า",
+ "ปลอดภัย",
+ "มั่นใจ",
+ "สะดวก"
+ ],
+ "urgency": [
+ "จำกัด",
+ "ด่วน",
+ "พิเศษ",
+ "เลือกเลย",
+ "โอกาสดี"
+ ],
+ "trust": [
+ "เชื่อถือได้",
+ "มาตรฐาน",
+ "รับประกัน",
+ "ยาวนาน",
+ "คุณภาพ"
+ ]
+ },
+ "advanced_thai_features": {
+ "character_validation": {
+ "critical_check": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+ "zero_width_characters": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+ "validation_tools": "Verify with Google SERP Preview Tool or Meta Tag Analyzer for actual SERP display",
+ "manual_verification": "Verify character-based meta tags using SERP preview tools if needed (meta-tags.json v3.7 handles optimization)"
+ },
+ "display_optimization": {
+ "font_rendering": "Character-based counting system (50-60 chars title, 140-160 chars description) per meta-tags.json v3.7",
+ "mobile_display": "Test Thai meta tags on mobile devices - target 50-60 chars for titles, 140-160 chars for descriptions",
+ "serp_preview": "Use SERP preview tools that support Thai Unicode for accurate character-based visualization"
+ }
+ }
+ },
+ "call_to_action": "required",
+ "benefit_focus": "preferred",
+ "keyword_density": {
+ "min": 1,
+ "max": 3
+ },
+ "professional_language": "required",
+ "emotional_triggers": [
+ "Save",
+ "Discover",
+ "Transform",
+ "Achieve"
+ ]
+ },
+ "scoring_weights": {
+ "title_weight": 0.6,
+ "description_weight": 0.4,
+ "length_penalty": 0.2,
+ "keyword_bonus": 0.15,
+ "location_bonus": 0.1,
+ "cta_bonus": 0.1
+ }
+ }
+ },
+ "workflow": {
+ "continuous_improvement_framework": {
+ "version_update_schedule": {
+ "minor_updates": "Monthly (multiplier adjustments based on feedback)",
+ "major_updates": "Quarterly (new features, system simplification)",
+ "emergency_fixes": "As needed (critical accuracy issues)"
+ },
+ "data_collection_goals": {
+ "current_samples": 2,
+ "target_samples": 20,
+ "sample_distribution": {
+ "conversational": 5,
+ "standard": 5,
+ "formal": 5,
+ "technical": 5
+ },
+ "priority_testing_areas": [
+ "ระดับความยาว 800-2000 คำ (ใช้บ่อยที่สุด)",
+ "เนื้อหาประเภทต่าง ๆ (สุขภาพ, ธุรกิจ, เทคโนโลยี)",
+ "Enhanced single-pass vs Section-by-section comparison"
+ ]
+ },
+ "improvement_priorities": {
+ "high_priority": [
+ "Multiplier accuracy improvement (target <5% error)",
+ "System simplification for new users",
+ "FAQ format standardization"
+ ],
+ "medium_priority": [
+ "Additional content type support",
+ "Better AI detection avoidance techniques",
+ "Integration with external tools"
+ ],
+ "low_priority": [
+ "Advanced analytics",
+ "Multi-language expansion beyond Thai/English",
+ "Custom brand voice templates"
+ ]
+ },
+ "quality_metrics_tracking": {
+ "accuracy_targets": {
+ "word_count_accuracy": "95-99% (current target)",
+ "user_satisfaction": "Measure through feedback reports",
+ "system_usability": "Time to complete first article <30 minutes"
+ },
+ "success_indicators": [
+ "Reduced feedback reports about word count issues",
+ "Increased usage of simplified decision tree",
+ "Better FAQ structure compliance",
+ "Fewer 'สรุป' and AI pattern occurrences"
+ ]
+ },
+ "feedback_integration_process": {
+ "monthly_review": {
+ "step_1": "Collect all feedback reports",
+ "step_2": "Analyze patterns in word count discrepancies",
+ "step_3": "Calculate new multiplier recommendations",
+ "step_4": "Test proposed changes with sample content",
+ "step_5": "Update system if improvements >10%"
+ },
+ "quarterly_major_review": {
+ "step_1": "Comprehensive system usage analysis",
+ "step_2": "User experience simplification opportunities",
+ "step_3": "New feature prioritization",
+ "step_4": "Major version planning"
+ }
+ },
+ "system_evolution_roadmap": {
+ "version_1.7": "Improved multipliers + simplified UI",
+ "version_1.8": "Enhanced external tool integration",
+ "version_2.0": "Complete system simplification overhaul",
+ "future_considerations": [
+ "AI model integration improvements",
+ "Real-time word counting guidance",
+ "Advanced content type detection"
+ ]
+ }
+ }
+ },
+ "features": {},
+ "resources": {
+ "external_validation_tools": {
+ "word_counting_tools": {
+ "recommended_for_thai": {
+ "google_docs": {
+ "accuracy": "High for Thai content",
+ "how_to_use": "Tools → Word Count → เลือก 'Include footnotes and endnotes'",
+ "pros": [
+ "Free",
+ "Accurate Thai word segmentation",
+ "Real-time counting"
+ ],
+ "cons": [
+ "Requires internet",
+ "Must copy-paste content"
+ ]
+ },
+ "microsoft_word": {
+ "accuracy": "Medium-High for Thai content",
+ "how_to_use": "Review → Word Count → เลือก 'Include textboxes, footnotes and endnotes'",
+ "pros": [
+ "Offline use",
+ "Professional interface"
+ ],
+ "cons": [
+ "Paid software",
+ "Sometimes counts Thai differently than Google"
+ ]
+ },
+ "online_thai_word_counters": {
+ "accuracy": "Varies widely",
+ "recommendation": "ใช้เป็น secondary validation เท่านั้น",
+ "note": "ผลลัพธ์อาจไม่ตรงกับ Google Docs"
+ }
+ },
+ "validation_workflow": {
+ "step_1": "Primary: Google Docs word count",
+ "step_2": "Secondary: Microsoft Word (if available)",
+ "step_3": "Compare with system estimate (should be within ±5%)",
+ "step_4": "If difference >10%, report using feedback template"
+ }
+ },
+ "content_quality_tools": {
+ "ai_detection_tools": {
+ "note": "AI detection tools อาจไม่แม่นยำกับภาษาไทย ใช้เพื่อ reference เท่านั้น",
+ "alternatives": [
+ "ให้คนอื่นอ่านเนื้อหาและประเมินความเป็นธรรมชาติ",
+ "ตรวจสอบ sentence structure และความหลากหลาย",
+ "มีตัวอย่างเฉพาะเจาะและประสบการณ์จริง"
+ ]
+ },
+ "readability_check": {
+ "manual_methods": [
+ "อ่านออกเสียงดัง - ควรไหลอย่างบังคับ?",
+ "ให้คนอื่นอ่านและประเมินความเข้าใจ",
+ "ตรวจสอบ paragraph length (2-4 ประโยค max)"
+ ]
+ }
+ },
+ "seo_validation_tools": {
+ "free_tools": {
+ "google_search_console": "ตรวจสอบ performance หลัง publish",
+ "google_rich_results_test": "ทดสอบ structured data ทั่วไป สำหรับ FAQPage ทูลจะรายงานว่า valid แต่จะไม่แสดง preview rich result (Google จำกัด FAQ Rich Results เฉพาะเว็บราชการ/สุขภาพ ตั้งแต่ ส.ค. 2023)",
+ "pagespeed_insights": "ตรวจสอบความเร็วของหน้า"
+ },
+ "manual_seo_checklist": [
+ "H1 มีเพียง 1 อัน",
+ "H2 มี primary/secondary keywords",
+ "Meta title 50-60 characters (delegated to meta-tags.json v3.7)",
+ "Meta description 140-160 characters (delegated to meta-tags.json v3.7)",
+ "FAQ ใช้ format_guidelines หลัก (H3 ไม่ใช้ ถาม:/ตอบ:)"
+ ]
+ }
+ }
+ },
+ "integration": {
+ "workflow_integration": {
+ "pre_requirements": [
+ "Brand configuration completed",
+ "Target keywords identified",
+ "Content brief prepared",
+ "User intent classified"
+ ],
+ "parallel_processes": [
+ "SEO optimization",
+ "Content quality assessment",
+ "Meta tags generation"
+ ],
+ "post_deliverables": [
+ "Optimized content ready for publishing",
+ "Meta tags for CMS integration",
+ "Performance tracking setup"
+ ],
+ "success_metrics": [
+ "Content meets all strategic specifications while maintaining natural readability",
+ "Brand voice and guidelines consistently applied throughout all content",
+ "SEO objectives achieved through natural keyword integration and semantic optimization",
+ "User intent fully satisfied with actionable, valuable information that exceeds competitor content",
+ "Content demonstrates authentic expertise and engages readers emotionally and intellectually",
+ "Meta elements optimized within character limits with compelling, click-worthy copy",
+ "Content structure optimized for scanning with appropriate paragraph length and clear headers",
+ "Natural headlines sound conversational and human-written, avoiding AI-generated patterns and cliched expert terminology",
+ "Thai content achieves accurate word count through semantic segmentation and professional validation",
+ "English URL slugs effectively communicate content context for international SEO compatibility"
+ ]
+ }
+ },
+ "tools": {
+ "user_feedback_system": {
+ "word_count_issue_reporting": {
+ "template": {
+ "issue_type": "[Word Count Inaccuracy / FAQ Format Issue / Conclusion Problem / Other]",
+ "content_type": "[conversational/standard/formal/technical]",
+ "target_words": "[X] คำ",
+ "actual_words_google_docs": "[Y] คำ",
+ "mode_used": "[enhanced_single_pass / section_by_section / single_pass]",
+ "accuracy_percentage": "[(Y/X) × 100]%",
+ "description": "อธิบายปัญหาอย่างละเอียด",
+ "sample_content": "[เนื้อหาตัวอย่าง 1-2 ย่อหน้า]",
+ "suggestions": "ข้อเสนอแนะการปรับปรุง"
+ },
+ "example_report": {
+ "issue_type": "Word Count Inaccuracy",
+ "content_type": "formal",
+ "target_words": "1200 คำ",
+ "actual_words_google_docs": "1234 คำ",
+ "mode_used": "enhanced_single_pass",
+ "accuracy_percentage": "82% (ต่ำกว่าเป้าหมาย ±5%)",
+ "description": "เนื้อหาเกี่ยวกับสุขภาพ ระบบประเมินว่าได้ 1200 คำ แต่จริงได้ 1134 คำ",
+ "suggestions": "RESOLVED: Multiplier formal adjusted to 4.5 based on real Unicode character counting (4.37 chars/word actual)"
+ }
+ },
+ "improvement_suggestions": {
+ "template": {
+ "suggestion_type": "[System Simplification / New Feature / Bug Fix / Documentation]",
+ "current_issue": "อธิบายปัญหาปัจจุบัน",
+ "proposed_solution": "ข้อเสนอวิธีแก้ไข",
+ "expected_benefit": "ผลประโยชน์ที่คาดว่าจะได้รับ",
+ "priority_level": "[High/Medium/Low]"
+ }
+ },
+ "contact_info": {
+ "note": "ข้อมูล feedback จะถูกนำมาปรับปรุงระบบใน version ถัดไป",
+ "data_usage": "ข้อมูลจะถูกใช้เพื่อปรับปรุง multipliers และระบบเท่านั้น"
+ }
+ }
+ },
+ "advanced": {},
+ "language": {
+ "output": "ภาษาไทยเป็นหลัก คำเทคนิคคงคำอังกฤษไว้ได้",
+ "currency": "บาท ใช้คำว่า บาท หรือ THB ห้ามใช้ USD เว้นแต่ผู้ใช้ระบุเอง",
+ "note": "สกิลชุดนี้ใช้กับธุรกิจไทย ห้ามแปลงเป็นสำนวนหรือหน่วยเงินแบบอเมริกัน"
+ },
+ "thai_character_counting": {
+ "rule": "การนับตัวอักษรไทย ใช้กติกาเดียวกับสกิล `meta-basics-lite` เท่านั้น คือ สระบน สระล่าง และวรรณยุกต์ นับเป็นตัวอักษร 1 ตัวเสมอ ทั้ง title, meta description และ H1 ห้ามใช้ NFD normalization และห้ามตัดอักขระประกอบออกจากการนับ",
+ "source_of_truth": "meta-basics-lite",
+ "limits": {
+ "title": "50 ถึง 60 ตัวอักษร",
+ "meta_description": "140 ถึง 160 ตัวอักษร"
+ },
+ "example": "เชียงใหม่ ตาเห็นราว 6 ช่อง แต่นับได้ 9 ตัวอักษร"
+ }
+}

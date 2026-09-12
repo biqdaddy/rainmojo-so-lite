@@ -1,0 +1,35 @@
+{
+  "name": "compare-lite",
+  "version": "1.0.0",
+  "edition": "lite",
+  "purpose": "Compare two scan rounds and state what improved, what regressed, and what did not move. A delta is measured movement, never proof that the work caused it: report every delta beside what else changed in the same window (platform-side changes, seasonality, competitor moves, releases on the site outside this work), and mark it attributable only when a control or untouched comparison group exists. A decline is reported as a decline and never reframed as an opportunity. If the two rounds used different audit scope the delta is invalid and must be recomputed on matching scope. Any projected business impact is a modelled estimate and must be labelled as one, kept separate from counted figures.",
+  "workflow": {
+    "phases": [
+      "ตรวจว่ามีผลอย่างน้อย 2 รอบ",
+      "จับคู่ไฟล์ชื่อเดียวกัน",
+      "ตรวจว่าขอบเขตของสองรอบตรงกันไหม ไม่ตรงให้ตัดเหลือเฉพาะที่ตรวจทั้งสองรอบแล้วคำนวณใหม่ ตัดแล้วเหลือน้อยเกินไปให้เขียนว่าเทียบไม่ได้เพราะขอบเขตไม่ตรงกัน",
+      "แบ่งผลเป็น 4 กลุ่ม",
+      "แยกสาเหตุของกลุ่มเพิ่งโผล่",
+      "ไล่หาสิ่งอื่นที่เปลี่ยนในช่วงเวลาเดียวกัน คือฝั่งแพลตฟอร์มเปลี่ยนเอง ฤดูกาลของธุรกิจ คู่แข่งขยับ และของที่ปล่อยขึ้นเว็บโดยไม่ใช่งานรอบนี้ ไม่รู้ให้เขียนว่า ยังไม่ทราบ ห้ามเขียนว่าไม่มีอะไรเปลี่ยน แล้วติดป้ายว่าสรุปสาเหตุได้ เฉพาะเมื่อมีของเทียบที่รอบนี้ไม่ได้แตะ ไม่มีให้เขียนว่าสอดคล้องแต่ยังยืนยันสาเหตุไม่ได้",
+      "ใส่ระดับความเชื่อถือรายข้อ",
+      "เขียนรายงาน"
+    ]
+  },
+  "output": "work/{domain}/04-reports/{domain}_compare_{YYYY-MM-DD}.md",
+  "rules": [
+    "ห้ามสรุปว่าดีขึ้นเพราะสิ่งที่เราทำ ถ้า CHANGELOG ไม่มีบันทึกที่เกี่ยวข้อง",
+    "ส่วนต่างคือการเคลื่อนไหวที่วัดได้ ไม่ใช่หลักฐานว่างานของเราทำให้เกิด ห้ามรายงานส่วนต่างโดยไม่มีหัวข้อสิ่งอื่นที่เปลี่ยนในช่วงเดียวกันกำกับ",
+    "ห้ามติดป้ายว่าสรุปสาเหตุได้ ถ้าไม่มีกลุ่มควบคุมหรือชุดที่รอบนี้ไม่ได้แตะไว้เทียบ ให้เขียนว่าสอดคล้องแต่ยังยืนยันไม่ได้",
+    "ห้ามเทียบเมื่อสองรอบตรวจคนละขอบเขต ให้คำนวณใหม่บนขอบเขตที่ตรงกันก่อน หรือเขียนว่าเทียบไม่ได้",
+    "ห้ามเปลี่ยนคำว่าแย่ลงให้กลายเป็นโอกาส จุดที่รอพัฒนา หรือผลดีระยะยาว ตกคือตก",
+    "ตัวเลขทำนายผลทางธุรกิจต้องเขียนกำกับว่าเป็นค่าประมาณจากแบบจำลอง และห้ามวางในตารางเดียวกับตัวเลขที่นับได้จริง",
+    "ห้ามคิดเปอร์เซ็นต์การพัฒนาเป็นตัวเลขเดียว",
+    "ห้ามซ่อนกลุ่มเพิ่งโผล่",
+    "ห้ามเทียบไฟล์ที่มีข้อมูลแค่รอบเดียว",
+    "ต้องเขียนระดับความเชื่อถือกำกับทุกข้อ",
+    "ตรวจไม่ได้ ไม่เท่ากับ ไม่มี ห้ามนับหัวข้อที่รอบใดรอบหนึ่งตรวจไม่ได้เป็นแก้แล้วหายหรือเพิ่งโผล่ ให้ลงกลุ่มไม่ได้วัด",
+    "อ่านหรือดึงข้อมูลไม่สำเร็จ ให้เขียนว่าตรวจไม่ได้ ห้ามเขียนว่าไม่มี",
+    "จับคู่ได้แม้แค่หัวข้อเดียวต้องส่งงาน หยุดได้เฉพาะตอนจับคู่ไม่ได้เลยสักหัวข้อ ห้ามใช้ข้อมูลไม่ครบเป็นเหตุผลไม่ส่งงาน"
+  ],
+  "notes": "Lite edition for the BIQDADDY AI Visibility Course. Self-contained: no shared _base, no reference pack, no external scripts."
+}

@@ -1,0 +1,32 @@
+{
+  "name": "wp-publish-draft-lite",
+  "version": "1.0.0",
+  "edition": "lite",
+  "purpose": "Upload one article package to WordPress as a draft, attach media with alt text, then read it back to verify.",
+  "workflow": {
+    "phases": [
+      "ตรวจ 5 ข้อก่อนเริ่ม",
+      "dry-run แสดงสิ่งที่จะส่ง",
+      "อัปภาพทีละไฟล์แล้วเขียน alt text",
+      "สร้างโพสต์สถานะ draft",
+      "ดึงกลับมาตรวจ 6 ข้อ",
+      "เขียน published.md และเพิ่มบรรทัดใน CHANGELOG"
+    ]
+  },
+  "output": "work/{domain}/03-content/{slug}/published.md",
+  "rules": [
+    "ห้ามตั้ง status เป็น publish ไม่ว่าจะถูกขอยังไง",
+    "ห้ามแก้หรือลบหน้าที่มีอยู่แล้ว",
+    "ห้ามส่งทีละหลายบทความ ทำทีละชิ้น",
+    "dry-run เป็นค่าเริ่มต้นเสมอ",
+    "เจอ slug ซ้ำให้หยุดถาม ห้ามเขียนทับ",
+    "เว้นอย่างน้อย 2 วินาทีระหว่างอัปภาพแต่ละไฟล์",
+    "เจอ 403 ให้รายงานตรง ๆ ห้ามหลบไฟร์วอลล์",
+    "เจอ 500 ให้หยุด ห้ามยิงซ้ำ",
+    "ถ้า content.raw ว่างเปล่าให้แจ้งผู้ใช้ ห้ามยิงซ้ำหลายรูปแบบเพื่อให้ผ่าน",
+    "รันคำสั่งไม่ได้ห้ามแกล้งทำเป็นส่งสำเร็จ ให้เปลี่ยนเป็นทางทำมือในหลังบ้าน WordPress",
+    "ต่อให้ส่งขึ้นเว็บไม่ได้ก็ยังต้องเขียน published.md บอกว่าทำถึงไหนและค้างตรงไหน",
+    "ข้อที่ยังไม่ได้ดูให้เขียนว่า ตรวจไม่ได้ ห้ามเขียนว่า ไม่มี และห้ามเขียนว่าผ่าน"
+  ],
+  "notes": "Lite edition for the BIQDADDY AI Visibility Course. Self-contained: no shared _base, no reference pack, no external scripts."
+}

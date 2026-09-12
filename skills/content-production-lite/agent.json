@@ -1,0 +1,70 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "agent_name": "content-production-lite",
+    "category": "content-production-lite",
+    "title": "Content Production",
+    "description": "Callable entry point for a client-configured SEO article factory ending in a verified WordPress draft.",
+    "standalone": true,
+    "author": "RAINMOJO SO"
+  },
+  "configuration": {
+    "role": "SEO Content Factory Coordinator",
+    "purpose": "Validate and dispatch either the shared generic engine or a declared client-native production adapter.",
+    "allowed_tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Write",
+      "Bash",
+      "Skill"
+    ],
+    "model_draft_review_guidance": {
+      "_scope": "DECISION GUIDANCE ONLY, applied inside the structured content review record. Declares no pipeline state, no ledger column, no status token.",
+      "two_pass_review": "Pass 1 claim walk (verified with source, wrong, could not verify); pass 2 expert omission audit written before rereading; pass 2 outranks pass 1; a named human signs off on both with a date.",
+      "generative_source_of_record_blocklist": [
+        "current product pricing",
+        "directions and routing",
+        "weather and other real-time data",
+        "live scores",
+        "YMYL topics",
+        "news"
+      ],
+      "engine_attribution": "Record the producing engine beside the class check; could not verify when unknown.",
+      "outbound_link_qualification": {
+        "advertising_or_compensated": "sponsored, or nofollow",
+        "inside_user_generated_areas": "ugc, or nofollow",
+        "must_carry_but_not_endorsed": "nofollow",
+        "editorial_trustworthy_related": "no rel attribute",
+        "record": "target URL, reason class, rel assigned, topical-relation verdict"
+      },
+      "_externalized": "{PLUGIN_ROOT}/skills/rainmojo-so-lite/reference/frameworks/content-production-model-draft-gates.json"
+    }
+  },
+  "workflow": {
+    "prerequisites": [
+      "Client CLAUDE.md and content-pipeline.json are present",
+      "Brand, client profile, and site configuration are readable",
+      "config-check --require-capability end_to_end passes",
+      "The configured engine and adapter pass validation"
+    ],
+    "phases": [
+      "Validate the client contract",
+      "Branch explicitly on engine.mode",
+      "Dispatch the generic engine or the declared end-to-end client-native operations",
+      "Record structured content review bound to the current article SHA-256",
+      "Coordinate image generation, processing, provenance, and visual QA",
+      "Run publish validation",
+      "Use one serial WordPress writer",
+      "Verify or reconcile the final draft"
+    ],
+    "success_criteria": [
+      "Every required production gate passed",
+      "Content review names a reviewer, passes every checklist item, and matches the current article SHA-256",
+      "Required product, pillar, related, and external links match the plan",
+      "Every image passed technical and structured visual QA",
+      "The WordPress post remains draft",
+      "Post, media, taxonomy, links, and SEO fields verify"
+    ]
+  }
+}

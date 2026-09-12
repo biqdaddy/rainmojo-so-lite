@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "version": "1.0-lite",
+    "agent_name": "so-present-lite",
+    "category": "shared",
+    "title": "Two-Tier Presentation Layer and Response Modes (Lite)",
+    "description": "Builds, lints and renders the Tier 1 quick-glance card for the current host and structures every answer in one of the seven response modes, then hands off to the unchanged Tier 2 deliverable. Lite cards carry counts of checks passed, never a weighted score.",
+    "last_updated": "2026-09-12",
+    "standalone": true,
+    "author": "BIQDADDY"
+  },
+  "configuration": {
+    "role": "Presentation Layer Renderer",
+    "purpose": "Turn a finished run into a clear card in chat and point to the complete deliverable, on any AI host, without inventing a single number.",
+    "allowed_tools": ["Read", "Grep", "Glob", "Write", "Bash"]
+  },
+  "workflow": {
+    "inputs": {
+      "deliverable": "The Tier 2 file the calling unit just wrote (report-lite HTML, an audit Markdown, a deploy file) or, for plain questions, the answer content.",
+      "host": "One of claude-desktop, cowork, artifact, chatgpt, gemini, cursor, vscode, preview, github, obsidian, claude-code, cli, terminal, email. Passed by the caller or read from RAINMOJO_PRESENT_TARGET.",
+      "mode": "quick_fact, howto, comparison, troubleshoot, audit, deployable. The caller sets it from the request; the primary deliverable decides when a request mixes modes."
+    },
+    "step_1_build_summary": {
+      "action": "Write summary.json against templates/widget/summary.schema.json.",
+      "rules": [
+        "Copy every value from the deliverable: counts of checks passed, platform states, competitor citation counts, query matrix rows. Never re-estimate.",
+        "Lite edition: omit the score block entirely. dimensions[].value is the number of checks passed and dimensions[].max the number of checks run; platforms[].score is null.",
+        "A value the run could not measure is null or unverifiable and its reason goes to transparency.could_not_verify.",
+        "Keep text short: summary 2 to 3 sentences, key_risk body under 90 words, action body under 40 words, 3 to 4 actions, at most 3 next steps.",
+        "Language follows meta.lang from the client profile; the card and the deliverable use the same language.",
+        "No emoji, no glyph in JSON text, no em dash, no pipe (deployables and diff text may contain pipes the client site already uses).",
+        "handoff.tier2_path is the deliverable path under work/{domain}/ or the client-confined path returned by client_workspace.py route; handoff.tier2_url only when an artifact was published.",
+        "next_steps prompts are exact slash commands of this plugin, e.g. /rainmojo-so-lite:aiso-platform-lite {domain}."
+      ],
+      "builder": "python {PLUGIN_ROOT}/skills/rainmojo-so-lite/scripts/build_summary.py --agent {agent_json} --page {page_json} --robots {robots_json} --checklist {checklist_json} --sampling {sampling_json} --client {client} --domain {domain} --lang {lang} --skill {skillkey} --tier2 {tier2_target} --summary \"{two or three sentences}\" --out {summary_target}. Absent inputs simply leave their blocks out; the builder never estimates."
+    },
+    "step_2_lint": {
+      "command": "python {PLUGIN_ROOT}/skills/rainmojo-so-lite/scripts/present.py --summary {summary_target} --lint",
+      "rule": "Any FAIL line blocks the render. Fix the JSON, never the lint."
+    },
+    "step_3_render": {
+      "command": "python {PLUGIN_ROOT}/skills/rainmojo-so-lite/scripts/present.py --summary {summary_target} --target auto --host {host}",
+      "ladder": [
+        {"target": "host", "show": "Pass the fragment to the host's inline widget tool. Write the one-sentence summary in the reply text as well; the widget holds the visual."},
+        {"target": "html", "show": "Publish as an artifact or canvas page, or write the card file next to the deliverable and open it in the preview pane."},
+        {"target": "mermaid", "show": "Emit the fenced mermaid block for workflow or decision questions only, and only where the host renders mermaid; pair it with the Markdown card for counts."},
+        {"target": "ascii", "show": "Emit the fenced text block with the pure ASCII tree when the host shows mermaid as raw code or is a plain console."},
+        {"target": "md", "show": "Emit the Markdown as the reply body. ASCII bars [#####-----] and text pills are allowed here only."}
+      ],
+      "fallback": "If a rung fails to render, drop exactly one rung and retry; never leave the user without a card."
+    },
+    "step_4_handoff": {
+      "rule": "The last thing the user sees is the hand-off line naming the Tier 2 file and the 2 to 3 next steps. The Tier 2 deliverable is never truncated, summarised in place, or replaced by the card."
+    },
+    "hard_rules": {
+      "_priority": "MANDATORY",
+      "no_emoji": "No emoji or pictograph on any surface; presentation_instruction_gate.py and present.py --lint reject them.",
+      "glyphs": "Typographic glyphs only in chat and Markdown; the HTML card uses inline SVG icons.",
+      "status_colours": "Semantic status tokens never follow the brand; only --brand-primary, --brand-accent, --brand-accent-ink change per client.",
+      "honesty": "Unmeasured means could not verify. A card that shows a value the deliverable does not carry is a defect.",
+      "no_score": "Lite edition: no score block, no percentage, no band. Counts of checks passed only."
+    },
+    "output": {
+      "summary": "{domain}_{skillkey}_{YYYY-MM-DD}_summary.json next to the deliverable (work/{domain}/04-reports/ or the report-data route of a client workspace)",
+      "card_file": "{domain}_{skillkey}_{YYYY-MM-DD}_card.html in the same folder, only when the host needs a file"
+    }
+  }
+}

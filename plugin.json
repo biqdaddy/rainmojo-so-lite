@@ -1,0 +1,21 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "rainmojo-so-lite",
+  "version": "2.0.0",
+  "description": "AISO and SEO toolkit for the BIQDADDY AI Visibility Course. 43 skills and 17 orchestrating agents covering AI crawler access bound to a 68-token crawler registry, AI readiness checklists for all ten documented AI answer platforms, AI agent readiness (semantic HTML and the accessibility tree), citability, content and schema review, llms.txt, brand mentions with sampled AI answers, keyword research and clustering, competitor and content gap analysis, topical authority, internal linking, image optimization, local SEO, backlink strategy, technical audit, two-round comparison, a Two-Tier presentation layer (Tier 1 card in chat on any AI host plus the full report), and a content production chain that publishes WordPress drafts. Lite edition for workshop use: checklists and counts, no weighted scores.",
+  "author": {
+    "name": "BIQDADDY",
+    "url": "https://course.biqdaddy.com"
+  },
+  "license": "LicenseRef-BIQDADDY-Course-1.0",
+  "keywords": [
+    "aiso",
+    "ai-visibility",
+    "seo",
+    "schema",
+    "llms-txt",
+    "course"
+  ],
+  "homepage": "https://course.biqdaddy.com",
+  "repository": "https://github.com/biqdaddy/rainmojo-so-lite"
+}

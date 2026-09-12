@@ -1,0 +1,30 @@
+{
+  "_note": "Inline SVG outline icons for the standalone Tier 1 card (viewBox 0 0 24 24, stroke currentColor, width 2, round caps). The host fragment uses Tabler webfont names in 'host' instead. No emoji, no glyphs.",
+  "viewBox": "0 0 24 24",
+  "attrs": "fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"",
+  "icons": {
+    "alert": {"svg": "<path d=\"M12 9v4\"/><path d=\"M10.4 3.9 2.4 17.5a1.9 1.9 0 0 0 1.6 2.9h16a1.9 1.9 0 0 0 1.6-2.9L13.6 3.9a1.9 1.9 0 0 0-3.2 0z\"/><path d=\"M12 16h.01\"/>", "host": "ti-alert-triangle"},
+    "check": {"svg": "<path d=\"M5 12l5 5 9-11\"/>", "host": "ti-check"},
+    "x": {"svg": "<path d=\"M18 6 6 18\"/><path d=\"M6 6l12 12\"/>", "host": "ti-x"},
+    "minus": {"svg": "<path d=\"M5 12h14\"/>", "host": "ti-minus"},
+    "trend-up": {"svg": "<path d=\"M3 17l6-6 4 4 8-8\"/><path d=\"M14 7h7v7\"/>", "host": "ti-trending-up"},
+    "trend-down": {"svg": "<path d=\"M3 7l6 6 4-4 8 8\"/><path d=\"M21 10v7h-7\"/>", "host": "ti-trending-down"},
+    "arrow-right": {"svg": "<path d=\"M5 12h14\"/><path d=\"M13 6l6 6-6 6\"/>", "host": "ti-arrow-right"},
+    "file": {"svg": "<path d=\"M14 3v4a1 1 0 0 0 1 1h4\"/><path d=\"M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z\"/><path d=\"M9 13h6\"/><path d=\"M9 17h6\"/>", "host": "ti-file-text"},
+    "clock": {"svg": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 3\"/>", "host": "ti-clock"},
+    "user": {"svg": "<circle cx=\"12\" cy=\"7\" r=\"4\"/><path d=\"M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2\"/>", "host": "ti-user"},
+    "circle-check": {"svg": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M9 12l2 2 4-4\"/>", "host": "ti-circle-check"},
+    "circle-half": {"svg": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 3v18\"/><path d=\"M12 3a9 9 0 0 1 0 18\" fill=\"currentColor\" stroke=\"none\"/>", "host": "ti-circle-half-2"},
+    "circle-x": {"svg": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M10 10l4 4\"/><path d=\"M14 10l-4 4\"/>", "host": "ti-circle-x"},
+    "circle-dashed": {"svg": "<path d=\"M8.56 3.69a9 9 0 0 0-2.92 1.95\"/><path d=\"M3.69 8.56A9 9 0 0 0 3 12\"/><path d=\"M3.69 15.44a9 9 0 0 0 1.95 2.92\"/><path d=\"M8.56 20.31A9 9 0 0 0 12 21\"/><path d=\"M15.44 20.31a9 9 0 0 0 2.92-1.95\"/><path d=\"M20.31 15.44A9 9 0 0 0 21 12\"/><path d=\"M20.31 8.56a9 9 0 0 0-1.95-2.92\"/><path d=\"M15.44 3.69A9 9 0 0 0 12 3\"/>", "host": "ti-circle-dashed"},
+    "help": {"svg": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 17h.01\"/><path d=\"M12 13.5a1.5 1.5 0 0 1 1-1.5 2.6 2.6 0 1 0-3-4\"/>", "host": "ti-help-circle"},
+    "external": {"svg": "<path d=\"M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6\"/><path d=\"M11 13l9-9\"/><path d=\"M15 4h5v5\"/>", "host": "ti-external-link"},
+    "copy": {"svg": "<rect x=\"8\" y=\"8\" width=\"12\" height=\"12\" rx=\"2\"/><path d=\"M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2\"/>", "host": "ti-copy"},
+    "info": {"svg": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 8h.01\"/><path d=\"M11 12h1v4h1\"/>", "host": "ti-info-circle"},
+    "bulb": {"svg": "<path d=\"M3 12h1m8-9v1m8 8h1M5.6 5.6l.7.7m12.1-.7-.7.7\"/><path d=\"M9 16a5 5 0 1 1 6 0 3.5 3.5 0 0 0-1 3 2 2 0 0 1-4 0 3.5 3.5 0 0 0-1-3\"/><path d=\"M9.7 17h4.6\"/>", "host": "ti-bulb"},
+    "terminal": {"svg": "<path d=\"M5 7l5 5-5 5\"/><path d=\"M12 19h7\"/>", "host": "ti-terminal-2"},
+    "wrench": {"svg": "<path d=\"M7 10h3v-3l-3.5-3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1-3 3l-6-6a6 6 0 0 1-8-8l3.5 3.5\"/>", "host": "ti-tool"},
+    "list": {"svg": "<path d=\"M9 6h11\"/><path d=\"M9 12h11\"/><path d=\"M9 18h11\"/><path d=\"M5 6v.01\"/><path d=\"M5 12v.01\"/><path d=\"M5 18v.01\"/>", "host": "ti-list"},
+    "search": {"svg": "<circle cx=\"10\" cy=\"10\" r=\"7\"/><path d=\"M21 21l-6-6\"/>", "host": "ti-search"}
+  }
+}

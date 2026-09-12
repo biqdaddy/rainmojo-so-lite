@@ -1,0 +1,68 @@
+{
+  "schema": "rainmojo.tier1.summary/1",
+  "mode": "howto",
+  "meta": {
+    "skill": "aiso-crawlers",
+    "client": "Demo Aesthetic Clinic",
+    "domain": "demo-aesthetic.example.invalid",
+    "generated_at": "2026-09-11T15:10:00+07:00",
+    "lang": "th",
+    "run_id": "20260911-1510"
+  },
+  "headline": {
+    "kicker": "วิธีทำ",
+    "title": "เปิดทางให้ AI search crawler โดยไม่เปิดสิทธิ์ฝึกโมเดล",
+    "subtitle": "robots.txt แบบ selective ใน 4 ขั้นตอน"
+  },
+  "steps": [
+    {
+      "title": "สำรอง robots.txt เดิม",
+      "do": "ดาวน์โหลดไฟล์ปัจจุบันเก็บไว้ใน uploads/ ก่อนแก้ทุกครั้ง",
+      "expect": "มีไฟล์ต้นฉบับพร้อมวันที่ไว้ย้อนกลับ",
+      "owner": "Dev"
+    },
+    {
+      "title": "เพิ่มกลุ่ม search crawler",
+      "do": "ใส่ User-agent สำหรับ OAI-SearchBot, Claude-SearchBot, PerplexityBot, meta-webindexer, Applebot พร้อม Allow: /",
+      "expect": "ทุกแพลตฟอร์มที่มีเอกสารทางการเข้าถึงหน้าสาธารณะได้",
+      "owner": "Dev"
+    },
+    {
+      "title": "แยกกลุ่ม training crawler",
+      "do": "ตั้ง GPTBot, ClaudeBot, Google-Extended, meta-externalagent, Applebot-Extended ตามนโยบายลูกค้า",
+      "expect": "สิทธิ์การฝึกโมเดลถูกตัดสินใจอย่างชัดเจน ไม่ปนกับ visibility",
+      "owner": "Client"
+    },
+    {
+      "title": "ตรวจสอบกับ noindex plan",
+      "do": "เทียบ Disallow ทุกบรรทัดกับแผน noindex ของ seo-noindex-checklist ก่อน deploy",
+      "expect": "ไม่มี URL ที่ถูกบล็อกจน meta noindex ไม่ถูกอ่าน",
+      "owner": "Dev"
+    }
+  ],
+  "deployables": [
+    {
+      "filename": "robots.txt",
+      "language": "text",
+      "content": "User-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: GPTBot\nDisallow: /\n\nUser-agent: *\nAllow: /\nSitemap: https://demo-aesthetic.example.invalid/sitemap.xml",
+      "path": "clients/demo-aesthetic.example.invalid/deploy/robots.txt"
+    }
+  ],
+  "handoff": {
+    "tier2_path": "clients/demo-aesthetic.example.invalid/reports/seo-audits/demo-aesthetic.example.invalid_aiso-crawlers_2026-09-11.md",
+    "tier2_label": "เปิดรายงาน crawler access ฉบับเต็ม",
+    "formats": [
+      "Markdown"
+    ]
+  },
+  "next_steps": [
+    {
+      "label": "สร้าง robots.txt แบบ selective",
+      "prompt": "/rainmojo-so-lite:aiso-crawlers-lite demo-aesthetic.example.invalid --generate selective"
+    },
+    {
+      "label": "ตรวจความพร้อมทั้ง 10 แพลตฟอร์ม",
+      "prompt": "/rainmojo-so-lite:aiso-platform-lite demo-aesthetic.example.invalid"
+    }
+  ]
+}

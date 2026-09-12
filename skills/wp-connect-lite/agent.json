@@ -1,0 +1,26 @@
+{
+  "name": "wp-connect-lite",
+  "version": "1.0.0",
+  "edition": "lite",
+  "purpose": "Verify a WordPress REST API connection using credentials from environment variables only. Read-only.",
+  "workflow": {
+    "phases": [
+      "ตรวจว่ามี .env หรือยัง ถ้าไม่มีสร้าง .env.example ให้",
+      "ยิง GET users/me ดูรหัสตอบกลับ",
+      "ตรวจสิทธิ์และดึงรายการหมวดหมู่",
+      "เขียน wp-connection.md"
+    ]
+  },
+  "output": "work/{domain}/wp-connection.md",
+  "rules": [
+    "ห้ามขอ credential ผ่านบทสนทนา",
+    "ห้ามแสดงหรือเขียน credential ลงไฟล์ใด ๆ",
+    "ห้ามสร้างไฟล์ .env ที่มีค่าจริง สร้างได้แค่ .env.example",
+    "ทุกคำสั่งเป็น GET ห้ามเขียนอะไรลงเว็บ",
+    "ห้ามพยายามหลบไฟร์วอลล์ ถ้าโดนกั้นให้รายงานตรง ๆ",
+    "ถ้าผู้ใช้พิมพ์ credential มาในแชท ให้เตือนว่าควรเปลี่ยนรหัสนั้นใหม่",
+    "ต่อให้ทดสอบไม่สำเร็จก็ต้องเขียน wp-connection.md ห้ามจบงานด้วยการไม่ส่งอะไรเลย",
+    "ช่องที่ยังไม่ได้พิสูจน์ให้เขียนว่า ตรวจไม่ได้ ห้ามเขียนว่า ไม่มี หรือ ไม่ผ่าน"
+  ],
+  "notes": "Lite edition for the BIQDADDY AI Visibility Course. Self-contained: no shared _base, no reference pack, no external scripts."
+}

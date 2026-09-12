@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "agent_name": "wp-content-publisher-lite",
+    "category": "wordpress",
+    "title": "WordPress Content Publisher",
+    "description": "Draft-only WordPress article and media publisher with REST fallback, throttling, idempotency, SEO fields, and verification.",
+    "standalone": true,
+    "author": "RAINMOJO SO"
+  },
+  "configuration": {
+    "role": "WordPress Editorial Publisher",
+    "purpose": "Upload a validated article package and all associated media as a verified WordPress draft.",
+    "allowed_tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Write",
+      "Bash"
+    ]
+  },
+  "workflow": {
+    "prerequisites": [
+      "Client content-pipeline.json is present",
+      "config-check --require-capability wordpress_draft passes",
+      "engine.mode has been read before choosing the generic publisher or native adapter"
+    ],
+    "phases": [
+      "Branch explicitly on engine.mode",
+      "For generic, require publish_ready and run the shared draft publisher",
+      "For generic, verify post, taxonomy, links, SEO fields, and media individually",
+      "For client_native, invoke only preflight, publish_draft, and verify_only",
+      "Use verify-only recovery and never retry an ambiguous write"
+    ],
+    "success_criteria": [
+      "Post status is draft",
+      "Title, slug, content, links, taxonomy, featured media, inline media, and SEO fields match the package",
+      "Media alt, title, caption, credit, dimensions, and identity match the package",
+      "Every media item is readable through the REST API",
+      "No ambiguous write was retried"
+    ]
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "_note": "Shared agent.json defaults for the RAINMOJO SO plugin. Every skill's agent.json inherits these. A skill's own agent.json only needs its unique metadata and workflow; merge these keys in (skill-level values override). Mirrors the conventions in _base/skill-scaffold.md.",
+  "metadata": {
+    "author": "RAINMOJO SO",
+    "integration_compatibility": "RAINMOJO"
+  },
+  "allowed_tools_default": [
+    "Read",
+    "Grep",
+    "Glob",
+    "WebFetch",
+    "Write",
+    "Bash"
+  ],
+  "brand_loading": {
+    "_note": "Skills auto-load client brand context before executing; see Brand Context in _base/skill-scaffold.md.",
+    "client_root": "./clients/{domain}/",
+    "lookup_order": [
+      "./clients/{domain}/AGENTS.md",
+      "./clients/{domain}/CLAUDE.md",
+      "./clients/{domain}/workspace-routing.json",
+      "./clients/{domain}/brand-guidelines.md",
+      "./clients/{domain}/client-profile.md",
+      "./clients/{domain}/site-config.md",
+      "./clients/{domain}/content-pipeline.json"
+    ],
+    "uploads_dir": "./clients/{domain}/uploads/",
+    "on_found": "Load and apply brand voice, tone, and context.",
+    "on_missing": "Continue with generic analysis."
+  },
+  "output_convention": {
+    "_note": "Shared naming and save-location rules; see Output in _base/skill-scaffold.md.",
+    "naming_pattern": "{domain}_{skillkey}_{YYYY-MM-DD}.{ext}",
+    "save_root": "./clients/{domain}/",
+    "generated_files_at_client_root": "forbidden",
+    "working_directory_output": "forbidden",
+    "subfolders": {
+      "keywords": "keyword research, clustering, trends",
+      "keywords/reports": "compiled keyword-pipeline reports",
+      "content/drafts": "standalone content drafts and outlines",
+      "content/planning": "content calendars, roadmaps, topic plans, and batch manifests",
+      "content/production/{slug}": "stateful article packages and per-article reports",
+      "content/dashboards": "regenerated mutable current content and publishing views only",
+      "content/reports/status": "immutable run-scoped content status snapshots and batch manifests",
+      "content/reports/publishing": "immutable run-scoped WordPress draft publishing snapshots",
+      "disavow/config": "client-scoped disavow rules",
+      "disavow/data/decision-ledgers": "immutable dated and run-scoped disavow decisions",
+      "disavow/reports/reviews": "immutable dated and run-scoped disavow review evidence",
+      "disavow/dashboards": "regenerated mutable current disavow view only",
+      "disavow/exports/search-console": "immutable dated and run-scoped Search Console disavow candidates",
+      "disavow/runs": "run-scoped disavow manifests and evidence",
+      "reports": "general assessments and client deliverables",
+      "reports/data": "unified-report inputs and working JSON only",
+      "reports/seo-audits": "SEO, AISO, technical, and combined search audits",
+      "schema": "JSON-LD markup files",
+      "optimization": "general meta tags and technical recommendations",
+      "optimization/images": "image-optimization outputs and naming ledgers outside article packages",
+      "optimization/off-page": "off-page strategies and reports",
+      "optimization/on-page": "on-page audits, plans, and reports",
+      "internal-links": "internal-link maps and plans",
+      "deploy": "reviewed deployment artifacts",
+      "wiki/entities": "durable client knowledge",
+      "work/{registered-type}": "registered novel work only"
+    }
+  },
+  "workspace_routing": {
+    "contract_file": "./clients/{domain}/workspace-routing.json",
+    "helper": "{PLUGIN_ROOT}/skills/rainmojo-so-lite/scripts/client_workspace.py",
+    "before_write": "Resolve the most precise existing route and write only to the returned client-confined path.",
+    "uploads_policy": "read_only",
+    "novel_work_policy": "Use create-work only when no existing route reasonably fits; require owner, artifact_classes, writable_subpaths, source_of_truth, retention, description, and created_at. After registration, resolve every artifact with route-work and write only to its returned target; never construct a work path directly. An explicit external source_of_truth must already exist, otherwise use the generated work README. Append log.md.",
+    "containment_policy": "Reject absolute paths, traversal, symlinks, junctions, reparse points, and any path outside the real client root.",
+    "closeout": "Run client_workspace.py validate after structural changes and before handoff."
+  },
+  "content_rules": {
+    "_priority": "MANDATORY - overrides any conflicting guidance in a skill file.",
+    "title_tag_brand_policy": "Include the brand or site name ONLY in the homepage title tag (as the first element). For ALL non-homepage pages (service, product, category, blog, about, contact, trust and credibility, local, informational) do NOT include the brand name and do NOT append a '|' brand separator. Use the full character budget for topic, keywords, and context. Reason: Google already shows the Sitename in the SERP, so a brand in the title wastes space.",
+    "title_examples": {
+      "wrong": "บริการรับทำ SEO เพิ่มยอดขาย ติดอันดับ | BIQDADDY",
+      "right": "บริการรับทำ SEO เพิ่มยอดขาย ติดอันดับ และรองรับ AI Search"
+    },
+    "forbidden_characters_in_output": "Do NOT use an em dash or the pipe character '|' in generated title tags, meta descriptions, headings, or body content and recommendations. Use commas, spaces, the word และ, or rephrase. Markdown table delimiters are exempt as structural formatting.",
+    "no_emoji": "Do NOT use emoji in client-facing deliverables.",
+    "no_ai_writing_patterns": "Avoid filler AI patterns: no สรุป section headers, no ฉบับสมบูรณ์ labels, no decorative emoji."
+  }
+}

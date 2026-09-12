@@ -1,0 +1,355 @@
+{
+  "version": "1.0.0",
+  "root_policy": {
+    "allowed_files": [
+      ".env",
+      ".env.example",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "brand-guidelines.md",
+      "brand.json",
+      "client-profile.md",
+      "content-pipeline.json",
+      "log.md",
+      "site-config.md",
+      "workspace-routing.json"
+    ],
+    "allowed_directories": [
+      "content",
+      "deploy",
+      "disavow",
+      "internal-links",
+      "keywords",
+      "optimization",
+      "reports",
+      "schema",
+      "uploads",
+      "wiki",
+      "work"
+    ],
+    "generated_files_forbidden": true
+  },
+  "required_directories": [
+    "content",
+    "content/drafts",
+    "content/planning",
+    "content/production",
+    "content/dashboards",
+    "content/reports",
+    "content/reports/status",
+    "content/reports/publishing",
+    "deploy",
+    "deploy/disavow",
+    "disavow",
+    "disavow/config",
+    "disavow/data",
+    "disavow/data/decision-ledgers",
+    "disavow/reports",
+    "disavow/reports/reviews",
+    "disavow/dashboards",
+    "disavow/exports",
+    "disavow/exports/search-console",
+    "disavow/runs",
+    "internal-links",
+    "keywords",
+    "keywords/reports",
+    "optimization",
+    "optimization/images",
+    "optimization/off-page",
+    "optimization/on-page",
+    "reports",
+    "reports/data",
+    "reports/seo-audits",
+    "schema",
+    "uploads",
+    "uploads/ahrefs",
+    "uploads/brand-assets",
+    "uploads/google-analytics",
+    "uploads/google-business-profile",
+    "uploads/google-search-console",
+    "uploads/other",
+    "uploads/pagespeed-insights",
+    "uploads/screaming-frog",
+    "wiki",
+    "wiki/entities",
+    "work"
+  ],
+  "uploads": {
+    "path": "uploads",
+    "read_only": true
+  },
+  "routes": [
+    {
+      "id": "client-report",
+      "aliases": [
+        "assessment-report",
+        "legal-pages"
+      ],
+      "directory": "reports",
+      "description": "General client-facing assessment, legal, HTML, PDF, or Markdown report without a more precise route.",
+      "filename_pattern": "{domain}_{type}_{YYYY-MM-DD}.{ext}"
+    },
+    {
+      "id": "seo-audit-report",
+      "aliases": [
+        "audit-report",
+        "technical-audit",
+        "full-seo-audit"
+      ],
+      "directory": "reports/seo-audits",
+      "description": "SEO, AISO, technical, or combined search audit report.",
+      "filename_pattern": "{domain}_{type}_{YYYY-MM-DD}.{ext}"
+    },
+    {
+      "id": "report-data",
+      "aliases": [
+        "report-input",
+        "report-working-data"
+      ],
+      "directory": "reports/data",
+      "description": "Governed JSON inputs and intermediate data for unified report generation; not a client-facing deliverable.",
+      "filename_pattern": "{client.json|audit-base.json|audit.json}"
+    },
+    {
+      "id": "optimization",
+      "aliases": [
+        "technical-recommendations"
+      ],
+      "directory": "optimization",
+      "description": "Optimization recommendation or implementation plan.",
+      "filename_pattern": "{domain}_{type}_{YYYY-MM-DD}.{ext}"
+    },
+    {
+      "id": "image-optimization",
+      "aliases": [
+        "image-optimization-report"
+      ],
+      "directory": "optimization/images",
+      "description": "Image optimization outputs, naming ledgers, and implementation reports outside a stateful article package.",
+      "filename_pattern": "{domain}_{type}_{YYYY-MM-DD}.{ext}"
+    },
+    {
+      "id": "off-page-strategy",
+      "aliases": [
+        "off-page-report"
+      ],
+      "directory": "optimization/off-page",
+      "description": "Off-page SEO strategy, backlink plan, or authority-development report.",
+      "filename_pattern": "{domain}_off-page-strategy_{YYYY-MM-DD}.{ext}"
+    },
+    {
+      "id": "on-page-report",
+      "aliases": [
+        "on-page-optimization"
+      ],
+      "directory": "optimization/on-page",
+      "description": "On-page audit, optimization plan, or implementation report.",
+      "filename_pattern": "{domain}_on-page_{YYYY-MM-DD}.{ext}"
+    },
+    {
+      "id": "keyword-research",
+      "aliases": [
+        "keyword-cluster",
+        "topical-map"
+      ],
+      "directory": "keywords",
+      "description": "Keyword research, cluster, topical map, or keyword dataset.",
+      "filename_pattern": "{domain}_{type}_{YYYY-MM-DD}.{ext}"
+    },
+    {
+      "id": "keyword-report",
+      "aliases": [
+        "keyword-analysis-report"
+      ],
+      "directory": "keywords/reports",
+      "description": "Compiled keyword research or keyword-pipeline report.",
+      "filename_pattern": "{domain}_keyword-report_{YYYY-MM-DD}.{ext}"
+    },
+    {
+      "id": "content-draft",
+      "aliases": [
+        "article",
+        "outline"
+      ],
+      "directory": "content/drafts",
+      "description": "Standalone content draft, article, or outline outside a stateful production package.",
+      "filename_pattern": "{slug}.{ext}"
+    },
+    {
+      "id": "content-planning",
+      "aliases": [
+        "content-calendar",
+        "content-manifest",
+        "content-roadmap"
+      ],
+      "directory": "content/planning",
+      "description": "Content plan, calendar, batch manifest, topic cluster, or production roadmap.",
+      "filename_pattern": "{domain}_{type}_{YYYY-MM-DD}.{ext}"
+    },
+    {
+      "id": "content-production",
+      "aliases": [
+        "article-package"
+      ],
+      "directory": "content/production",
+      "description": "Stateful article production packages and publisher state.",
+      "filename_pattern": "{slug}/"
+    },
+    {
+      "id": "content-dashboard",
+      "aliases": [
+        "publishing-dashboard",
+        "content-status-dashboard"
+      ],
+      "directory": "content/dashboards",
+      "description": "Regenerated mutable current views of aggregate content creation and publishing status; never a state store.",
+      "filename_pattern": "content-status.{json,html}"
+    },
+    {
+      "id": "content-status-report",
+      "aliases": [
+        "batch-status",
+        "production-status"
+      ],
+      "directory": "content/reports/status",
+      "description": "Immutable machine-readable aggregate content status snapshot derived from article packages.",
+      "filename_pattern": "{YYYY-MM-DD}/content-status-{run-id}.json"
+    },
+    {
+      "id": "content-publishing-report",
+      "aliases": [
+        "wordpress-publishing-report",
+        "draft-verification-report"
+      ],
+      "directory": "content/reports/publishing",
+      "description": "Immutable aggregate WordPress draft publishing and verification snapshot.",
+      "filename_pattern": "{YYYY-MM-DD}/publishing-status-{run-id}.json"
+    },
+    {
+      "id": "content-batch-report-manifest",
+      "aliases": [
+        "content-report-run"
+      ],
+      "directory": "content/reports/status",
+      "description": "Immutable manifest for one aggregate content batch-report run.",
+      "filename_pattern": "{YYYY-MM-DD}/batch-report-{run-id}-manifest.json"
+    },
+    {
+      "id": "internal-link-plan",
+      "aliases": [
+        "internal-link-map"
+      ],
+      "directory": "internal-links",
+      "description": "Internal-link map, plan, or remediation output.",
+      "filename_pattern": "{domain}_link-map_{YYYY-MM-DD}.{ext}"
+    },
+    {
+      "id": "schema",
+      "aliases": [
+        "json-ld"
+      ],
+      "directory": "schema",
+      "description": "Schema.org JSON-LD or structured-data artifact.",
+      "filename_pattern": "{page}_schema.json"
+    },
+    {
+      "id": "deploy",
+      "aliases": [
+        "deployment-artifact"
+      ],
+      "directory": "deploy",
+      "description": "Reviewed deployment artifact that does not have a more precise route.",
+      "filename_pattern": "{exact-filename}"
+    },
+    {
+      "id": "disavow-config",
+      "aliases": [
+        "disavow-rules"
+      ],
+      "directory": "disavow/config",
+      "description": "Client-scoped disavow rules and review configuration.",
+      "filename_pattern": "review-rules.json"
+    },
+    {
+      "id": "disavow-decision-ledger",
+      "aliases": [
+        "disavow-ledger"
+      ],
+      "directory": "disavow/data/decision-ledgers",
+      "description": "Immutable run-scoped disavow decision ledger.",
+      "filename_pattern": "{client-slug}_disavow-decisions_{YYYY-MM-DD}_{run-id}.csv"
+    },
+    {
+      "id": "disavow-review",
+      "aliases": [
+        "disavow-review-report"
+      ],
+      "directory": "disavow/reports/reviews",
+      "description": "Immutable run-scoped disavow backlink review evidence.",
+      "filename_pattern": "{client-slug}-disavow-review-{YYYY-MM-DD}-{run-id}.html"
+    },
+    {
+      "id": "disavow-dashboard",
+      "aliases": [
+        "backlink-risk-dashboard"
+      ],
+      "directory": "disavow/dashboards",
+      "description": "Regenerated mutable current view derived from the latest immutable disavow review; never decision evidence.",
+      "filename_pattern": "disavow-review.html"
+    },
+    {
+      "id": "disavow-search-console-export",
+      "aliases": [
+        "disavow-candidate",
+        "disavow-final"
+      ],
+      "directory": "disavow/exports/search-console",
+      "description": "Immutable run-scoped Search Console disavow candidate; not approved deployment state.",
+      "filename_pattern": "{client-slug}_{YYYYMMDD}_{run-id}_DisavowLinks.txt"
+    },
+    {
+      "id": "disavow-run",
+      "aliases": [
+        "disavow-run-evidence"
+      ],
+      "directory": "disavow/runs",
+      "description": "Run-scoped disavow evidence, manifest, and execution record.",
+      "filename_pattern": "{run-id}/manifest.json"
+    },
+    {
+      "id": "deploy-disavow",
+      "aliases": [
+        "approved-disavow-deployment"
+      ],
+      "directory": "deploy/disavow",
+      "description": "Explicitly approved disavow file promoted for manual deployment.",
+      "filename_pattern": "{domain}_{YYYYMMDD}_DisavowLinks.txt"
+    },
+    {
+      "id": "wiki-entity",
+      "aliases": [
+        "knowledge-entity"
+      ],
+      "directory": "wiki/entities",
+      "description": "Cross-linked client knowledge entity.",
+      "filename_pattern": "{entity-slug}.md"
+    }
+  ],
+  "novel_work": {
+    "root": "work",
+    "registry": "work/registry.json",
+    "folder_pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+    "require_registration": true,
+    "entry_required_fields": [
+      "id",
+      "path",
+      "description",
+      "owner",
+      "artifact_classes",
+      "writable_subpaths",
+      "source_of_truth",
+      "retention",
+      "created_at"
+    ]
+  }
+}

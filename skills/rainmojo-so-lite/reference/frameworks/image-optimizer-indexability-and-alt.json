@@ -1,0 +1,108 @@
+{
+ "_owner": "seo-image-optimizer owns this file: the indexability failure-mode scan on images that already exist on a page, and the alt attribute VALIDITY and decorative-versus-content split. It runs alongside the existing filename, image URL, and alt alignment work in Phase 5 and does not replace it. What alt must SAY (describe what the image shows, never a keyword list, and the core-term overlap exemption) is already fixed by Phase 5 of the skill and by the used-word ledger from seo-onpage-strategy; this file adds only the empty-alt decision and the markup-validity check on top of it. Image briefs, prompts, exact dimensions, the three-ratio delivery set, sitemap declaration completeness, and the licensing-fields exception belong to seo-image-production. Image structured data, licensing markup, and badge eligibility belong to aiso-schema. Section order inside the page body belongs to seo-article-anatomy. Video thumbnails belong to seo-video.",
+ "_index": {
+  "scope_and_deference": "What this scan decides and what it hands to another owner",
+  "indexability_failure_modes": "Six delivery conditions that stop an image from ever reaching image results",
+  "alt_decision_tree": "Decorative versus content, and what an empty alt means",
+  "alt_attribute_validity": "Markup faults that void the attribute even when the words are correct",
+  "title_attribute_rule": "When title is redundant and what to do when a system forces one",
+  "scan_output": "How each failure mode is recorded"
+ },
+ "scope_and_deference": {
+  "in_scope": "Whether an image as currently delivered CAN be indexed, and whether its alt attribute is both correctly classified and valid markup.",
+  "out_of_scope": "Building the image, choosing its dimensions, declaring it in a sitemap, and the three-ratio delivery set: seo-image-production owns those at build time inside a declared content pipeline. Structured data that carries the image, and any licensing or badge markup: aiso-schema owns that. Where the page's sections sit relative to one another: seo-article-anatomy owns that.",
+  "lifecycle_split": "This scan is diagnostic and runs on what is already published. The same placement rule applied at build time, before the package ships, is stated once by seo-image-production. Report the defect here; hand the rebuild to that skill when the image belongs to a declared pipeline."
+ },
+ "indexability_failure_modes": {
+  "rule": "Run all six checks on every image the client needs found in image results. Any one of them firing is sufficient to explain a zero-impression image, so record which one fired rather than a bare 'not indexed' verdict.",
+  "modes": [
+   {
+    "id": "css_background_only",
+    "condition": "The image is delivered only as a CSS background.",
+    "why_it_fails": "Only the HTML is parsed for images, so an image that exists solely in a stylesheet is never seen and never indexed.",
+    "fix": "Require a real img element for any image that must be found. A background image may stay a background image only when it is decoration nobody needs to search for.",
+    "evidence": "Quote the CSS rule and confirm no img element carries the same asset."
+   },
+   {
+    "id": "lazy_loading",
+    "condition": "The image is lazy loaded.",
+    "why_it_fails": "A lazy-loaded image may be absorbed late or not at all, so its presence in the rendered view is not proof it was collected.",
+    "fix": "Mitigate on two fronts: declare the image in an image sitemap so it is discoverable without depending on the render, and deliver it responsively through a picture element with multiple sources or an img with a srcset. Neither mitigation alone is the fix.",
+    "evidence": "Name the lazy-load mechanism found and state whether a sitemap entry and a responsive source set both exist."
+   },
+   {
+    "id": "chrome_placement",
+    "condition": "The image sits in a sidebar, a header, or footer navigation.",
+    "why_it_fails": "Images in those regions are treated as decoration and ignored, whatever their alt text says.",
+    "fix": "An image that carries the page's subject belongs high in the body and above the fold. Moving it out of the chrome is the fix; rewriting its alt is not.",
+    "evidence": "Name the region the image was found in and the position of the first in-body image."
+   },
+   {
+    "id": "cross_origin_block",
+    "condition": "Hotlink protection, or a server setting that blocks cross-origin display, prevents the file from rendering when it is requested from anywhere other than the site itself.",
+    "why_it_fails": "An image that cannot be displayed off-site cannot appear in image results at all.",
+    "fix": "Allow the image to be displayed cross-origin, or accept that it will not appear. Decide this deliberately per directory rather than leaving a blanket rule in place by accident.",
+    "evidence": "Request the image URL without a same-site referrer and record the status code and body returned."
+   },
+   {
+    "id": "off_domain_hosting",
+    "condition": "The image is served from a different top-level domain than the page displaying it.",
+    "why_it_fails": "The association between page and image is weakened when the two do not share a top-level domain.",
+    "fix": "Host the image on the same top-level domain as the page that displays it. A subdomain or path-based asset host on that same top-level domain is inside the rule.",
+    "evidence": "Record the page host and the image host side by side."
+   },
+   {
+    "id": "embedded_thumbnail_on_export",
+    "condition": "The exported source file still carries an embedded thumbnail.",
+    "why_it_fails": "Embedded thumbnails inflate file size and break some compression pipelines, so the file arrives heavier than it should and may fail processing outright.",
+    "fix": "Disable embedded thumbnails at export time, before the file enters any optimisation step.",
+    "evidence": "Record the presence of an embedded thumbnail in the source file and the file size before and after removal."
+   }
+  ]
+ },
+ "alt_decision_tree": {
+  "rule": "Classify every image as decorative or content BEFORE writing any alt text. The two classes take opposite treatment and getting the class wrong cannot be repaired by better wording.",
+  "decorative": {
+   "examples": "Spacers, borders, and ornamental elements that carry no information a reader would miss.",
+   "required": "An EMPTY alt attribute, or no alt attribute at all.",
+   "forbidden": "Writing descriptive alt text for a decorative image. It is wrong, not merely unnecessary, because it pushes noise into the page's context.",
+   "audit_verdict": "A decorative image carrying descriptive alt is a defect and is listed as one."
+  },
+  "content": {
+   "definition": "Any image a reader would lose information by not seeing.",
+   "required": "A descriptive alt attribute, then the validity check below.",
+   "content_rules_owner": "What the words must say stays under Phase 5 of this skill and the used-word ledger from seo-onpage-strategy. Do not restate or reopen those rules here."
+  }
+ },
+ "alt_attribute_validity": {
+  "rule": "Correct words in an invalid attribute deliver nothing. Check the markup itself on every content image, not just the text.",
+  "checks": [
+   {
+    "id": "quotes_present",
+    "test": "The attribute value is quoted.",
+    "failure": "Without quotes, everything after the first word is lost and the rest of the tag is misparsed.",
+    "fix": "Quote every alt value."
+   },
+   {
+    "id": "symbols_escaped",
+    "test": "The value contains no unescaped apostrophes or quotation marks.",
+    "failure": "CMS-generated alt text carrying a raw apostrophe or quotation mark invalidates the tag. This is the common source because the text is assembled by the platform, not typed by hand.",
+    "fix": "Escape the symbol or write it as an entity. Check CMS-generated alt specifically; hand-written alt is not where this fault usually starts."
+   }
+  ],
+  "verdict": "An image whose alt fails either check is reported as an invalid attribute, not as missing alt. The two send the client to different fixes."
+ },
+ "title_attribute_rule": {
+  "default": "The title attribute is redundant when alt is present. Do not add one.",
+  "when_a_system_forces_one": "Mirror the alt words rather than inventing a second description.",
+  "hard_stop": "Never let a forced title render with dashes substituted for spaces. A dash-separated title is a filename leaking into a user-visible field and is reported as a defect."
+ },
+ "scan_output": {
+  "rows": "One row per image scanned, carrying: image file, page URL, failure mode fired or none, alt class (decorative or content), alt validity (valid, unquoted, unescaped symbol, or not applicable), title attribute state, evidence.",
+  "verdict_rules": [
+   "A failure mode fires only on evidence read in this run. A fetch that failed is 'could not verify', never a fired mode.",
+   "An image that passes all six modes and carries a valid alt is a pass and gets no recommendation.",
+   "Where the image belongs to a declared content pipeline, name seo-image-production as the owner of the rebuild instead of proposing a build change here."
+  ]
+ }
+}

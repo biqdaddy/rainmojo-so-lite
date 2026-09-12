@@ -1,0 +1,216 @@
+{
+  "version": "1.1.0",
+  "config_policy": {
+    "profile": "production",
+    "require_client_file": true,
+    "explicit_defaults_profiles": [
+      "demo",
+      "test"
+    ]
+  },
+  "engine": {
+    "mode": "generic",
+    "source_of_truth": "content/production",
+    "capabilities": {
+      "scope": "end_to_end",
+      "content": true,
+      "images": true,
+      "wordpress_draft": true,
+      "content_review": true,
+      "image_source_review": true,
+      "image_visual_review": true,
+      "verify_only": true,
+      "draft_only": true
+    },
+    "adapter": {
+      "allowed_commands": [],
+      "operations": {}
+    }
+  },
+  "content": {
+    "default_language": "en",
+    "default_article_type": "cluster",
+    "h1_source": "wordpress_title",
+    "require_outline_approval": true,
+    "table_of_contents": false,
+    "inline_image_counts": {
+      "cluster": 1,
+      "pillar": 2
+    },
+    "minimum_internal_links": {
+      "cluster": 3,
+      "pillar": 5
+    },
+    "external_links": {
+      "minimum": 2,
+      "maximum": 3,
+      "allowed_domains": [],
+      "blocked_domains": []
+    }
+  },
+  "links": {
+    "allow_relative_internal_links": true,
+    "require_all_declared_targets": true,
+    "required_target_groups": {
+      "cluster": [
+        "product_targets",
+        "pillar_targets",
+        "related_targets"
+      ],
+      "pillar": [
+        "product_targets",
+        "related_targets"
+      ]
+    }
+  },
+  "provenance": {
+    "require_external_records": true,
+    "require_external_plan": true,
+    "require_record_for_every_external_link": true,
+    "external_required_fields": [
+      "url",
+      "claim",
+      "accessed_at"
+    ],
+    "require_image_records": true,
+    "image_required_fields": [
+      "source_type",
+      "provider",
+      "rights_record"
+    ]
+  },
+  "seo": {
+    "plugin": "yoast",
+    "meta_fields": {
+      "title": "_yoast_wpseo_title",
+      "description": "_yoast_wpseo_metadesc",
+      "focus_keyword": "_yoast_wpseo_focuskw",
+      "canonical": "_yoast_wpseo_canonical"
+    }
+  },
+  "images": {
+    "format": "WEBP",
+    "featured": {
+      "required": true,
+      "width": 1200,
+      "height": 630,
+      "quality": 85,
+      "fit": "cover",
+      "allow_upscale": false
+    },
+    "inline": {
+      "width": 1200,
+      "height": 800,
+      "quality": 85,
+      "fit": "cover",
+      "allow_upscale": false
+    },
+    "style": {
+      "mode": "client_defined",
+      "prompt_rules": [],
+      "negative_prompt_rules": [],
+      "text_default": "none",
+      "human_visual_review_required": true,
+      "review_checklist": [
+        "composition",
+        "no_unapproved_text",
+        "logo_clear_space",
+        "anatomy_or_subject_integrity",
+        "equipment_or_scene_accuracy",
+        "brand_accuracy"
+      ]
+    },
+    "infographic": {
+      "allowed": false,
+      "language": "English"
+    },
+    "logo": {
+      "allowed": true,
+      "required": false,
+      "apply_to": [],
+      "asset_path": "",
+      "placement": "top-right",
+      "width_ratio": 0.1,
+      "min_width_px": 80,
+      "max_width_px": 160,
+      "margin_x_ratio": 0.03,
+      "margin_y_ratio": 0.03,
+      "opacity": 1.0,
+      "clear_space_required": true
+    },
+    "metadata": {
+      "strip_embedded_metadata": true,
+      "prohibited_terms": [
+        "exif",
+        "gps",
+        "xmp",
+        "iptc",
+        "icc_profile",
+        "c2pa",
+        "copyright",
+        "license",
+        "creator",
+        "software",
+        "prompt",
+        "parameters",
+        "comment"
+      ],
+      "internal_provenance_sidecar": true,
+      "synthid_note": "SynthID is an image-level signal rather than ordinary file metadata. This pipeline does not claim to remove or defeat it.",
+      "licensing_fields_exception": false,
+      "licensing_fields_exception_note": "Default false: all listed terms are stripped and audited. A client that needs image licensing badges (creator, credit, licence shown in image search) sets this true in their client config: the licensing carriers (iptc, xmp, icc_profile, c2pa, copyright, license, creator) are then allowed to remain, while gps, exif device data, software, prompt, parameters, and comment stay prohibited. The exception covers rights fields only, never location or generator traces."
+    }
+  },
+  "wordpress": {
+    "post_type": "posts",
+    "default_status": "draft",
+    "default_category_name": "",
+    "default_category_id": null,
+    "create_missing_categories": false,
+    "external_link_attributes": {
+      "target_blank": true,
+      "rel": [
+        "noopener",
+        "noreferrer"
+      ]
+    },
+    "rest_mode": "auto",
+    "write_interval_seconds": 25,
+    "request_timeout_seconds": 45,
+    "lock_timeout_seconds": 300,
+    "verify_after_write": true,
+    "refuse_non_draft_overwrite": true,
+    "inline_figure_class": "rainmojo-inline-image",
+    "env_aliases": {},
+    "state_paths": {
+      "operation_lock": "content/production/.publisher-state/operation.lock",
+      "write_lock": "content/production/.publisher-state/write.lock",
+      "write_state": "content/production/.publisher-state/last-write.txt"
+    }
+  },
+  "quality_gates": {
+    "content_review_required": true,
+    "content_review_checklist": [
+      "factual_accuracy",
+      "brand_voice",
+      "search_intent",
+      "seo_structure",
+      "internal_links",
+      "external_sources",
+      "grammar_and_readability",
+      "no_unverified_claims"
+    ],
+    "image_source_review_required": true,
+    "image_source_review_checklist": [
+      "source_matches_approved_brief",
+      "source_identity_verified",
+      "provenance_complete",
+      "rights_confirmed",
+      "sufficient_resolution",
+      "no_unapproved_text_or_logo"
+    ],
+    "image_visual_review_required": true,
+    "publish_validation_required": true,
+    "draft_only": true
+  }
+}

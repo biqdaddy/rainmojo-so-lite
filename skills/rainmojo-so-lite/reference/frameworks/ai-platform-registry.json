@@ -1,0 +1,2447 @@
+{
+  "version": "1.3-lite",
+  "updated": "2026-09-11",
+  "_note": "Lite edition of the RAINMOJO SO AI platform and crawler registry. Public facts only: platforms, answer surfaces, retrieval, crawler tokens with vendor, role and evidence tier, robots policies, declared-preference standards and sources. Every weight, point value, status band and numeric inspection target of the full registry has been removed; each platform carries a checklist whose items are answered PASS, FAIL or COULD NOT VERIFY.",
+  "evidence_tiers": {
+    "official": "Vendor publishes the token, its purpose and usually an IP list or reverse DNS pattern.",
+    "observed": "Token appears in community robots lists or server logs; vendor publishes no documentation or verification.",
+    "none": "Vendor publishes no crawler identity; fetches are indistinguishable from browsers. Crawler access cannot be scored."
+  },
+  "unverifiable_policy": "When crawler_evidence is not official (Grok, DeepSeek, Qwen), crawler access is reported as COULD NOT VERIFY, never guessed and never counted as a fail.",
+  "inspection_ids": {
+    "llms_txt.present": "GET /llms.txt returns 200 text",
+    "passage.definitional_block": "first paragraph after H1 is a short passage phrased as a definition",
+    "passage.quotable_count": "count of standalone quotable paragraphs",
+    "freshness.days_since_modified": "days since dateModified, article:modified_time or Last-Modified",
+    "freshness.dates_visible": "datePublished and dateModified both present",
+    "facts.numeric_density": "numbers, percentages and prices per passage",
+    "headings.hierarchy_clean": "exactly one H1 and no skipped heading levels",
+    "headings.question_count": "H2 to H4 phrased as questions",
+    "render.ssr_text_ratio": "visible text to HTML ratio high enough that the text is readable without JavaScript",
+    "tables.comparison_count": "tables with header cells",
+    "lists.count": "ordered and unordered lists",
+    "faq.present": "FAQPage JSON-LD, or several question headings",
+    "social.og_complete": "og:title, og:description, og:image, og:url",
+    "social.twitter_card": "twitter:card and twitter:site",
+    "social.x_profile_linked": "sameAs or link to x.com or twitter.com",
+    "social.x_activity": "evidence: x_account_active (aiso-brand-mentions)",
+    "social.fb_ig_linked": "links to facebook.com and instagram.com",
+    "social.fb_ig_completeness": "evidence: social_profiles_complete (seo-social-profile)",
+    "i18n.hreflang_count": "link rel=alternate hreflang count",
+    "i18n.lang_consistent": "html lang agrees with og:locale",
+    "i18n.bilingual_pages": "evidence: bilingual_pages_present",
+    "schema.organization_present": "Organization, Brand or LocalBusiness JSON-LD",
+    "schema.sameas_count": "distinct sameAs URLs",
+    "schema.graph_ids": "@graph nodes carrying @id",
+    "schema.author_byline": "author in JSON-LD, rel=author, or byline element",
+    "schema.speakable": "speakable property present",
+    "index.canonical_ok": "rel=canonical present and self-referencing",
+    "index.indexable": "no noindex in meta robots or X-Robots-Tag",
+    "index.snippet_controls_open": "no nosnippet and no max-snippet below 160",
+    "index.google_top10": "evidence: google_top10 (serp_checker or rank export)",
+    "index.bing_indexed": "evidence: bing_indexed",
+    "index.indexnow": "evidence: indexnow_enabled",
+    "entity.wikidata": "evidence: wikidata_present (aiso-brand-mentions); a sameAs link alone is COULD NOT VERIFY, not presence",
+    "entity.knowledge_graph": "evidence: knowledge_panel_present",
+    "entity.reddit_presence": "evidence: reddit_presence",
+    "entity.youtube": "evidence: youtube_channel_active; a link alone is COULD NOT VERIFY, not presence",
+    "agent.operable_controls": "no clickable div or span and no unlabeled inputs (AI-Ready Web hand-off)",
+    "social.x_sentiment": "evidence: x_brand_sentiment in {positive, neutral, mixed, negative} (aiso-brand-mentions sampling of recent X posts)",
+    "entity.tech_hub_presence": "evidence: tech_hub_presence (GitHub organisation, developer docs, Stack Overflow or Hugging Face presence recorded by aiso-brand-mentions)",
+    "content.promo_density": "promotional superlatives per passage (best, number one, guaranteed, Thai equivalents); lower is better"
+  },
+  "platforms": [
+    {
+      "id": "chatgpt",
+      "display_name": "ChatGPT",
+      "vendor": "OpenAI",
+      "answer_surfaces": [
+        "ChatGPT search answers with citations",
+        "Inline brand links in answers",
+        "ChatGPT Atlas browser",
+        "Shopping results via the Agentic Commerce Protocol",
+        "Custom GPTs and Actions",
+        "ChatGPT Work cloud browser (formerly ChatGPT agent)",
+        "Responses API web_search tool"
+      ],
+      "retrieval": {
+        "backing_index": "OpenAI's own index (internally Labrador, per an August 2026 server-side analysis) is primary; OpenAI states ChatGPT search sometimes partners with other search providers (Bing), and purchased Google SERP results feed paid Thinking mode. Treat Bing indexation as a floor, not the ceiling; the page cache is refreshed about every 30 minutes.",
+        "real_time": "yes"
+      },
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "OAI-SearchBot",
+        "ChatGPT-User"
+      ],
+      "training_crawlers": [
+        "GPTBot"
+      ],
+      "user_fetchers": [
+        "ChatGPT-User"
+      ],
+      "non_robots_controls": [
+        "robots.txt per crawler (each OpenAI setting is independent)",
+        "IP verification json files per crawler"
+      ],
+      "measurement_tools": [
+        "OpenAI has no publisher citation dashboard; track referrals with utm and the chatgpt.com referrer"
+      ],
+      "citation_facts": [
+        {
+          "claim": "Each OpenAI crawler setting is independent",
+          "value": "blocking GPTBot does not affect OAI-SearchBot",
+          "source_url": "https://developers.openai.com/api/docs/bots",
+          "source_type": "official",
+          "source_date": "2026",
+          "confidence": "high"
+        },
+        {
+          "claim": "Overlap of ChatGPT citations with Bing top 10 versus Google top 10 (PR-agency roundup of Seer, Profound and Discovered Labs data)",
+          "value": "87 percent versus 56 percent",
+          "source_url": "https://www.5wpr.com/research/state-of-ai-citations-2026/",
+          "source_type": "community",
+          "source_date": "2025",
+          "confidence": "medium"
+        },
+        {
+          "claim": "Wikipedia share of ChatGPT top-10 citations (PR-agency roundup of Seer, Profound and Discovered Labs data)",
+          "value": "47.9 percent",
+          "source_url": "https://www.5wpr.com/research/state-of-ai-citations-2026/",
+          "source_type": "community",
+          "source_date": "2025",
+          "confidence": "medium"
+        },
+        {
+          "claim": "Thailand",
+          "value": "ChatGPT Go at 259 THB per month (national press, 2025-10-14); OpenAI executives reported Thai weekly active users up more than 4x year on year (press, 2025-09-15)",
+          "source_url": "https://www.bangkokpost.com/life/tech/3120718/openai-launches-chatgpt-go-in-thailand",
+          "source_type": "vendor_blog",
+          "source_date": "2025-10-14",
+          "confidence": "medium"
+        },
+        {
+          "claim": "ChatGPT search index",
+          "value": "own index primary; Bing partner; purchased Google SERPs in paid Thinking mode; 30 minute page cache",
+          "source_url": "https://searchengineland.com/chatgpt-retrieval-stack-index-cache-pages-485036",
+          "source_type": "large_sample_study",
+          "source_date": "2026-08-17",
+          "confidence": "medium"
+        },
+        {
+          "claim": "Opened versus retrieved pages",
+          "value": "an opened page is cited 74 percent of the time, a merely retrieved page 7 percent",
+          "source_url": "https://searchengineland.com/chatgpt-retrieval-stack-index-cache-pages-485036",
+          "source_type": "large_sample_study",
+          "source_date": "2026-08-17",
+          "confidence": "medium"
+        },
+        {
+          "claim": "Age of cited pages",
+          "value": "958 days since publication versus 1,416 for organic SERPs",
+          "source_url": "https://ahrefs.com/blog/do-ai-assistants-prefer-to-cite-fresh-content",
+          "source_type": "large_sample_study",
+          "source_date": "2025-07-28",
+          "confidence": "medium"
+        },
+        {
+          "claim": "Share of ChatGPT-cited pages updated within the last year",
+          "value": "73 percent (87 percent within two years)",
+          "source_url": "https://www.seerinteractive.com/insights/",
+          "source_type": "small_study",
+          "source_date": "2026-07",
+          "confidence": "low"
+        }
+      ],
+      "notes": "Blocking GPTBot does not remove a site from ChatGPT search; OAI-SearchBot decides visibility.",
+      "checklist": [
+        {
+          "id": "chatgpt.ssr",
+          "label": "Server-rendered, openable page",
+          "inspection": "render.ssr_text_ratio",
+          "rationale": "OAI-SearchBot and ChatGPT-User do not execute JavaScript; opened pages are cited about ten times more often than merely retrieved ones"
+        },
+        {
+          "id": "chatgpt.wikidata",
+          "label": "Wikipedia or Wikidata entity",
+          "inspection": "entity.wikidata",
+          "rationale": "Wikipedia is the most cited domain in ChatGPT answers, although its share fell sharply in late 2025"
+        },
+        {
+          "id": "chatgpt.freshness",
+          "label": "Recently updated content",
+          "inspection": "freshness.days_since_modified",
+          "rationale": "ChatGPT-cited pages average 958 days since publication versus 1,416 for organic results; 73 percent updated within a year"
+        },
+        {
+          "id": "chatgpt.bing_indexed",
+          "label": "Indexed in Bing",
+          "inspection": "index.bing_indexed",
+          "rationale": "Bing remains an official search partner; a floor, not the ceiling"
+        },
+        {
+          "id": "chatgpt.h1_snippet",
+          "label": "H1 and first visible text carry the answer",
+          "inspection": "passage.definitional_block",
+          "rationale": "OpenAI's index snippets are anchored on the H1 and the first visible text, and the meta description is ignored"
+        },
+        {
+          "id": "chatgpt.lists",
+          "label": "Lists and step structure",
+          "inspection": "lists.count",
+          "rationale": "Extractable list structure lifts into answers"
+        }
+      ],
+      "checklist_note": "Answer each item PASS, FAIL or COULD NOT VERIFY. No points."
+    },
+    {
+      "id": "perplexity",
+      "display_name": "Perplexity",
+      "vendor": "Perplexity AI",
+      "answer_surfaces": [
+        "Perplexity answers",
+        "Perplexity Pro search",
+        "Sonar API",
+        "Comet browser"
+      ],
+      "retrieval": {
+        "backing_index": "Own index (200B+ URLs) with real-time retrieval",
+        "real_time": "yes"
+      },
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "PerplexityBot",
+        "Perplexity-User"
+      ],
+      "training_crawlers": [],
+      "user_fetchers": [
+        "Perplexity-User"
+      ],
+      "non_robots_controls": [
+        "robots.txt for PerplexityBot; Perplexity-User generally ignores robots.txt",
+        "Perplexity help article 10354969 (2026-09-11): a Disallow still allows indexing of the domain, headline and a brief factual summary; blocked-URL summarisation is disabled; third-party crawler partners also build the index"
+      ],
+      "measurement_tools": [
+        "Perplexity Publishers program reports; referrer perplexity.ai in analytics"
+      ],
+      "citation_facts": [
+        {
+          "claim": "Index size",
+          "value": "200B+ URLs, continuously updated",
+          "source_url": "https://vespa.ai/perplexity",
+          "source_type": "vendor_blog",
+          "source_date": "2026",
+          "confidence": "medium"
+        },
+        {
+          "claim": "Age of cited pages",
+          "value": "Perplexity 1166 days since publication and 993 since update versus organic 1416 and 1047",
+          "source_url": "https://ahrefs.com/blog/do-ai-assistants-prefer-to-cite-fresh-content",
+          "source_type": "large_sample_study",
+          "source_date": "2025-07-28",
+          "confidence": "medium"
+        },
+        {
+          "claim": "Reddit share of top-10 sources (PR-agency roundup)",
+          "value": "about 46.7 percent",
+          "source_url": "https://www.5wpr.com/research/state-of-ai-citations-2026/",
+          "source_type": "community",
+          "source_date": "2026",
+          "confidence": "medium"
+        }
+      ],
+      "notes": "Perplexity cites several sources per answer and its index is refreshed in real time, the widest opening for mid-authority sites; per-answer source counts vary by study and are not stated here as a fixed number.",
+      "checklist": [
+        {
+          "id": "perplexity.freshness",
+          "label": "Freshness of the page",
+          "inspection": "freshness.days_since_modified",
+          "rationale": "Perplexity-cited URLs are newer than organic results on average (Ahrefs: 993 versus 1047 days since update) and moving topics decay fast"
+        },
+        {
+          "id": "perplexity.quotable",
+          "label": "Quotable standalone passages",
+          "inspection": "passage.quotable_count",
+          "rationale": "Source chips lift standalone passages"
+        },
+        {
+          "id": "perplexity.reddit",
+          "label": "Reddit and community validation",
+          "inspection": "entity.reddit_presence",
+          "rationale": "Reddit is the top Perplexity source across studies"
+        },
+        {
+          "id": "perplexity.youtube",
+          "label": "YouTube presence",
+          "inspection": "entity.youtube",
+          "rationale": "Video sources appear regularly in Perplexity citations"
+        },
+        {
+          "id": "perplexity.tables",
+          "label": "Comparison tables",
+          "inspection": "tables.comparison_count",
+          "rationale": "Structured comparison sources dominate commercial queries"
+        }
+      ],
+      "checklist_note": "Answer each item PASS, FAIL or COULD NOT VERIFY. No points."
+    },
+    {
+      "id": "claude",
+      "display_name": "Claude",
+      "vendor": "Anthropic",
+      "answer_surfaces": [
+        "Claude web search with citations",
+        "Claude.ai",
+        "Claude API web search tool"
+      ],
+      "retrieval": {
+        "backing_index": "Anthropic search index built by Claude-SearchBot, with Brave Search named as a web search subprocessor on the Trust Center list (reported 2025-03; TurboPuffer added 2026)",
+        "real_time": "yes"
+      },
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "Claude-SearchBot",
+        "Claude-User"
+      ],
+      "training_crawlers": [
+        "ClaudeBot"
+      ],
+      "user_fetchers": [
+        "Claude-User"
+      ],
+      "non_robots_controls": [
+        "robots.txt per crawler; Crawl-delay supported; IP list at claude.com/crawling/bots.json",
+        "meta robots noindex: Anthropic documents it as effective for keeping a page out of Claude web search results (help article 10684638)",
+        "nosnippet, max-snippet, data-nosnippet: not documented by Anthropic"
+      ],
+      "measurement_tools": [
+        "No first-party dashboard; the Citations API exposes sources in API responses; Cloudflare Radar publishes crawl-to-refer ratios per operator"
+      ],
+      "citation_facts": [
+        {
+          "claim": "Brave Search is a named web search subprocessor (TurboPuffer added under Web Search in 2026)",
+          "value": "listed for all products per secondary reports of the Trust Center list (JavaScript-rendered page, not fetchable by script)",
+          "source_url": "https://trust.anthropic.com/subprocessors",
+          "source_type": "official",
+          "source_date": "2025-03-19",
+          "confidence": "medium"
+        },
+        {
+          "claim": "noindex removes a page from Claude web search",
+          "value": "documented",
+          "source_url": "https://support.claude.com/en/articles/10684638",
+          "source_type": "official",
+          "source_date": "2026",
+          "confidence": "high"
+        }
+      ],
+      "notes": "Claude does not browse by default; citations appear when web search is enabled.",
+      "checklist": [
+        {
+          "id": "claude.facts",
+          "label": "Numeric fact density",
+          "inspection": "facts.numeric_density",
+          "rationale": "Claude cites verifiable, specific statements"
+        },
+        {
+          "id": "claude.honesty",
+          "label": "Factual, non-promotional language",
+          "inspection": "content.promo_density",
+          "rationale": "Superlatives and unverifiable marketing claims are avoided in Claude answers"
+        },
+        {
+          "id": "claude.hierarchy",
+          "label": "Clean H1 to H3 hierarchy",
+          "inspection": "headings.hierarchy_clean",
+          "rationale": "Long-context reading depends on logical section order"
+        },
+        {
+          "id": "claude.author",
+          "label": "Author byline with credentials",
+          "inspection": "schema.author_byline",
+          "rationale": "Attributed sources are preferred over anonymous pages"
+        },
+        {
+          "id": "claude.snippet",
+          "label": "Snippet controls open",
+          "inspection": "index.snippet_controls_open",
+          "rationale": "Restrictive snippet directives limit what can be quoted"
+        },
+        {
+          "id": "claude.indexable",
+          "label": "Page is indexable",
+          "inspection": "index.indexable",
+          "rationale": "Anthropic documents noindex as removing a page from Claude web search"
+        },
+        {
+          "id": "claude.llms",
+          "label": "llms.txt and llms-full.txt",
+          "inspection": "llms_txt.present",
+          "rationale": "Low-evidence hygiene item; no confirmed reader"
+        }
+      ],
+      "checklist_note": "Answer each item PASS, FAIL or COULD NOT VERIFY. No points."
+    },
+    {
+      "id": "google_aio",
+      "display_name": "Google AI Overviews and AI Mode",
+      "vendor": "Google",
+      "answer_surfaces": [
+        "AI Overviews",
+        "AI Mode"
+      ],
+      "retrieval": {
+        "backing_index": "Google Search index with query fan-out",
+        "real_time": "yes"
+      },
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "Googlebot"
+      ],
+      "training_crawlers": [
+        "Google-Extended"
+      ],
+      "user_fetchers": [],
+      "non_robots_controls": [
+        "nosnippet: official, also prevents use as direct input for AI Overviews and AI Mode while the page stays indexed",
+        "max-snippet:[n]: official, limits how much content may be used as direct AI input; -1 removes the limit",
+        "data-nosnippet: excludes a text portion from snippets and from direct AI input; flag definitional blocks wrapped in it",
+        "noindex and unavailable_after: remove the page from Search and every AI feature",
+        "X-Robots-Tag header carries every meta robots rule; the audit reads response headers too",
+        "Search Console Settings, Search generative AI control: property-level opt-out from AI features, rolled out to all properties by 2026-08-31",
+        "Google-Extended does not affect AI Overviews or AI Mode"
+      ],
+      "measurement_tools": [
+        "Search Console Performance report (AI Overview and AI Mode clicks and impressions counted in Web search type)",
+        "Search Console Search generative AI performance report (announced 2026-06-03, broad rollout 2026-08-31)",
+        "Search Console URL Inspection for the indexing and snippet eligibility gate"
+      ],
+      "citation_facts": [
+        {
+          "claim": "Eligibility",
+          "value": "a page must be indexed and eligible to show with a snippet; no special file, markup or schema required",
+          "source_url": "https://developers.google.com/search/docs/appearance/ai-features",
+          "source_type": "official",
+          "source_date": "2026",
+          "confidence": "high"
+        },
+        {
+          "claim": "AIO citations that rank top 10 for the head query or a fan-out query",
+          "value": "51.2 percent of ranking citations match the head query plus at least one fan-out",
+          "source_url": "https://surferseo.com/blog/query-fan-out-impact/",
+          "source_type": "large_sample_study",
+          "source_date": "2025-12",
+          "confidence": "medium"
+        },
+        {
+          "claim": "Share of AIO citations that link to at least one top-10 organic result",
+          "value": "93.67 percent (Ahrefs analysis, as aggregated by 5W)",
+          "source_url": "https://www.5wpr.com/research/state-of-ai-citations-2026/",
+          "source_type": "community",
+          "source_date": "2025-10",
+          "confidence": "medium"
+        }
+      ],
+      "notes": "Google states no special file, markup or schema is required beyond indexing and snippet eligibility.",
+      "checklist": [
+        {
+          "id": "aio.top10",
+          "label": "Ranks in Google top 10 for the target query",
+          "inspection": "index.google_top10",
+          "rationale": "Most AI Overview links come from pages already ranking on page one"
+        },
+        {
+          "id": "aio.questions",
+          "label": "Question-phrased headings",
+          "inspection": "headings.question_count",
+          "rationale": "Fan-out sub-queries map to question headings"
+        },
+        {
+          "id": "aio.faq",
+          "label": "FAQ content or FAQPage",
+          "inspection": "faq.present",
+          "rationale": "Direct question and answer pairs are lifted"
+        },
+        {
+          "id": "aio.tables",
+          "label": "Comparison tables",
+          "inspection": "tables.comparison_count",
+          "rationale": "Structured comparisons feed AI Mode answers"
+        },
+        {
+          "id": "aio.snippet",
+          "label": "Snippet controls open",
+          "inspection": "index.snippet_controls_open",
+          "rationale": "Google states snippet controls are the only AI feature controls"
+        }
+      ],
+      "checklist_note": "Answer each item PASS, FAIL or COULD NOT VERIFY. No points."
+    },
+    {
+      "id": "gemini",
+      "display_name": "Google Gemini",
+      "vendor": "Google",
+      "answer_surfaces": [
+        "Gemini app",
+        "Gemini in Workspace",
+        "Vertex AI grounding with Google Search"
+      ],
+      "retrieval": {
+        "backing_index": "Google Search index and Knowledge Graph; Google-Extended governs grounding use",
+        "real_time": "yes"
+      },
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "Googlebot"
+      ],
+      "training_crawlers": [
+        "Google-Extended"
+      ],
+      "user_fetchers": [
+        "Google-GeminiNotebook",
+        "Google-Agent"
+      ],
+      "non_robots_controls": [
+        "Google-Extended robots.txt token (training and grounding), snippet controls"
+      ],
+      "measurement_tools": [
+        "No first-party site-owner reporting for the Gemini app; Google-Extended grounding cannot be measured from Google's side"
+      ],
+      "citation_facts": [],
+      "notes": "Disallowing Google-Extended removes the site from Gemini grounding without affecting Search.",
+      "checklist": [
+        {
+          "id": "gemini.kg",
+          "label": "Knowledge Graph entity",
+          "inspection": "entity.knowledge_graph",
+          "rationale": "Gemini leans on Google entity data"
+        },
+        {
+          "id": "gemini.youtube",
+          "label": "YouTube channel",
+          "inspection": "entity.youtube",
+          "rationale": "YouTube is a top Gemini source"
+        },
+        {
+          "id": "gemini.sameas",
+          "label": "sameAs entity graph",
+          "inspection": "schema.sameas_count",
+          "rationale": "Entity reconciliation across profiles"
+        },
+        {
+          "id": "gemini.top10",
+          "label": "Ranks in Google top 10",
+          "inspection": "index.google_top10",
+          "rationale": "Grounding pulls from ranking pages"
+        }
+      ],
+      "checklist_note": "Answer each item PASS, FAIL or COULD NOT VERIFY. No points."
+    },
+    {
+      "id": "deepseek",
+      "display_name": "DeepSeek",
+      "vendor": "DeepSeek",
+      "answer_surfaces": [
+        "DeepSeek chat with web search",
+        "DeepSeek-V3 and R1 models"
+      ],
+      "retrieval": {
+        "backing_index": "Third-party search APIs: DeepSeek's privacy policy (2025-02-14 version) states it integrates third-party APIs such as Bing to provide search services; the current policy names no provider",
+        "real_time": "yes"
+      },
+      "crawler_evidence": "none",
+      "visibility_crawlers": [],
+      "training_crawlers": [
+        "DeepSeekBot"
+      ],
+      "user_fetchers": [],
+      "non_robots_controls": [
+        "No documented control; no named user agent to target"
+      ],
+      "measurement_tools": [
+        "DeepSeek API web search tool returns per-result url, title and page_age on the Anthropic-compatible endpoint, usable for citation sampling",
+        "SE Ranking AI traffic research: DeepSeek referral share is near zero outside China"
+      ],
+      "citation_facts": [
+        {
+          "claim": "Search backend",
+          "value": "third-party APIs, Bing named in the 2025-02-14 policy text, unnamed in the 2026-02-10 text",
+          "source_url": "https://chat.deepseek.com/downloads/DeepSeek%20Privacy%20Policy.html",
+          "source_type": "official",
+          "source_date": "2026-02-10",
+          "confidence": "medium"
+        }
+      ],
+      "notes": "Crawler dimension is unverifiable: DeepSeek publishes no user agent, and the search backend is a third-party API. Score reflects content signals only; DeepSeek referral traffic outside China is negligible in 2026 studies.",
+      "checklist": [
+        {
+          "id": "deepseek.ssr",
+          "label": "Server-rendered text",
+          "inspection": "render.ssr_text_ratio",
+          "rationale": "Plain HTML text is the only reliably readable form"
+        },
+        {
+          "id": "deepseek.tables",
+          "label": "Comparison tables",
+          "inspection": "tables.comparison_count",
+          "rationale": "Technical and spec comparisons are extracted well"
+        },
+        {
+          "id": "deepseek.hierarchy",
+          "label": "Logical heading hierarchy",
+          "inspection": "headings.hierarchy_clean",
+          "rationale": "Reasoning models follow document structure"
+        },
+        {
+          "id": "deepseek.facts",
+          "label": "Numeric precision",
+          "inspection": "facts.numeric_density",
+          "rationale": "Technical precision is rewarded"
+        },
+        {
+          "id": "deepseek.tech_hub",
+          "label": "Open-source and tech-hub presence",
+          "inspection": "entity.tech_hub_presence",
+          "rationale": "Developer-facing sources dominate DeepSeek's citation mix"
+        }
+      ],
+      "checklist_note": "Answer each item PASS, FAIL or COULD NOT VERIFY. No points."
+    },
+    {
+      "id": "grok",
+      "display_name": "Grok",
+      "vendor": "xAI",
+      "answer_surfaces": [
+        "Grok on X",
+        "grok.com",
+        "xAI API with X search and web search tools"
+      ],
+      "retrieval": {
+        "backing_index": "Server-side web_search and x_search tools (docs.x.ai); backing index undisclosed; X posts reach Grok through the platform, not crawling",
+        "real_time": "yes"
+      },
+      "crawler_evidence": "none",
+      "visibility_crawlers": [],
+      "training_crawlers": [],
+      "user_fetchers": [],
+      "non_robots_controls": [
+        "No documented control; fetches reported with browser user agents"
+      ],
+      "measurement_tools": [
+        "xAI API sources field; no publisher dashboard"
+      ],
+      "citation_facts": [
+        {
+          "claim": "Share of Grok citations that are X posts",
+          "value": "about 45 percent",
+          "source_url": "https://presenc.ai/research/grok-citation-patterns-2026",
+          "source_type": "small_study",
+          "source_date": "2026",
+          "confidence": "low"
+        },
+        {
+          "claim": "Grok organic top-10 overlap",
+          "value": "14.1 percent, lowest of the major engines (153,425 citations)",
+          "source_url": "https://organikpi.com/blog/geo-ai-search/grok-xai-seo-guide/",
+          "source_type": "small_study",
+          "source_date": "2026-05",
+          "confidence": "low"
+        }
+      ],
+      "notes": "xAI publishes no crawler user agent (the EU AI Act public summary names an xAI Web Crawler without a token). GrokAgent (hosted browser agent, Web Bot Auth) and Twitterbot (card previews) are the only observable X and xAI fetchers. Grok is available in every country where X is available.",
+      "checklist": [
+        {
+          "id": "grok.x_activity",
+          "label": "Active, verified X account",
+          "inspection": "social.x_activity",
+          "rationale": "About 45 percent of Grok citations are X posts; verified accounts are cited far more often"
+        },
+        {
+          "id": "grok.x_sentiment",
+          "label": "Brand sentiment on X",
+          "inspection": "social.x_sentiment",
+          "rationale": "Grok blends real-time X sentiment into answers about brands"
+        },
+        {
+          "id": "grok.x_linked",
+          "label": "X profile linked from the site",
+          "inspection": "social.x_profile_linked",
+          "rationale": "Entity link between site and X account"
+        },
+        {
+          "id": "grok.twitter_card",
+          "label": "Twitter card tags",
+          "inspection": "social.twitter_card",
+          "rationale": "twitter:card and twitter:site carry context into X"
+        },
+        {
+          "id": "grok.freshness",
+          "label": "Recent updates",
+          "inspection": "freshness.days_since_modified",
+          "rationale": "Real-time bias"
+        },
+        {
+          "id": "grok.og",
+          "label": "Open Graph complete",
+          "inspection": "social.og_complete",
+          "rationale": "Shared-link context"
+        }
+      ],
+      "checklist_note": "Answer each item PASS, FAIL or COULD NOT VERIFY. No points."
+    },
+    {
+      "id": "qwen",
+      "display_name": "Qwen",
+      "vendor": "Alibaba Cloud",
+      "answer_surfaces": [
+        "Qwen chat (chat.qwen.ai)",
+        "Tongyi app",
+        "Quark search"
+      ],
+      "retrieval": {
+        "backing_index": "Undisclosed; Alibaba Cloud Model Studio documents a paid web search tool for Qwen API users and no crawler for site owners; Shenma and Quark search (Yisouspider) are the observed Alibaba search spiders",
+        "real_time": "yes"
+      },
+      "crawler_evidence": "observed",
+      "visibility_crawlers": [
+        "Qwen-User"
+      ],
+      "training_crawlers": [
+        "QwenBot",
+        "TongyiBot"
+      ],
+      "user_fetchers": [
+        "Qwen-User"
+      ],
+      "non_robots_controls": [
+        "Community-observed tokens only; no verification method published"
+      ],
+      "measurement_tools": [
+        "None published"
+      ],
+      "citation_facts": [
+        {
+          "claim": "Community listing of Qwen tokens",
+          "value": "QwenBot and TongyiBot present in ai.robots.txt (175 agents)",
+          "source_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+          "source_type": "community",
+          "source_date": "2026-09-11",
+          "confidence": "medium"
+        }
+      ],
+      "notes": "Crawler dimension is unverifiable; Qwen-User, QwenBot and TongyiBot are community-observed tokens (ai.robots.txt lists 175 agents, TongyiBot added 2026-07-09) with no Alibaba verification method.",
+      "checklist": [
+        {
+          "id": "qwen.bilingual",
+          "label": "Bilingual or Chinese pages present",
+          "inspection": "i18n.bilingual_pages",
+          "rationale": "Multilingual consistency drives retrieval"
+        },
+        {
+          "id": "qwen.hreflang",
+          "label": "hreflang alternates",
+          "inspection": "i18n.hreflang_count",
+          "rationale": "Language targeting signal"
+        },
+        {
+          "id": "qwen.lang",
+          "label": "Language declarations consistent",
+          "inspection": "i18n.lang_consistent",
+          "rationale": "html lang and og:locale agreement"
+        },
+        {
+          "id": "qwen.tables",
+          "label": "Spec and price tables",
+          "inspection": "tables.comparison_count",
+          "rationale": "Structured catalog data"
+        },
+        {
+          "id": "qwen.ssr",
+          "label": "Server-rendered text",
+          "inspection": "render.ssr_text_ratio",
+          "rationale": "Plain HTML readability"
+        }
+      ],
+      "checklist_note": "Answer each item PASS, FAIL or COULD NOT VERIFY. No points."
+    },
+    {
+      "id": "meta_ai",
+      "display_name": "Meta AI",
+      "vendor": "Meta",
+      "answer_surfaces": [
+        "Meta AI in WhatsApp, Instagram, Facebook and Messenger",
+        "meta.ai"
+      ],
+      "retrieval": {
+        "backing_index": "Meta index built by meta-webindexer plus third-party search partners (Bing and Google results shown as Sources)",
+        "real_time": "yes"
+      },
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "meta-webindexer",
+        "meta-externalfetcher"
+      ],
+      "training_crawlers": [
+        "meta-externalagent"
+      ],
+      "user_fetchers": [
+        "meta-externalfetcher"
+      ],
+      "non_robots_controls": [
+        "robots.txt per crawler; meta-externalfetcher may bypass robots.txt"
+      ],
+      "measurement_tools": [
+        "None published"
+      ],
+      "citation_facts": [
+        {
+          "claim": "meta-webindexer purpose",
+          "value": "improve Meta AI search quality and cite and link to content",
+          "source_url": "https://developers.facebook.com/documentation/sharing/webmasters/web-crawlers",
+          "source_type": "official",
+          "source_date": "2026-05-21",
+          "confidence": "high"
+        },
+        {
+          "claim": "meta-webindexer request volume",
+          "value": "grew 163 percent to 3.75 billion requests in Q2 2026",
+          "source_url": "https://datadome.co/threat-research/ai-traffic-report-q2-2026/",
+          "source_type": "large_sample_study",
+          "source_date": "2026-07-16",
+          "confidence": "medium"
+        }
+      ],
+      "notes": "Allow meta-webindexer for citations; meta-externalagent is a separate training decision.",
+      "checklist": [
+        {
+          "id": "meta.og",
+          "label": "Open Graph complete",
+          "inspection": "social.og_complete",
+          "rationale": "Meta surfaces read og tags for every shared link"
+        },
+        {
+          "id": "meta.fb_ig_linked",
+          "label": "Facebook and Instagram linked",
+          "inspection": "social.fb_ig_linked",
+          "rationale": "Social graph entity link"
+        },
+        {
+          "id": "meta.fb_ig_complete",
+          "label": "Facebook and Instagram profiles complete",
+          "inspection": "social.fb_ig_completeness",
+          "rationale": "Profile completeness verified by seo-social-profile"
+        },
+        {
+          "id": "meta.lang",
+          "label": "Locale consistent",
+          "inspection": "i18n.lang_consistent",
+          "rationale": "og:locale must match the content language"
+        },
+        {
+          "id": "meta.bing",
+          "label": "Indexed in Bing",
+          "inspection": "index.bing_indexed",
+          "rationale": "Meta AI falls back to Bing and Google results"
+        }
+      ],
+      "checklist_note": "Answer each item PASS, FAIL or COULD NOT VERIFY. No points."
+    },
+    {
+      "id": "copilot",
+      "display_name": "Microsoft Copilot",
+      "vendor": "Microsoft",
+      "answer_surfaces": [
+        "Copilot",
+        "Copilot Search in Bing",
+        "Copilot in Windows, Edge and Microsoft 365"
+      ],
+      "retrieval": {
+        "backing_index": "Bing index with grounding queries",
+        "real_time": "yes"
+      },
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "bingbot"
+      ],
+      "training_crawlers": [],
+      "user_fetchers": [],
+      "non_robots_controls": [
+        "robots.txt for bingbot; Bing Webmaster Tools controls"
+      ],
+      "measurement_tools": [
+        "Bing Webmaster Tools AI Performance dashboard (Microsoft Advertising blog, 2026-03-23): citation counts, page-level data and grounding query to page mapping",
+        "IndexNow submission status in Bing Webmaster Tools"
+      ],
+      "citation_facts": [
+        {
+          "claim": "Copilot and Bing share one crawl and index",
+          "value": "no separate Copilot crawler",
+          "source_url": "https://www.bing.com/webmasters/help/webmasters-guidelines-30fba23a",
+          "source_type": "official",
+          "source_date": "2026-02-26",
+          "confidence": "high"
+        },
+        {
+          "claim": "AI Performance dashboard in Bing Webmaster Tools",
+          "value": "citations, page-level data, grounding queries",
+          "source_url": "https://about.ads.microsoft.com/en/blog/post/march-2026/the-ai-performance-dashboard-your-view-into-where-your-brand-appears-across-the-ai-web",
+          "source_type": "official",
+          "source_date": "2026-03-23",
+          "confidence": "high"
+        }
+      ],
+      "notes": "Copilot grounds on the Bing index; Microsoft documents no Copilot-specific crawler and the Guidelines say Copilot relies on the same crawling and indexing. th-TH is not a documented Bing market code; Thai content is served through language detection, not a Thai market.",
+      "checklist": [
+        {
+          "id": "copilot.bing_indexed",
+          "label": "Indexed in Bing",
+          "inspection": "index.bing_indexed",
+          "rationale": "No Bing index, no Copilot citation"
+        },
+        {
+          "id": "copilot.indexnow",
+          "label": "IndexNow enabled",
+          "inspection": "index.indexnow",
+          "rationale": "Faster refresh into the grounding index"
+        },
+        {
+          "id": "copilot.faq",
+          "label": "FAQ content",
+          "inspection": "faq.present",
+          "rationale": "Direct answers are lifted"
+        },
+        {
+          "id": "copilot.canonical",
+          "label": "Canonical set correctly",
+          "inspection": "index.canonical_ok",
+          "rationale": "Bing consolidates on canonical URLs"
+        },
+        {
+          "id": "copilot.lists",
+          "label": "Lists and steps",
+          "inspection": "lists.count",
+          "rationale": "Extractable structure"
+        }
+      ],
+      "checklist_note": "Answer each item PASS, FAIL or COULD NOT VERIFY. No points."
+    },
+    {
+      "id": "apple_intelligence",
+      "display_name": "Apple Intelligence",
+      "vendor": "Apple",
+      "answer_surfaces": [
+        "Siri",
+        "Spotlight",
+        "Safari suggestions",
+        "Apple Intelligence answers"
+      ],
+      "retrieval": {
+        "backing_index": "Applebot index; ChatGPT and Gemini integrations for open-ended questions",
+        "real_time": "yes"
+      },
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "Applebot"
+      ],
+      "training_crawlers": [
+        "Applebot-Extended"
+      ],
+      "user_fetchers": [],
+      "non_robots_controls": [
+        "nosnippet meta tag opts out of use as context in Siri answers; Applebot-Extended opts out of training"
+      ],
+      "measurement_tools": [
+        "None published; no Siri citation report exists"
+      ],
+      "citation_facts": [
+        {
+          "claim": "Siri and Search world-knowledge answers may include links to the sources used",
+          "value": "documented",
+          "source_url": "https://support.apple.com/en-us/119829",
+          "source_type": "official",
+          "source_date": "2026-09-04",
+          "confidence": "high"
+        },
+        {
+          "claim": "Top 1,000 sites blocking Applebot versus Applebot-Extended",
+          "value": "5 percent block Applebot, 19 percent block Applebot-Extended",
+          "source_url": "https://knownagents.com/agents/applebot",
+          "source_type": "community",
+          "source_date": "2026",
+          "confidence": "low"
+        }
+      ],
+      "notes": "Applebot-Extended does not crawl; search inclusion and training are separate controls.",
+      "checklist": [
+        {
+          "id": "apple.snippet",
+          "label": "Snippet controls open",
+          "inspection": "index.snippet_controls_open",
+          "rationale": "nosnippet removes the page from Siri answer context"
+        },
+        {
+          "id": "apple.faq",
+          "label": "FAQ and direct answers",
+          "inspection": "faq.present",
+          "rationale": "Siri favours concise factual answers"
+        },
+        {
+          "id": "apple.quotable",
+          "label": "Quotable passages",
+          "inspection": "passage.quotable_count",
+          "rationale": "Answer lifting"
+        },
+        {
+          "id": "apple.speakable",
+          "label": "Speakable schema",
+          "inspection": "schema.speakable",
+          "rationale": "Voice-ready content markup"
+        },
+        {
+          "id": "apple.questions",
+          "label": "Question headings",
+          "inspection": "headings.question_count",
+          "rationale": "Voice queries are questions"
+        }
+      ],
+      "checklist_note": "Answer each item PASS, FAIL or COULD NOT VERIFY. No points."
+    }
+  ],
+  "crawlers": [
+    {
+      "token": "OAI-SearchBot",
+      "vendor": "OpenAI",
+      "role": "search_index",
+      "platform_ids": [
+        "chatgpt"
+      ],
+      "affects_visibility": true,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://developers.openai.com/api/docs/bots",
+      "ip_verification": "https://openai.com/searchbot.json",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Surfaces sites in ChatGPT search results; independent of GPTBot"
+    },
+    {
+      "token": "GPTBot",
+      "vendor": "OpenAI",
+      "role": "training",
+      "platform_ids": [
+        "chatgpt"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://developers.openai.com/api/docs/bots",
+      "ip_verification": "https://openai.com/gptbot.json",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Training data for OpenAI foundation models; blocking it does not remove a site from ChatGPT search"
+    },
+    {
+      "token": "ChatGPT-User",
+      "vendor": "OpenAI",
+      "role": "user_fetcher",
+      "platform_ids": [
+        "chatgpt"
+      ],
+      "affects_visibility": true,
+      "respects_robots_txt": "conditional",
+      "doc_url": "https://developers.openai.com/api/docs/bots",
+      "ip_verification": "https://openai.com/chatgpt-user.json",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "User-initiated fetches; not used to decide search inclusion; opens pages in Thinking mode and an opened page is cited far more often than a merely retrieved one, so a WAF block removes the strongest citation path even though robots.txt is not the control"
+    },
+    {
+      "token": "OAI-AdsBot",
+      "vendor": "OpenAI",
+      "role": "ads",
+      "platform_ids": [
+        "chatgpt"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://developers.openai.com/api/docs/bots",
+      "ip_verification": "https://openai.com/adsbot.json",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Validates ad landing pages; not used for training"
+    },
+    {
+      "token": "Claude-SearchBot",
+      "vendor": "Anthropic",
+      "role": "search_index",
+      "platform_ids": [
+        "claude"
+      ],
+      "affects_visibility": true,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler",
+      "ip_verification": "https://claude.com/crawling/bots.json",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Improves search result quality for Claude users"
+    },
+    {
+      "token": "Claude-User",
+      "vendor": "Anthropic",
+      "role": "user_fetcher",
+      "platform_ids": [
+        "claude"
+      ],
+      "affects_visibility": true,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler",
+      "ip_verification": "https://claude.com/crawling/bots.json",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Fetches pages when a Claude user asks a question"
+    },
+    {
+      "token": "ClaudeBot",
+      "vendor": "Anthropic",
+      "role": "training",
+      "platform_ids": [
+        "claude"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler",
+      "ip_verification": "https://claude.com/crawling/bots.json",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Collects web content that may contribute to model training"
+    },
+    {
+      "token": "anthropic-ai",
+      "vendor": "Anthropic",
+      "role": "training",
+      "platform_ids": [
+        "claude"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Site-decides",
+      "purpose": "Deprecated legacy token no longer in Anthropic documentation; treat as inert, not a live crawler"
+    },
+    {
+      "token": "PerplexityBot",
+      "vendor": "Perplexity",
+      "role": "search_index",
+      "platform_ids": [
+        "perplexity"
+      ],
+      "affects_visibility": true,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://docs.perplexity.ai/docs/resources/perplexity-crawlers",
+      "ip_verification": "https://www.perplexity.com/perplexitybot.json",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Indexes pages for Perplexity answers; explicitly not used for training"
+    },
+    {
+      "token": "Perplexity-User",
+      "vendor": "Perplexity",
+      "role": "user_fetcher",
+      "platform_ids": [
+        "perplexity"
+      ],
+      "affects_visibility": true,
+      "respects_robots_txt": "no",
+      "doc_url": "https://docs.perplexity.ai/docs/resources/perplexity-crawlers",
+      "ip_verification": "https://www.perplexity.com/perplexity-user.json",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "User-requested fetch; developer docs say it generally ignores robots.txt, so only IP or WAF filtering stops it"
+    },
+    {
+      "token": "Googlebot",
+      "vendor": "Google",
+      "role": "search_index",
+      "platform_ids": [
+        "google_aio",
+        "gemini"
+      ],
+      "affects_visibility": true,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers",
+      "ip_verification": "https://developers.google.com/static/search/apis/ipranges/googlebot.json",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Google Search index; AI Overviews and AI Mode cite only indexed, snippet-eligible pages"
+    },
+    {
+      "token": "Google-Extended",
+      "vendor": "Google",
+      "role": "training",
+      "platform_ids": [
+        "gemini"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Opt-out token for Gemini model training and Gemini app grounding; no effect on Googlebot, AI Overviews, AI Mode or rankings"
+    },
+    {
+      "token": "Google-CloudVertexBot",
+      "vendor": "Google",
+      "role": "agent",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Crawls for Vertex AI Agents built by site owners"
+    },
+    {
+      "token": "GoogleOther",
+      "vendor": "Google",
+      "role": "search_index",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Generic crawler for internal research and development"
+    },
+    {
+      "token": "meta-webindexer",
+      "vendor": "Meta",
+      "role": "search_index",
+      "platform_ids": [
+        "meta_ai"
+      ],
+      "affects_visibility": true,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://developers.facebook.com/documentation/sharing/webmasters/web-crawlers",
+      "ip_verification": "No IP list on the current page (removed 2026-05-21); verify by ASN AS32934 (Meta) whois, the method Meta documented before",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Improves Meta AI search quality and lets Meta AI cite and link to content; Meta's page does not state robots.txt compliance for this token explicitly, so respects_robots_txt is inferred from the page-level statement"
+    },
+    {
+      "token": "meta-externalagent",
+      "vendor": "Meta",
+      "role": "training",
+      "platform_ids": [
+        "meta_ai"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://developers.facebook.com/documentation/sharing/webmasters/web-crawlers",
+      "ip_verification": "No IP list on the current page (removed 2026-05-21); verify by ASN AS32934 (Meta) whois, the method Meta documented before",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Training foundation models or improving products by indexing content directly"
+    },
+    {
+      "token": "meta-externalfetcher",
+      "vendor": "Meta",
+      "role": "user_fetcher",
+      "platform_ids": [
+        "meta_ai"
+      ],
+      "affects_visibility": true,
+      "respects_robots_txt": "no",
+      "doc_url": "https://developers.facebook.com/documentation/sharing/webmasters/web-crawlers",
+      "ip_verification": "No IP list on the current page (removed 2026-05-21); verify by ASN AS32934 (Meta) whois, the method Meta documented before",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "User-initiated agentic fetches; may bypass robots.txt"
+    },
+    {
+      "token": "facebookexternalhit",
+      "vendor": "Meta",
+      "role": "link_preview",
+      "platform_ids": [
+        "meta_ai"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "conditional",
+      "doc_url": "https://developers.facebook.com/documentation/sharing/webmasters/web-crawlers",
+      "ip_verification": "No IP list on the current page (removed 2026-05-21); verify by ASN AS32934 (Meta) whois, the method Meta documented before",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Link previews for shared URLs; reads Open Graph tags"
+    },
+    {
+      "token": "meta-externalads",
+      "vendor": "Meta",
+      "role": "ads",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://developers.facebook.com/documentation/sharing/webmasters/web-crawlers",
+      "ip_verification": "No IP list on the current page (removed 2026-05-21); verify by ASN AS32934 (Meta) whois, the method Meta documented before",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Advertising and business product improvement"
+    },
+    {
+      "token": "Applebot",
+      "vendor": "Apple",
+      "role": "search_index",
+      "platform_ids": [
+        "apple_intelligence"
+      ],
+      "affects_visibility": true,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://support.apple.com/en-us/119829",
+      "ip_verification": "reverse DNS *.applebot.apple.com and published CIDR list",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Powers Spotlight, Siri and Safari search; content may also train Apple foundation models unless Applebot-Extended is disallowed"
+    },
+    {
+      "token": "Applebot-Extended",
+      "vendor": "Apple",
+      "role": "training",
+      "platform_ids": [
+        "apple_intelligence"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://support.apple.com/en-us/119829",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Does not crawl; disallowing it opts out of training Apple foundation models without affecting search inclusion"
+    },
+    {
+      "token": "bingbot",
+      "vendor": "Microsoft",
+      "role": "search_index",
+      "platform_ids": [
+        "copilot"
+      ],
+      "affects_visibility": true,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://www.bing.com/webmasters/help/which-crawlers-does-bing-use-8c184ec0",
+      "ip_verification": "https://www.bing.com/toolbox/bingbot.json",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Bing index that grounds Copilot answers; no separate Copilot crawler exists"
+    },
+    {
+      "token": "MicrosoftPreview",
+      "vendor": "Microsoft",
+      "role": "link_preview",
+      "platform_ids": [
+        "copilot"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://www.bing.com/webmasters/help/which-crawlers-does-bing-use-8c184ec0",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Microsoft link preview and snapshot fetcher listed on the Bing crawler page; also serves Copilot surfaces"
+    },
+    {
+      "token": "DeepSeekBot",
+      "vendor": "DeepSeek",
+      "role": "training",
+      "platform_ids": [
+        "deepseek"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Site-decides",
+      "purpose": "Community-listed token; DeepSeek publishes no crawler documentation and fetches have been observed without a named agent"
+    },
+    {
+      "token": "Qwen-User",
+      "vendor": "Alibaba Cloud",
+      "role": "user_fetcher",
+      "platform_ids": [
+        "qwen"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://botcrawl.com/bots/qwen-user/",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Allow",
+      "purpose": "Live-fetch agent observed for Qwen chat; Alibaba publishes no verification method"
+    },
+    {
+      "token": "QwenBot",
+      "vendor": "Alibaba Cloud",
+      "role": "training",
+      "platform_ids": [
+        "qwen"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Site-decides",
+      "purpose": "Community-listed token for Qwen data collection"
+    },
+    {
+      "token": "TongyiBot",
+      "vendor": "Alibaba Cloud",
+      "role": "training",
+      "platform_ids": [
+        "qwen"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Site-decides",
+      "purpose": "Community-listed token for Tongyi (Qwen) products"
+    },
+    {
+      "token": "CCBot",
+      "vendor": "Common Crawl",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://commoncrawl.org/ccbot",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Common Crawl open corpus (nonprofit); honours robots.txt; blocking it has no effect on any live answer engine"
+    },
+    {
+      "token": "Bytespider",
+      "vendor": "ByteDance",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "no",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Block",
+      "purpose": "Undocumented ByteDance crawler; log studies report it ignores robots.txt, so a Disallow is advisory and server-side blocking is needed; siblings TikTokSpider and DoubaoBot"
+    },
+    {
+      "token": "Amazonbot",
+      "vendor": "Amazon",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://developer.amazon.com/amazonbot",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Amazon states crawled content may be used to train Amazon AI models; search eligibility moved to Amzn-SearchBot"
+    },
+    {
+      "token": "MistralAI-User",
+      "vendor": "Mistral AI",
+      "role": "user_fetcher",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://docs.mistral.ai/robots/",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "User-triggered fetch for Le Chat"
+    },
+    {
+      "token": "DuckAssistBot",
+      "vendor": "DuckDuckGo",
+      "role": "search_index",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://duckduckgo.com/duckduckgo-help-pages/results/duckassistbot/",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Grounds DuckDuckGo AI answers"
+    },
+    {
+      "token": "YouBot",
+      "vendor": "You.com",
+      "role": "search_index",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://about.you.com/youbot/",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "You.com answer engine"
+    },
+    {
+      "token": "Ai2Bot",
+      "vendor": "Allen Institute for AI",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://allenai.org/crawler",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Open research datasets"
+    },
+    {
+      "token": "cohere-ai",
+      "vendor": "Cohere",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Site-decides",
+      "purpose": "Community-listed token"
+    },
+    {
+      "token": "Diffbot",
+      "vendor": "Diffbot",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://docs.diffbot.com/docs/crawlbot",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Knowledge graph extraction crawler"
+    },
+    {
+      "token": "KimiBot",
+      "vendor": "Moonshot AI",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://www.kimi.com/policies/kimi-crawlers",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Moonshot AI training crawler (documented)"
+    },
+    {
+      "token": "Kimi-SearchBot",
+      "vendor": "Moonshot AI",
+      "role": "search_index",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://www.kimi.com/policies/kimi-crawlers",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Kimi search indexing (documented)"
+    },
+    {
+      "token": "Amzn-SearchBot",
+      "vendor": "Amazon",
+      "role": "search_index",
+      "platform_ids": [],
+      "affects_visibility": true,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://developer.amazon.com/amazonbot",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Amazon search features; documented as not used for training"
+    },
+    {
+      "token": "Amzn-User",
+      "vendor": "Amazon",
+      "role": "user_fetcher",
+      "platform_ids": [],
+      "affects_visibility": true,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://developer.amazon.com/amazonbot",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "User-initiated fetches for Amazon assistants"
+    },
+    {
+      "token": "TikTokSpider",
+      "vendor": "ByteDance",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Block",
+      "purpose": "Community-listed ByteDance token"
+    },
+    {
+      "token": "DoubaoBot",
+      "vendor": "ByteDance",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Block",
+      "purpose": "Community-listed token for Doubao"
+    },
+    {
+      "token": "MistralAI-Index",
+      "vendor": "Mistral AI",
+      "role": "search_index",
+      "platform_ids": [],
+      "affects_visibility": true,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://docs.mistral.ai/robots/",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Le Chat search indexing"
+    },
+    {
+      "token": "MistralAI-Training",
+      "vendor": "Mistral AI",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://docs.mistral.ai/robots/",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Mistral model training"
+    },
+    {
+      "token": "Diffbot-User",
+      "vendor": "Diffbot",
+      "role": "user_fetcher",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://www.diffbot.com/docs/crawl/faq/robots-txt",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "User-triggered Diffbot fetch"
+    },
+    {
+      "token": "Kimi-User",
+      "vendor": "Moonshot AI",
+      "role": "user_fetcher",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "conditional",
+      "doc_url": "https://www.kimi.com/policies/kimi-crawlers",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "User-initiated fetch for Kimi (documented)"
+    },
+    {
+      "token": "ERNIEBot",
+      "vendor": "Baidu",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Block",
+      "purpose": "Community-listed Baidu token"
+    },
+    {
+      "token": "YiyanBot",
+      "vendor": "Baidu",
+      "role": "user_fetcher",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Site-decides",
+      "purpose": "Community-listed Baidu Yiyan fetcher"
+    },
+    {
+      "token": "PanguBot",
+      "vendor": "Huawei",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Block",
+      "purpose": "Community-listed Huawei token"
+    },
+    {
+      "token": "PetalBot",
+      "vendor": "Huawei (Aspiegel)",
+      "role": "search_index",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://aspiegel.com/petalbot",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "Petal Search index"
+    },
+    {
+      "token": "Bravebot",
+      "vendor": "Brave",
+      "role": "search_index",
+      "platform_ids": [
+        "claude"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "conditional",
+      "doc_url": "https://search.brave.com/help/brave-search-crawler",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Allow",
+      "purpose": "Brave states its crawler does not advertise a differentiated user agent, so this token is unverifiable; Brave Search is Anthropic's named web search subprocessor, and Brave inherits Googlebot rules"
+    },
+    {
+      "token": "kagi-fetcher",
+      "vendor": "Kagi",
+      "role": "user_fetcher",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://kagi.com/bot",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Allow",
+      "purpose": "Kagi user-triggered fetch"
+    },
+    {
+      "token": "Timpibot",
+      "vendor": "Timpi",
+      "role": "search_index",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Site-decides",
+      "purpose": "Decentralised search index"
+    },
+    {
+      "token": "Webzio-Extended",
+      "vendor": "Webz.io",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://webz.io/bot.html",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Block",
+      "purpose": "Data feeds for AI training"
+    },
+    {
+      "token": "omgili",
+      "vendor": "Webz.io",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://webz.io/bot.html",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Block",
+      "purpose": "Webz.io legacy crawler"
+    },
+    {
+      "token": "ImagesiftBot",
+      "vendor": "Hive",
+      "role": "search_index",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "yes",
+      "doc_url": "https://imagesift.com/about",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Block",
+      "purpose": "Image search and dataset crawler"
+    },
+    {
+      "token": "iaskspider",
+      "vendor": "iAsk.ai",
+      "role": "search_index",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "no",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Site-decides",
+      "purpose": "Reported to ignore robots.txt"
+    },
+    {
+      "token": "Andibot",
+      "vendor": "Andi",
+      "role": "search_index",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Allow",
+      "purpose": "Andi answer engine"
+    },
+    {
+      "token": "Claude-Web",
+      "vendor": "Anthropic",
+      "role": "unknown",
+      "platform_ids": [
+        "claude"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Site-decides",
+      "purpose": "Legacy, inert: community-listed token not in current Anthropic documentation"
+    },
+    {
+      "token": "Yisouspider",
+      "vendor": "Alibaba (Shenma)",
+      "role": "search_index",
+      "platform_ids": [
+        "qwen"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "conditional",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Allow",
+      "purpose": "Shenma and Quark search spider observed in logs; Alibaba publishes no Qwen-specific crawler documentation"
+    },
+    {
+      "token": "GrokAgent",
+      "vendor": "xAI",
+      "role": "agent",
+      "platform_ids": [
+        "grok"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "no",
+      "doc_url": "https://docs.x.ai",
+      "ip_verification": "Web Bot Auth signed requests (key directory observed on Cursor cloud infrastructure)",
+      "evidence_tier": "observed",
+      "default_recommendation": "Site-decides",
+      "purpose": "Grok Bot hosted browser agent; xAI documents that Grok Bot computers run in Cursor's cloud; no robots.txt contract"
+    },
+    {
+      "token": "Twitterbot",
+      "vendor": "X",
+      "role": "link_preview",
+      "platform_ids": [
+        "grok"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://web.archive.org/web/20260101000233/https://developer.x.com/en/docs/x-for-websites/cards/guides/getting-started",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Allow",
+      "purpose": "Fetches twitter:card metadata for previews on X; the Cards documentation is only available as a 2026-01 archive and Cloudflare's directory records it as not following robots.txt"
+    },
+    {
+      "token": "Google-GeminiNotebook",
+      "vendor": "Google",
+      "role": "user_fetcher",
+      "platform_ids": [
+        "gemini"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "conditional",
+      "doc_url": "https://developers.google.com/crawling/docs/crawlers-fetchers/google-user-triggered-fetchers",
+      "ip_verification": "",
+      "evidence_tier": "official",
+      "default_recommendation": "Allow",
+      "purpose": "NotebookLM user-triggered fetch (replaces Google-NotebookLM, deprecated August 2026); user-triggered fetchers generally ignore robots.txt"
+    },
+    {
+      "token": "Google-Agent",
+      "vendor": "Google",
+      "role": "agent",
+      "platform_ids": [
+        "gemini"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "conditional",
+      "doc_url": "https://developers.google.com/crawling/docs/crawlers-fetchers/google-user-triggered-fetchers",
+      "ip_verification": "Web Bot Auth key directory (agent.bot.goog)",
+      "evidence_tier": "official",
+      "default_recommendation": "Site-decides",
+      "purpose": "Google's agent fetcher (formerly GoogleAgent-Mariner); user-triggered"
+    },
+    {
+      "token": "Gemini-Deep-Research",
+      "vendor": "Google",
+      "role": "user_fetcher",
+      "platform_ids": [
+        "gemini"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Allow",
+      "purpose": "Community-listed token for Gemini Deep Research fetches"
+    },
+    {
+      "token": "GoogleAgent-URLContext",
+      "vendor": "Google",
+      "role": "user_fetcher",
+      "platform_ids": [
+        "gemini"
+      ],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://ai.google.dev/gemini-api/docs/url-context",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Allow",
+      "purpose": "Community-listed token for the Gemini API URL context tool; Google's doc names no token"
+    },
+    {
+      "token": "AzureAI-SearchBot",
+      "vendor": "Microsoft",
+      "role": "search_index",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://knownagents.com/agents/azureai-searchbot",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Allow",
+      "purpose": "Indexes web content for Azure AI services (observed 2026-09)"
+    },
+    {
+      "token": "ChatGLM-Spider",
+      "vendor": "Zhipu AI",
+      "role": "training",
+      "platform_ids": [],
+      "affects_visibility": false,
+      "respects_robots_txt": "unknown",
+      "doc_url": "https://knownagents.com/agents/chatglm-spider",
+      "ip_verification": "",
+      "evidence_tier": "observed",
+      "default_recommendation": "Block",
+      "purpose": "Zhipu GLM training and evaluation data collection"
+    }
+  ],
+  "robots_policies": {
+    "friendly": {
+      "description": "Allow every documented search and user-fetch crawler; leave training crawlers allowed.",
+      "rules": [
+        {
+          "token": "Googlebot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "bingbot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "OAI-SearchBot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "ChatGPT-User",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "GPTBot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "Claude-SearchBot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "Claude-User",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "ClaudeBot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "PerplexityBot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "Google-Extended",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "meta-webindexer",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "Applebot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "Amzn-SearchBot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "MistralAI-Index",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "PetalBot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "Kimi-SearchBot",
+          "directive": "Allow: /"
+        }
+      ]
+    },
+    "selective": {
+      "description": "Allow search and user-fetch crawlers (visibility), disallow training-only crawlers.",
+      "rules": [
+        {
+          "token": "Googlebot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "bingbot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "OAI-SearchBot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "ChatGPT-User",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "Claude-SearchBot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "Claude-User",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "PerplexityBot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "meta-webindexer",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "Applebot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "DuckAssistBot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "Amazonbot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "GPTBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "ClaudeBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Google-Extended",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Applebot-Extended",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "meta-externalagent",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "CCBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Bytespider",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "DeepSeekBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "QwenBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "TongyiBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Amzn-SearchBot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "MistralAI-Index",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "PetalBot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "Kimi-SearchBot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "TikTokSpider",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "DoubaoBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "MistralAI-Training",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Webzio-Extended",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "omgili",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "KimiBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "ERNIEBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "PanguBot",
+          "directive": "Disallow: /"
+        }
+      ]
+    },
+    "blocked": {
+      "description": "Disallow every AI crawler, keep classic search engines.",
+      "rules": [
+        {
+          "token": "Googlebot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "bingbot",
+          "directive": "Allow: /"
+        },
+        {
+          "token": "OAI-SearchBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "ChatGPT-User",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "GPTBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Claude-SearchBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Claude-User",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "ClaudeBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "PerplexityBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Perplexity-User",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Google-Extended",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "meta-webindexer",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "meta-externalagent",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "meta-externalfetcher",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Applebot-Extended",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "CCBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Bytespider",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "DeepSeekBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "QwenBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "TongyiBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Amazonbot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "cohere-ai",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Diffbot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "KimiBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Amzn-SearchBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Amzn-User",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "TikTokSpider",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "DoubaoBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "MistralAI-Index",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "MistralAI-Training",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "MistralAI-User",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Webzio-Extended",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "omgili",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Kimi-SearchBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Kimi-User",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "ERNIEBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "PanguBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "DuckAssistBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "YouBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Ai2Bot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "ImagesiftBot",
+          "directive": "Disallow: /"
+        },
+        {
+          "token": "Diffbot-User",
+          "directive": "Disallow: /"
+        }
+      ]
+    }
+  },
+  "sources": [
+    "https://about.ads.microsoft.com/en/blog/post/march-2026/the-ai-performance-dashboard-your",
+    "https://ahrefs.com/blog/do-ai-assistants-prefer-to-cite-fresh-content",
+    "https://ahrefs.com/blog/what-is-llms-txt/",
+    "https://arxiv.org/abs/2311.09735",
+    "https://blog.cloudflare.com/content-signals-policy/",
+    "https://datadome.co/threat-research/ai-traffic-report-q2-2026/",
+    "https://datatracker.ietf.org/wg/aipref/documents/",
+    "https://developer.amazon.com/amazonbot",
+    "https://developers.cloudflare.com/ai-crawl-control/",
+    "https://developers.facebook.com/docs/sharing/webmasters/web-crawlers/",
+    "https://developers.facebook.com/documentation/sharing/webmasters/web-crawlers",
+    "https://developers.google.com/crawling/docs/crawlers-fetchers/google-user-triggered-fetchers",
+    "https://developers.google.com/search/docs/appearance/ai-features",
+    "https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers",
+    "https://developers.openai.com/api/docs/bots",
+    "https://docs.mistral.ai/robots/",
+    "https://docs.perplexity.ai/docs/resources/perplexity-crawlers",
+    "https://docs.perplexity.ai/guides/bots",
+    "https://github.com/ai-robots-txt/ai.robots.txt",
+    "https://help.openai.com/en/articles/11752874",
+    "https://help.openai.com/en/articles/20001203-offline-web-search-for-chatgpt-workspaces",
+    "https://rslstandard.org/",
+    "https://searchengineland.com/chatgpt-retrieval-stack-index-cache-pages-485036",
+    "https://seranking.com/blog/llms-txt/",
+    "https://support.apple.com/en-us/119829",
+    "https://support.claude.com/en/articles/10684638",
+    "https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler",
+    "https://surferseo.com/blog/query-fan-out-impact/",
+    "https://trust.anthropic.com/subprocessors",
+    "https://www.5wpr.com/research/state-of-ai-citations-2026/",
+    "https://www.bangkokpost.com/life/tech/3120718/openai-launches-chatgpt-go-in-thailand",
+    "https://www.bing.com/webmasters/help/which-crawlers-does-bing-use-8c184ec0",
+    "https://www.kimi.com/policies/kimi-crawlers",
+    "https://www.seroundtable.com/google-llms-txt-39698.html"
+  ],
+  "declared_preferences": {
+    "_note": "Machine-readable usage preferences a site may declare in 2026. None of the ten platforms states compliance with them, so the audit parses and reports them (transparency) and never scores a platform on them. A site that declares ai-input=no or search=no has opted out of AI answers by policy; the report says so instead of recommending fixes.",
+    "content_signal": {
+      "where": "robots.txt line: Content-Signal: search=yes, ai-input=yes, ai-train=no",
+      "origin": "Cloudflare Content Signals Policy, 2025-09-24, auto-applied to 3.8M+ managed robots.txt files",
+      "keys": [
+        "search",
+        "ai-input",
+        "ai-train"
+      ],
+      "source_url": "https://blog.cloudflare.com/content-signals-policy/"
+    },
+    "content_usage": {
+      "where": "HTTP header Content-Usage or robots.txt line Content-Usage:",
+      "origin": "IETF AIPREF drafts (aipref-attach-05, aipref-vocab-07, 2026-08), Standards Track, not yet an RFC",
+      "keys": [
+        "train-ai",
+        "search"
+      ],
+      "source_url": "https://datatracker.ietf.org/wg/aipref/documents/"
+    },
+    "rsl_license": {
+      "where": "robots.txt line: License: https://example.com/license.xml",
+      "origin": "Really Simple Licensing 1.0 (Reddit, Yahoo, Quora, Cloudflare, Fastly, Akamai and publishers)",
+      "source_url": "https://rslstandard.org/"
+    },
+    "tdm_reservation": {
+      "where": "/.well-known/tdmrep.json or TDM-Reservation header",
+      "origin": "EU DSM Article 4 text-and-data-mining opt-out",
+      "source_url": "https://www.w3.org/community/tdmrep/"
+    },
+    "crawler_paywall": {
+      "where": "HTTP 402 returned to AI crawlers",
+      "origin": "Cloudflare Pay Per Crawl under AI Crawl Control (private beta, 2026)",
+      "audit_rule": "classify 402 on a crawler user agent as crawler paywall, not as a server error",
+      "source_url": "https://developers.cloudflare.com/ai-crawl-control/"
+    },
+    "cloudflare_ai_bot_policies": {
+      "note": "Cloudflare presets (Search, Agent, Training) with new-zone defaults from 2026-09-15 allowing Search and blocking Training and Agent on ad-bearing pages; a site on Cloudflare may block a documented search crawler at the edge without a robots.txt line, so robots.txt ALLOWED is necessary, not sufficient",
+      "source_url": "https://developers.cloudflare.com/bots/additional-configurations/block-ai-bots/"
+    }
+  },
+  "verification_methods": [
+    "ip_list_json",
+    "reverse_dns",
+    "asn_whois",
+    "web_bot_auth (/.well-known/http-message-signatures-directory)",
+    "none"
+  ],
+  "agentic_browsers_note": "Agentic browsers carry no crawler token: ChatGPT Atlas and the ChatGPT Work cloud browser, Perplexity Comet, Claude in Chrome, Gemini in Chrome, Edge Copilot Mode, Grok Bot, Meta Muse. They appear as ordinary browser traffic and robots.txt cannot address them; the audit reports agent readiness (operable controls, labels, live regions) instead of crawler access for them.",
+  "out_of_scope_regional": [
+    {
+      "platform": "LINE / LY Corporation AI",
+      "reason": "dominant Thai messenger with no documented crawler or citation surface; revisit when documentation appears"
+    },
+    {
+      "platform": "Tencent Yuanbao / Hunyuan",
+      "reason": "no known token"
+    },
+    {
+      "platform": "Zhipu GLM",
+      "reason": "ChatGLM-Spider tracked as a secondary training crawler only"
+    },
+    {
+      "platform": "Naver AI Briefing",
+      "reason": "Yeti crawler; Korean market"
+    }
+  ]
+}

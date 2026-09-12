@@ -1,0 +1,25 @@
+{
+  "name": "seo-heading-matrix-lite",
+  "version": "1.0.0",
+  "edition": "lite",
+  "purpose": "Audit H1-H6 hierarchy per page type and propose the structure it should have.",
+  "workflow": {
+    "phases": [
+      "จัดกลุ่มหน้าตามประเภท",
+      "อ่านลำดับหัวข้อจากโค้ดจริง",
+      "เทียบกับเกณฑ์ 6 ข้อ",
+      "เสนอโครงที่ควรเป็นพร้อมเหตุผล"
+    ]
+  },
+  "output": "work/{domain}/01-current/{domain}_heading-matrix_{YYYY-MM-DD}.md",
+  "rules": [
+    "ห้ามแก้เว็บให้",
+    "ห้ามให้คะแนนรวมเป็นตัวเลข",
+    "อ่านลำดับจากโค้ด ไม่ใช่จากที่ตาเห็นบนจอ",
+    "ถ้าอ่านหัวข้อไม่ได้เพราะโหลดด้วย JavaScript ให้บอกตรง ๆ ห้ามเดาโครง",
+    "H1 ซ้ำเพราะ template ให้ระบุว่าเป็นปัญหาระดับ template",
+    "ดึงข้อมูลไม่สำเร็จให้เขียนว่า ตรวจไม่ได้ ห้ามเขียนว่า ไม่มี",
+    "อ่านได้กี่หน้าให้ส่งเท่านั้น ห้ามกลั้นทั้งงานเพราะบางหน้าอ่านไม่ได้ และให้ติดป้ายว่าข้อไหนยืนยันแล้วข้อไหนต้องยืนยันเพิ่ม"
+  ],
+  "notes": "Lite edition for the BIQDADDY AI Visibility Course. Self-contained: no shared _base, no reference pack, no external scripts."
+}

@@ -1,0 +1,518 @@
+{
+  "metadata": {
+    "version": "2.0-lite",
+    "agent_name": "aiso-platform-lite",
+    "category": "aiso",
+    "title": "Platform-Specific AI Search Optimization (Lite)",
+    "description": "Platform-specific AI search optimization for all ten documented AI answer platforms (ChatGPT, Perplexity, Claude, Google AI Overviews and Gemini, DeepSeek, Grok, Qwen, Meta AI, Microsoft Copilot, Apple Intelligence), registry-bound, reported as a per-platform checklist with no score. Lite edition.",
+    "last_updated": "2026-09-12",
+    "standalone": true,
+    "author": "BIQDADDY"
+  },
+  "configuration": {
+    "role": "AISO Platform Optimizer",
+    "purpose": "Audit and optimize a website for each AI answer platform individually: ChatGPT, Perplexity, Claude, Google AI Overviews, Gemini, DeepSeek, Grok, Qwen, Meta AI, Microsoft Copilot and Apple Intelligence. Every platform is a checklist, never a number.",
+    "allowed_tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "WebFetch",
+      "Write",
+      "Bash"
+    ]
+  },
+  "workflow": {
+    "core_insight": "Domains cited by BOTH ChatGPT and Google AI Overviews for the same query are the exception rather than the rule. Each AI search platform uses different indexes, ranking logic, and source preferences. Platform-specific optimization is not optional.",
+    "method": "Walk the checklist for each platform and mark every item ผ่าน, บางส่วน, ยังไม่มี, or ตรวจไม่ได้. There is no point matrix, report the checklist result and the gaps it exposes.",
+    "marking_rule": "ยังไม่มี ใช้ได้ต่อเมื่อไปดูมาแล้วและยืนยันว่าไม่มีจริง ถ้ายังไม่ได้เห็นหลักฐานให้ลงว่า ตรวจไม่ได้ พร้อมบอกว่าขาดอะไร ห้ามลงว่า ยังไม่มี และถึงจะมีหลายข้อที่ ตรวจไม่ได้ ก็ยังต้องส่งผลของข้อที่เหลือ ห้ามยกเลิกทั้งงาน",
+    "query_eligibility_gate": {
+      "position": "Runs BEFORE any page is scored against any platform checklist. It is a gate on the QUERY SET, not a scoring criterion on a page.",
+      "step_1_query_mode_routing": {
+        "rule": "Build the AI-visibility target list from search MODE, not from topic alone.",
+        "not_targets": "Queries where the user already knows the destination, and queries that want one exact fact. These are served by the classic index path, so effort on them belongs in classic organic.",
+        "targets": "The queries a person would otherwise resolve over several successive refinements. The conversational answer surfaces were designed to absorb this mode.",
+        "test": "Would a human realistically need three or more refining searches to finish this task? Multi-constraint, comparison, and which-should-I queries qualify. Single-fact and navigational queries do not.",
+        "routing": "Drop the queries that are not AI-visibility targets and record each one as routed to classic organic. Never drop them silently."
+      },
+      "step_2_answer_suppression_classes": {
+        "observed_behaviours": [
+          "The generative answer layer withholds a response entirely for topics where reliable data is scarce.",
+          "It refuses generation for queries signalling a vulnerable user situation.",
+          "It attaches an explicit verify-elsewhere disclaimer on YMYL results."
+        ],
+        "buckets": {
+          "generation_suppressed": "Scarce reliable data, or a vulnerable user situation. AI-answer opportunity is zero. Do NOT score pages for these queries; spend the effort on classic organic and say so in the report.",
+          "disclaimer_attached": "YMYL queries answered with a verify-elsewhere disclaimer. Score them, with consensus alignment and citable authority dominating the emphasis.",
+          "normal": "Everything the surface answers without suppression or an attached disclaimer. Score on the full platform checklists."
+        },
+        "score_only": "Score pages only for the disclaimer_attached and normal buckets.",
+        "defer": "Whether a topic is YMYL belongs to seo-content-audit-lite; read that classification rather than making one. With no such reading available, label the bucketing as provisional and awaiting confirmation, never as fact."
+      },
+      "procedure": [
+        "Collect the client candidate query set before opening any platform checklist.",
+        "Apply query mode routing first and drop the non-targets, recording each as routed to classic organic.",
+        "Apply the answer-suppression classes to what remains and assign each query to one of the three buckets.",
+        "Score pages only for the disclaimer_attached and normal buckets.",
+        "Show the bucket counts and the classic-organic routing list in the report."
+      ],
+      "failure_mode": "Without this gate the skill scores every page on the same checklist regardless of whether an AI answer can ever appear for that query, and hands the client a full remediation plan for query sets where the surface is designed never to generate.",
+      "missing_query_set": "If the client has supplied no query set, ask for one. If it still does not arrive, infer candidate queries from the page content, continue the run, and label the bucketing as not yet confirmed against real queries. Never abandon the whole job over this step."
+    },
+    "platform_1_google_aio": {
+      "title": "Google AI Overviews (AIO)",
+      "registry_id": "google_aio",
+      "how_it_selects": [
+        "Most AIO citations come from pages already ranking near the top of organic results",
+        "A meaningful share of citations still comes from pages ranking lower, so AIO applies its own selection logic on top of rank",
+        "Strongly favors clean structure, direct answers, and scannable formatting",
+        "Featured snippet optimization overlaps substantially with AIO optimization"
+      ],
+      "checklist": [
+        "Question-Based Headings: H2/H3 phrased as questions matching real user queries",
+        "Direct Answer in First Paragraph: 1-2 sentence answer immediately after each question heading",
+        "Tables and Structured Comparisons: Convert comparison/pricing/spec data into HTML tables",
+        "Ordered and Unordered Lists: Step-by-step as ordered, features as unordered",
+        "FAQ Sections: real customer questions with H3 headings",
+        "Definitions and Glossary Boxes: Clear definitions for industry terms",
+        "Statistics with Sources: Specific numbers with attribution",
+        "Publication Date: Visible publish and last-updated dates",
+        "Author Byline: Name with credentials, linked author page",
+        "Page Depth: reachable in a few clicks from the homepage"
+      ],
+      "marking": "Each item: ผ่าน, บางส่วน, ยังไม่มี, ตรวจไม่ได้. No points.",
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "Googlebot"
+      ],
+      "registry_checklist": [
+        "Ranks in Google top 10 for the target query",
+        "Question-phrased headings",
+        "FAQ content or FAQPage",
+        "Comparison tables",
+        "Snippet controls open"
+      ]
+    },
+    "platform_2_chatgpt": {
+      "title": "ChatGPT Web Search",
+      "registry_id": "chatgpt",
+      "how_it_selects": [
+        "Uses OpenAI's own search index built by OAI-SearchBot (Bing now plays only a secondary role) , allowing OAI-SearchBot in robots.txt matters more than Bing SEO",
+        "Top citation sources: Wikipedia (47.9%), Reddit (11.3%), YouTube, major news",
+        "Heavily weights entity recognition (Wikipedia, Wikidata, Crunchbase)",
+        "Prefers authoritative, well-established sources",
+        "Longer, comprehensive articles cited more often"
+      ],
+      "checklist": [
+        "Wikipedia Presence: Check/create article if notable",
+        "Wikidata Entity: Verify/create with key properties",
+        "Bing Webmaster Tools: Register, submit sitemap, fix errors",
+        "Bing Index Coverage: Verify key pages indexed via site:domain.com on Bing",
+        "Reddit Authority: Check brand mentions and participation",
+        "YouTube Presence: Channel with relevant content",
+        "Authoritative Backlinks: .edu, .gov, major publications",
+        "Entity Consistency: Same info across Wikipedia, Crunchbase, LinkedIn, website",
+        "Comprehensive Content: 2000+ words with thorough coverage",
+        "Clear Attribution: About sections, company descriptions, founding stories"
+      ],
+      "marking": "Each item: ผ่าน, บางส่วน, ยังไม่มี, ตรวจไม่ได้. No points.",
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "OAI-SearchBot",
+        "ChatGPT-User"
+      ],
+      "registry_checklist": [
+        "Server-rendered, openable page",
+        "Wikipedia or Wikidata entity",
+        "Recently updated content",
+        "Indexed in Bing",
+        "H1 and first visible text carry the answer",
+        "Lists and step structure"
+      ]
+    },
+    "platform_3_perplexity": {
+      "title": "Perplexity AI",
+      "registry_id": "perplexity",
+      "how_it_selects": [
+        "Top citation: Reddit (46.7%), Wikipedia, YouTube, major publications",
+        "Heaviest emphasis on community validation of all AI platforms",
+        "Strongly favors discussion threads with multiple participants",
+        "Prefers recent content , publication date is strong ranking signal",
+        "Cites 5-15 sources per answer , more opportunity for mid-authority sites"
+      ],
+      "checklist": [
+        "Active Reddit Presence: Authentic participation in relevant subreddits",
+        "Reddit AMAs and Threads: Detailed discussion threads and Q&As",
+        "Forum/Community Presence: Hacker News, Stack Overflow, Quora, niche forums",
+        "Discussion-Friendly Content: Opinion pieces, research, original data",
+        "Freshness Signals: Clear dates, regular updates",
+        "Multiple Source Validation: Claims supported by other sources",
+        "YouTube Video Content: Videos Perplexity can reference",
+        "Direct, Quotable Passages: Standalone paragraphs with clear points",
+        "Original Data and Research: Surveys, benchmarks, case studies",
+        "Perplexity Pages: Check if Perplexity has curated a Page about topic/brand"
+      ],
+      "marking": "Each item: ผ่าน, บางส่วน, ยังไม่มี, ตรวจไม่ได้. No points.",
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "PerplexityBot",
+        "Perplexity-User"
+      ],
+      "registry_checklist": [
+        "Freshness of the page",
+        "Quotable standalone passages",
+        "Reddit and community validation",
+        "YouTube presence",
+        "Comparison tables"
+      ]
+    },
+    "platform_4_gemini": {
+      "title": "Google Gemini",
+      "registry_id": "gemini",
+      "how_it_selects": [
+        "Uses Google's search index plus strong weighting toward Google-owned properties",
+        "YouTube content weighted significantly more than standard Google Search",
+        "Google Business Profile data directly accessible",
+        "Uses Google Knowledge Graph directly",
+        "Structured data consumed directly for entity understanding",
+        "Multi-modal: can reference images, videos, and text together"
+      ],
+      "checklist": [
+        "Google Knowledge Panel: Check/claim through GBP or structured data",
+        "Google Business Profile: Complete all fields (completeness measured by seo-social-profile; reuse that verdict, see workflow.gbp_completeness_verification)",
+        "YouTube Strategy: Content for every key topic with chapters",
+        "YouTube Chapters and Timestamps: For Gemini to reference segments",
+        "Google Merchant Center: Products registered (e-commerce)",
+        "Structured Data (Schema.org): Comprehensive markup",
+        "Google Sites Ecosystem: Scholar, News, Maps presence",
+        "Image Optimization: Descriptive alt text, structured filenames",
+        "Google E-E-A-T Signals: Author pages, about pages, editorial policies",
+        "Chrome Web Store / Workspace Marketplace: Presence (software companies)"
+      ],
+      "marking": "Each item: ผ่าน, บางส่วน, ยังไม่มี, ตรวจไม่ได้. No points.",
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "Googlebot"
+      ],
+      "registry_checklist": [
+        "Knowledge Graph entity",
+        "YouTube channel",
+        "sameAs entity graph",
+        "Ranks in Google top 10"
+      ]
+    },
+    "platform_5_bing_copilot": {
+      "title": "Bing Copilot",
+      "registry_id": "copilot",
+      "how_it_selects": [
+        "Uses Bing's search index",
+        "Supports IndexNow protocol for near-instant indexing",
+        "Cites fewer sources per answer (3-5) but more prominent attribution",
+        "Microsoft ecosystem integration: LinkedIn, GitHub, Microsoft Learn",
+        "Prefers structured markup and fast load times"
+      ],
+      "checklist": [
+        "Bing Webmaster Tools: Register, verify, submit sitemap",
+        "IndexNow Implementation: Real-time content change notification",
+        "LinkedIn Company Page: Complete with accurate description and posts",
+        "GitHub Presence: Active repos (tech companies)",
+        "Microsoft Learn / Documentation: Compatible docs (if relevant)",
+        "Bing Places for Business: Complete all fields (local)",
+        "Clear Meta Descriptions: Bing weights these more than Google",
+        "Social Signals: Active social media presence",
+        "Exact-Match Keywords: Bing is more literal about keyword matching",
+        "Fast Page Load: Target sub-2-second load time"
+      ],
+      "marking": "Each item: ผ่าน, บางส่วน, ยังไม่มี, ตรวจไม่ได้. No points.",
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "bingbot"
+      ],
+      "registry_checklist": [
+        "Indexed in Bing",
+        "IndexNow enabled",
+        "FAQ content",
+        "Canonical set correctly",
+        "Lists and steps"
+      ]
+    },
+    "platform_6_claude": {
+      "title": "Claude (Anthropic)",
+      "registry_id": "claude",
+      "how_it_selects": [
+        "Claude does not browse by default; with web search on it retrieves through Claude-SearchBot's index and live Claude-User fetches, with Brave Search officially named as the web search subprocessor",
+        "Anthropic documents meta robots noindex as removing a page from Claude web search results; blocking ClaudeBot (training) does not remove search visibility",
+        "Answers favour verifiable, specific statements with attribution and a clean logical document structure",
+        "Citations API returns the exact passages used, so quotable standalone paragraphs are lifted verbatim"
+      ],
+      "checklist": [
+        "Crawler access: Claude-SearchBot and Claude-User allowed; ClaudeBot is a separate training decision",
+        "A short definitional answer block under the H1 and several quotable standalone paragraphs",
+        "Numeric facts (numbers, prices, percentages) present in the passages that should be cited",
+        "Factual, non-promotional wording with few superlatives",
+        "One H1 and no skipped heading levels",
+        "Author byline with credentials in JSON-LD or a visible byline",
+        "No nosnippet or restrictive max-snippet, page indexable",
+        "llms.txt present (hygiene, low weight)"
+      ],
+      "marking": "Each item: ผ่าน, บางส่วน, ยังไม่มี, ตรวจไม่ได้. No points.",
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "Claude-SearchBot",
+        "Claude-User"
+      ],
+      "registry_checklist": [
+        "Numeric fact density",
+        "Factual, non-promotional language",
+        "Clean H1 to H3 hierarchy",
+        "Author byline with credentials",
+        "Snippet controls open",
+        "Page is indexable",
+        "llms.txt and llms-full.txt"
+      ]
+    },
+    "platform_7_deepseek": {
+      "title": "DeepSeek",
+      "registry_id": "deepseek",
+      "how_it_selects": [
+        "DeepSeek's privacy policy states search is provided through third-party APIs (Bing was named in the 2025 text, no provider in the 2026 text) and no crawler user agent is published",
+        "Reasoning models follow document structure and technical precision: server-rendered text, comparison tables and a logical heading order are what survive retrieval",
+        "DeepSeek referral traffic outside China is negligible in 2026 studies; treat readiness here as a hedge, not a growth channel"
+      ],
+      "checklist": [
+        "Server-side rendered text readable without JavaScript",
+        "Comparison tables with header cells for specs and prices",
+        "Clean H1 to H3 hierarchy",
+        "Presence on developer and open-source hubs (GitHub, docs, Stack Overflow, Hugging Face; evidence from aiso-brand-mentions-lite)",
+        "Numeric precision: figures, units and dates per claim",
+        "Crawler access: could not verify (no documented user agent); report it that way"
+      ],
+      "marking": "Each item: ผ่าน, บางส่วน, ยังไม่มี, ตรวจไม่ได้. No points.",
+      "crawler_evidence": "none",
+      "visibility_crawlers": [],
+      "registry_checklist": [
+        "Server-rendered text",
+        "Comparison tables",
+        "Logical heading hierarchy",
+        "Numeric precision",
+        "Open-source and tech-hub presence"
+      ],
+      "crawler_access_rule": "No documented crawler: report crawler access as ตรวจไม่ได้ and never as a failed item."
+    },
+    "platform_8_grok": {
+      "title": "Grok (xAI)",
+      "registry_id": "grok",
+      "how_it_selects": [
+        "Two retrieval tools: x_search over X posts and web_search over the open web; roughly 45 percent of citations in 2026 samples are X posts and verified accounts are cited far more often",
+        "xAI publishes no crawler user agent; fetches are observed with browser user agents, and GrokAgent (hosted browser agent) signs requests with Web Bot Auth",
+        "Lowest organic top-10 overlap of the major engines, so classic rankings buy little here; real-time social presence does"
+      ],
+      "checklist": [
+        "Active, verified X account posting on the topic (evidence from aiso-brand-mentions-lite)",
+        "Brand sentiment on X sampled from recent posts (evidence from aiso-brand-mentions-lite)",
+        "X profile linked from the site through sameAs",
+        "twitter:card and twitter:site tags on every page",
+        "Recent dateModified on the pages that should be cited",
+        "Complete Open Graph tags",
+        "Crawler access: could not verify; report it that way"
+      ],
+      "marking": "Each item: ผ่าน, บางส่วน, ยังไม่มี, ตรวจไม่ได้. No points.",
+      "crawler_evidence": "none",
+      "visibility_crawlers": [],
+      "registry_checklist": [
+        "Active, verified X account",
+        "Brand sentiment on X",
+        "X profile linked from the site",
+        "Twitter card tags",
+        "Recent updates",
+        "Open Graph complete"
+      ],
+      "crawler_access_rule": "No documented crawler: report crawler access as ตรวจไม่ได้ and never as a failed item."
+    },
+    "platform_9_qwen": {
+      "title": "Qwen (Alibaba Cloud)",
+      "registry_id": "qwen",
+      "how_it_selects": [
+        "Qwen chat and Tongyi apps retrieve through Alibaba search infrastructure (Shenma and Quark spiders observed as Yisouspider); Alibaba documents a paid web search tool for API users and no crawler for site owners",
+        "Bilingual and Chinese content, hreflang alternates and consistent language declarations drive retrieval; spec and price tables are extracted well",
+        "Qwen-User, QwenBot and TongyiBot are community-observed tokens with no verification method"
+      ],
+      "checklist": [
+        "Bilingual (TH and EN, or CN) pages for the core services (evidence: site crawl)",
+        "hreflang alternates on every localised page",
+        "html lang agrees with og:locale",
+        "Spec and price comparison tables",
+        "Server-rendered text",
+        "Crawler access: could not verify; report it that way"
+      ],
+      "marking": "Each item: ผ่าน, บางส่วน, ยังไม่มี, ตรวจไม่ได้. No points.",
+      "crawler_evidence": "observed",
+      "visibility_crawlers": [
+        "Qwen-User"
+      ],
+      "registry_checklist": [
+        "Bilingual or Chinese pages present",
+        "hreflang alternates",
+        "Language declarations consistent",
+        "Spec and price tables",
+        "Server-rendered text"
+      ],
+      "crawler_access_rule": "No documented crawler: report crawler access as ตรวจไม่ได้ and never as a failed item."
+    },
+    "platform_10_meta_ai": {
+      "title": "Meta AI",
+      "registry_id": "meta_ai",
+      "how_it_selects": [
+        "Meta AI answers in WhatsApp, Instagram, Facebook and meta.ai cite through meta-webindexer's index and show Bing and Google results as Sources",
+        "Every Meta surface reads Open Graph tags for shared links; og:locale must match the content language",
+        "meta-externalagent is the training crawler and meta-externalfetcher the user fetcher that may bypass robots.txt; only meta-webindexer decides citation"
+      ],
+      "checklist": [
+        "robots.txt allows meta-webindexer explicitly",
+        "og:title, og:description, og:image, og:url on every page",
+        "Facebook and Instagram profiles linked through sameAs and complete (evidence from the client profile or a user-supplied profile check)",
+        "og:locale consistent with html lang",
+        "Indexed in Bing (evidence)"
+      ],
+      "marking": "Each item: ผ่าน, บางส่วน, ยังไม่มี, ตรวจไม่ได้. No points.",
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "meta-webindexer",
+        "meta-externalfetcher"
+      ],
+      "registry_checklist": [
+        "Open Graph complete",
+        "Facebook and Instagram linked",
+        "Facebook and Instagram profiles complete",
+        "Locale consistent",
+        "Indexed in Bing"
+      ]
+    },
+    "platform_11_apple_intelligence": {
+      "title": "Apple Intelligence (Siri, Spotlight, Safari)",
+      "registry_id": "apple_intelligence",
+      "how_it_selects": [
+        "Applebot indexes for Spotlight, Siri and Safari; Apple documents that world-knowledge answers may include links to the sources used",
+        "Applebot-Extended does not crawl: it only opts a site out of training Apple foundation models, and nosnippet opts a page out of use as answer context",
+        "Siri favours concise factual answers; ChatGPT and Gemini integrations answer open-ended questions"
+      ],
+      "checklist": [
+        "Applebot allowed; nosnippet absent on pages that should be cited",
+        "FAQ content or FAQPage markup with direct answers",
+        "Several quotable standalone passages",
+        "speakable markup on answer sections",
+        "Question-phrased headings for voice queries"
+      ],
+      "marking": "Each item: ผ่าน, บางส่วน, ยังไม่มี, ตรวจไม่ได้. No points.",
+      "crawler_evidence": "official",
+      "visibility_crawlers": [
+        "Applebot"
+      ],
+      "registry_checklist": [
+        "Snippet controls open",
+        "FAQ and direct answers",
+        "Quotable passages",
+        "Speakable schema",
+        "Question headings"
+      ]
+    },
+    "cross_platform_summary": {
+      "universal_actions": [
+        "Wikipedia or Wikidata entity presence",
+        "YouTube channel with relevant content",
+        "Comprehensive, well-structured content with clear headings",
+        "Schema.org structured data (Organization plus sameAs)",
+        "Fast page load and clean HTML",
+        "Author pages with credentials and sameAs links",
+        "Regular content updates with visible dates",
+        "Allow every documented search crawler (OAI-SearchBot, Claude-SearchBot, PerplexityBot, meta-webindexer, Applebot, Googlebot, bingbot) and decide training crawlers separately"
+      ],
+      "platform_priorities": {
+        "Google_AIO": [
+          "Top-10 ranking",
+          "Q&A structure",
+          "Tables and lists",
+          "Featured snippets"
+        ],
+        "ChatGPT": [
+          "Wikipedia",
+          "Entity graph",
+          "Bing SEO",
+          "Reddit"
+        ],
+        "Perplexity": [
+          "Reddit presence",
+          "Original research",
+          "Freshness",
+          "Community forums"
+        ],
+        "Gemini": [
+          "YouTube",
+          "Knowledge Panel",
+          "Schema.org",
+          "GBP"
+        ],
+        "Copilot": [
+          "IndexNow",
+          "Bing WMT",
+          "LinkedIn",
+          "Meta descriptions"
+        ],
+        "Claude": [
+          "Fact density",
+          "Clean hierarchy",
+          "Author byline",
+          "Indexable, snippet open"
+        ],
+        "DeepSeek": [
+          "SSR text",
+          "Comparison tables",
+          "Heading hierarchy",
+          "Numeric precision"
+        ],
+        "Grok": [
+          "Verified X activity",
+          "twitter:card",
+          "Freshness",
+          "Open Graph"
+        ],
+        "Qwen": [
+          "Bilingual pages",
+          "hreflang",
+          "Spec tables",
+          "SSR"
+        ],
+        "Meta_AI": [
+          "meta-webindexer allowed",
+          "Open Graph",
+          "Facebook and Instagram complete",
+          "Bing index"
+        ],
+        "Apple_Intelligence": [
+          "No nosnippet",
+          "FAQ answers",
+          "Quotable passages",
+          "speakable"
+        ]
+      }
+    },
+    "output": {
+      "filename": "{domain}_platform-analysis_{YYYY-MM-DD}.md",
+      "sections": [
+        "Query Eligibility Gate (bucket counts plus the queries routed to classic organic)",
+        "Platform checklist table: 11 cards, per card the counts of ผ่าน, บางส่วน, ยังไม่มี, ตรวจไม่ได้ and the crawler evidence tier; no score",
+        "Platform details with per-card checklist, gaps and actions",
+        "Prioritized action plan: quick wins, medium term, strategic",
+        "Card feed: the checklist JSON for build_summary.py --checklist and the platforms block of summary.json"
+      ]
+    },
+    "registry_binding": {
+      "source_of_truth": "{PLUGIN_ROOT}/skills/rainmojo-so-lite/reference/frameworks/ai-platform-registry.json (loaded by scripts/ai_platforms.py)",
+      "rule": "Eleven cards for ten platforms: ChatGPT, Perplexity, Claude, Google AI Overviews, Gemini, DeepSeek, Grok, Qwen, Meta AI, Microsoft Copilot, Apple Intelligence. Crawler tokens, evidence tiers and checklist items come from the registry; when this file and the registry disagree the registry wins.",
+      "no_score": "Lite edition: every platform is a checklist answered ผ่าน, บางส่วน, ยังไม่มี or ตรวจไม่ได้. There is no per-platform number, no site number and no band. Count the items per state and report the counts.",
+      "unverifiable_rule": "When the vendor publishes no crawler documentation (Grok, DeepSeek) or only community-observed tokens (Qwen), crawler access is ตรวจไม่ได้ on that card and is excluded from the counts.",
+      "evidence_from_other_skills": "Off-site facts come from their owning skills: Wikidata, Knowledge Panel, Reddit, YouTube, X activity and tech-hub presence from aiso-brand-mentions-lite; profile completeness from the client profile; Google top 10 and Bing index from the user (Search Console, site: search). A missing fact is ตรวจไม่ได้.",
+      "llms_txt": "llms.txt is a hygiene item on every card: 2025 and 2026 measurements found no major platform reading it. Keep generating it through aiso-llmstxt-lite; never present it as the reason a card passes or fails.",
+      "card_feed": "Write the checklist JSON that build_summary.py --checklist reads: {\"platforms\": [{\"id\", \"label\", \"status\" (ok, warning, critical, info), \"crawler_access\" (allowed, blocked, partial, unverifiable, not_checked), \"note\"}], \"dimensions\": [{\"key\": \"platform_checklist\", \"label\", \"passed\", \"total\"}]}"
+    }
+  }
+}

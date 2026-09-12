@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "version": "1.0-lite",
+    "agent_name": "aiso-agent-readiness-lite",
+    "category": "aiso",
+    "title": "AI Agent Readiness Checklist (semantic HTML and accessibility tree, Lite)",
+    "description": "Checklist of 14 checks per page answered PASS, FAIL, N/A or could not verify from the static HTML and the Playwright accessibility tree: named controls, clickable generics, ARIA conformance, form labels and autocomplete, landmarks, live regions, modal containment, closed Shadow DOM, render integrity and the agent tool surface. No score, no weights, no gate. Lite edition.",
+    "last_updated": "2026-09-12",
+    "standalone": true,
+    "author": "BIQDADDY"
+  },
+  "configuration": {
+    "role": "AI Agent Readiness Auditor",
+    "purpose": "Tell the site owner which controls, forms and structures an autonomous web agent cannot perceive or operate, with a code-level fix for each, without inventing a number.",
+    "allowed_tools": ["Read", "Grep", "Glob", "WebFetch", "Write", "Bash"]
+  },
+  "workflow": {
+    "core_insight": "Agents that read the accessibility tree see only what semantic HTML exposes: a clickable div has role generic and no name; a placeholder-only input loses its name once the agent types; a div modal leaves the background clickable. Screenshot-only agents still depend on visible text and a layout that settles quickly.",
+    "perception_classes_verified_2026_09": {
+      "accessibility_tree": ["Playwright MCP", "Claude in Chrome and the Anthropic browser tool", "Perplexity Comet", "ChatGPT Atlas", "Stagehand"],
+      "dom_plus_screenshot": ["Browser Use", "Google Project Mariner"],
+      "screenshot_only": ["OpenAI Operator / CUA", "Anthropic computer use", "Gemini Computer Use", "Amazon Nova Act", "Edge Copilot Actions"]
+    },
+    "refuted_claims_never_made": [
+      "Agents do not hang without aria-live; they re-observe the page a moment after acting. Live regions still matter so the message carries a role in the accessibility tree.",
+      "INP is not what agents time out on; step budgets are seconds to minutes. What matters is that the DOM settles and the confirmation stays visible.",
+      "Accessibility is not a Google ranking factor; this checklist is about agents and users, never rank."
+    ],
+    "step_1_run_script": {
+      "command": "python {PLUGIN_ROOT}/skills/rainmojo-so-lite/scripts/agent_readiness_lite.py https://{domain}/ --scope representative_templates --output json --out work/{domain}/01-current/{domain}_agent-readiness_{YYYY-MM-DD}.json",
+      "scopes": {"homepage_only": "1 page", "representative_templates": "up to 60 static pages, 12 rendered, 3 per template", "full_site_crawl": "up to 500 static, 18 rendered"},
+      "render": "auto uses Playwright Chromium when installed; off runs the static tier only and reports rendered checks as could not verify. Never submit forms, never click checkout, payment, login or delete.",
+      "no_shell_host": "When the host cannot run commands, ask the user for the page source (Ctrl+U, copy all) and run --html on it, or mark the rendered checks could not verify. Never guess."
+    },
+    "step_2_read_checklist": {
+      "checks": ["CTL-01 clickable generics", "CTL-02 ARIA conformance", "CTL-03 named interactive controls", "CTL-04 visible text or labelled icon", "FRM-01 programmatic labels", "FRM-02 autocomplete on identity fields", "FRM-03 type, name and required parity", "STR-01 landmark skeleton", "STR-02 content inside landmarks", "DYN-01 live region where an action exists", "DYN-02 modal containment", "DYN-03 no closed Shadow DOM on controls", "ACC-01 headless render integrity", "ACC-02 agent tool surface (INFO only)"],
+      "verdicts": "PASS, FAIL, N/A (check does not apply on this page), COULD NOT VERIFY (tier not run), INFO (inventory only).",
+      "no_score": "Report counts of checks passed out of checks applicable per page and for the site. Never weight, never total into a number, never cap or gate."
+    },
+    "step_3_defects_and_fixes": {
+      "rule": "Group defects by check. Each defect names the selector and a code-level fix: button instead of div, label for=id, WHATWG autocomplete token, dialog with showModal() or role=dialog plus aria-modal plus inert, role=status container, open shadow root or ElementInternals.",
+      "priority_hint": "Order the fix list by how many audited pages the check fails on; the reader decides, the skill does not assign points."
+    },
+    "step_4_cited_verdicts": {
+      "rule": "Cite, never re-measure: heading hierarchy from seo-heading-matrix-lite, SSR from aiso-technical-lite, robots access from aiso-crawlers-lite, llms.txt from aiso-llmstxt-lite, JSON-LD from aiso-schema-lite. When a cited skill has not run this round, write not audited."
+    },
+    "step_5_tool_surface": {
+      "rule": "List every probed endpoint as declared, not declared or obsolete. Informational only; a declared MCP or UCP endpoint is reported, not rewarded."
+    },
+    "not_in_lite": "No axe-core subset, no settle probe, no legal context note, no Task Completion Rate. Say so plainly when asked.",
+    "output": {
+      "filename": "{domain}_agent-readiness_{YYYY-MM-DD}.md plus the script JSON, under work/{domain}/00-baseline/ or 01-current/",
+      "sections": ["Checks passed out of checks applicable, scope, could not verify list", "Per-page table (URL, template, passed, failed, unnamed controls, unlabeled fields)", "Defects and fixes grouped by check with selectors and code snippets", "Cited verdicts panel from owning skills", "Agent tool surface inventory (informational)", "Tier 1 card feed: build_summary.py --agent reads the JSON directly"]
+    }
+  }
+}

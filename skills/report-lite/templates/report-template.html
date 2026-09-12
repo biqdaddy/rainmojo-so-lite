@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>AISO Report {{DOMAIN}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1A1A1A;
+    --muted: #767676;
+    --line: #E2E2E2;
+    --surface: #F5F5F5;
+    --accent: #0066CC;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #FFFFFF;
+    color: var(--ink);
+    font-family: "Noto Sans Thai", "Segoe UI", Tahoma, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .page { max-width: 780px; margin: 0 auto; padding: 48px 24px 64px; }
+
+  header { border-bottom: 2px solid var(--ink); padding-bottom: 16px; }
+  .eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 6px;
+  }
+  h1 { font-size: 27px; font-weight: 700; line-height: 1.35; margin: 0 0 10px; }
+  .meta { font-size: 13px; color: var(--muted); margin: 0; }
+  .meta span + span::before { content: "/"; margin: 0 8px; color: var(--line); }
+
+  .lead {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    padding: 14px 18px;
+    margin: 24px 0 0;
+    font-size: 14px;
+  }
+
+  h2 {
+    font-size: 18px; font-weight: 700; margin: 44px 0 4px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--line);
+  }
+  h2 .num { color: var(--accent); margin-right: 8px; }
+  .hint { font-size: 13px; color: var(--muted); margin: 10px 0 18px; }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--surface); font-weight: 600; font-size: 13px; white-space: nowrap; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+  td:nth-child(2) { white-space: nowrap; }
+
+  .badge {
+    display: inline-block; padding: 1px 10px; border: 1px solid;
+    border-radius: 3px; font-size: 12px; font-weight: 600; line-height: 1.6;
+  }
+  .badge.pass { color: var(--accent); border-color: var(--accent); }
+  .badge.fail { color: var(--ink); border-color: var(--ink); background: var(--surface); }
+  .badge.na   { color: var(--muted); border-color: var(--line); }
+
+  ol.fixes { list-style: none; counter-reset: fix; padding: 0; margin: 0; }
+  ol.fixes li {
+    counter-increment: fix; position: relative;
+    padding: 14px 0 14px 40px; border-bottom: 1px solid var(--line);
+  }
+  ol.fixes li::before {
+    content: counter(fix); position: absolute; left: 0; top: 14px;
+    width: 26px; height: 26px; border: 1px solid var(--line); border-radius: 50%;
+    text-align: center; line-height: 24px; font-size: 12px; font-weight: 600; color: var(--accent);
+  }
+  .fix-title { font-weight: 600; margin: 0 0 4px; }
+  .fix-area {
+    display: inline-block; margin-left: 8px; padding: 0 7px; background: var(--surface);
+    border-radius: 3px; font-size: 11px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.04em; vertical-align: middle;
+  }
+  .fix-body { margin: 0; font-size: 14px; color: #3D3D3D; }
+
+  ol.steps { padding-left: 20px; margin: 0; }
+  ol.steps li { padding: 7px 0; border-bottom: 1px solid var(--line); }
+  ol.steps li:last-child { border-bottom: 0; }
+  ol.steps li::marker { color: var(--accent); font-weight: 600; }
+
+  footer {
+    margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line);
+    font-size: 12px; color: var(--muted);
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 32px 16px 48px; }
+    h1 { font-size: 22px; }
+    th, td { padding: 9px 8px; }
+  }
+  @media print {
+    .page { max-width: none; padding: 0; }
+    ol.fixes li, ol.steps li, tr { break-inside: avoid; }
+  }
+    tbody tr.grp td{background:#f2f5f7;font-weight:700;letter-spacing:.02em}
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <p class="eyebrow">AISO Report</p>
+    <h1>{{REPORT_TITLE}}</h1>
+    <p class="meta"><span>{{DOMAIN}}</span><span>{{REPORT_DATE}}</span></p>
+  </header>
+
+  <p class="lead">{{SUMMARY_LINE}}</p>
+
+  <h2><span class="num">1</span>สรุปสถานะ</h2>
+  <p class="hint">{{SUMMARY_HINT}}</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>ด้าน</th><th>สถานะ</th><th>สิ่งที่ตรวจพบ</th></tr>
+      </thead>
+      <!-- STATUS_ROWS: วนใส่ทีละกลุ่ม
+           แถวหัวกลุ่ม ใช้แบบนี้
+           <tr class="grp"><td colspan="3">ชื่อกลุ่ม</td></tr>
+           แถวข้อมูล ใช้แบบนี้ class ของ badge เป็น pass หรือ fail หรือ na
+           <tr><td>ชื่อด้าน</td><td><span class="badge pass">ผ่าน</span></td><td>สิ่งที่ตรวจพบ 1 ประโยค</td></tr>
+           ไฟล์ต้นทางบอกว่ายืนยันไม่ได้ ใช้ na กับคำว่า ตรวจไม่ได้ ห้ามใช้ fail กับคำว่า ไม่ผ่าน
+           ใส่เฉพาะด้านที่มีไฟล์ผลตรวจจริง -->
+      <tbody>
+{{STATUS_ROWS}}
+      </tbody>
+    </table>
+  </div>
+
+  <h2><span class="num">2</span>สิ่งที่ต้องแก้</h2>
+  <p class="hint">{{FIX_HINT}}</p>
+  <ol class="fixes">
+    <!-- FIX_ITEMS: ใส่ได้ไม่เกิน 10 รายการ เรียงจากสำคัญมากไปน้อย ใช้ block นี้ต่อ 1 รายการ
+    <li>
+      <p class="fix-title">ชื่อปัญหา<span class="fix-area">ด้านที่เกี่ยว</span></p>
+      <p class="fix-body">สิ่งที่ต้องทำ และเหตุผลสั้น ๆ ว่าทำไมต้องแก้</p>
+    </li>
+    -->
+    {{FIX_ITEMS}}
+  </ol>
+
+  <h2><span class="num">3</span>ขั้นตอนถัดไป</h2>
+  <p class="hint">{{NEXT_HINT}}</p>
+  <ol class="steps">
+    <!-- NEXT_STEPS: 3 ถึง 5 รายการ ใช้ <li>ข้อความ</li> ต่อ 1 รายการ -->
+    {{NEXT_STEPS}}
+  </ol>
+
+  <footer>{{FOOTER_NOTE}}</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.env
+*.plugin
+work/
+clients/*/
+!clients/demo-client/

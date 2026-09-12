@@ -1,0 +1,15 @@
+{
+ "_owner": "new-client",
+ "owner_note": "new-client owns brand setup. It creates the client workspace, writes brand-guidelines.md and client-profile.md, and its Step 2 brand profile interview is the one place these questions are asked and the answers are persisted. Every other skill reads the resulting brand files and does not decide the brand profile itself. Route a standalone request to set up, define, or change a client's brand to new-client.",
+ "why_this_file_exists": "The same question set was previously duplicated inside eight skills and had already drifted: one copy asked six questions and the rest five, and the formality question was reworded per skill (content / meta descriptions / on-page content). Storing it once means a run cannot depend on which skill happened to ask.",
+ "when_to_use": "Fallback only. A skill reaches this file when brand-guidelines.md and client-profile.md are both missing for the client and the current run cannot wait for new-client. Answers collected this way are input for that run only.",
+ "essential_questions": [
+  "What is your brand's personality? (Professional, Friendly, Expert, Approachable, etc.)",
+  "How formal should your content sound? (Very formal, Professional, Conversational, Casual)",
+  "Who is your primary target audience? (Demographics, expertise level, interests)",
+  "What makes your business different from competitors?",
+  "What language/region should we optimize for? (American English, British English, Thai, etc.)"
+ ],
+ "question_wording_rule": "Ask these five verbatim. A skill may add its own follow-up questions under its skill_specific_followups key, but must not restate, reword, or renumber the five above.",
+ "answer_handling": "Apply the answers to the current run, then tell the user the answers are not yet saved and that running new-client (or filling brand-guidelines.md directly) is what makes them persist. Never write brand-guidelines.md or client-profile.md from inside a fallback interview: that file belongs to new-client and a second writer would produce two brand profiles that do not know about each other."
+}

@@ -1,0 +1,460 @@
+{
+  "industry_adaptation_note": "CRITICAL: all examples below use football e-commerce. For clients in other industries (dental clinics, legal firms, supplements, fashion, healthcare, etc.) you MUST adapt ALL industry-specific elements while preserving the structure and optimization principles.",
+  "what_to_maintain": [
+    "Title/Description character targets (50-60 chars, 140-160 chars)",
+    "Page type structure and format rules",
+    "Brand placement rules by page type",
+    "Formal Thai language standards",
+    "CTA rotation principles (never repeat)",
+    "Context quality scoring methodology",
+    "Unicode character counting protocol"
+  ],
+  "what_to_adapt": [
+    "Product/service terminology (รองเท้าฟุตบอล → client's product category)",
+    "Brand names (Nike, Adidas → actual brands from client's industry)",
+    "Technical terms (FG, AG, SG → industry-specific technical terms)",
+    "Features/benefits (กระชับเท้า, ควบคุมลูกแม่น → product-specific benefits)",
+    "CTAs (ไซต์ครบ, พร้อมส่ง → industry-appropriate CTAs like บริการด่วน, ปรึกษาฟรี)",
+    "Value propositions (ของแท้ 100% → industry-relevant USPs like มาตรฐานสากล, รับประกันผล)"
+  ],
+  "homepage": {
+    "url_pattern": "/",
+    "primary_goal": "Brand identity + site navigation + trust establishment",
+    "user_intent": "Navigational - came to find YOUR store",
+    "title_format": "{{BRAND_NAME}} [Primary Value Proposition] [Key Product/Service Categories] [Unique Selling Point]",
+    "website_brand_in_title": "REQUIRED - must be FIRST element in title",
+    "h1_format": "[Brand Tagline or Value Proposition Statement]",
+    "h1_note": "Focus on value proposition, not just brand name repetition",
+    "psychological_frameworks": {
+      "recommended": [
+        "promise_benefit",
+        "use_numbers"
+      ],
+      "framework_priority": "Use both core frameworks: promise_benefit (value proposition + USP) + use_numbers (categories, years in business, quantity).",
+      "application": "Brand name FIRST (required), then main benefit, specific numbers (categories, years, quantity), end with specific USP.",
+      "example_application": "{{BRAND_NAME}} (brand required) + รองเท้าฟุตบอลของแท้ 100% (promise_benefit: authenticity) + ทุกแบรนด์ดัง Nike Adidas Puma (specific brand names showing variety) + จัดส่งฟรีทั่วไทย (promise_benefit: free shipping)",
+      "specificity_note": "Homepage uses specificity via exact brand names (Nike Adidas Puma) and specific value props (100%, free shipping). Apply as a quality, not a separate framework.",
+      "avoid": [
+        "urgency",
+        "fomo",
+        "curiosity"
+      ],
+      "reason_to_avoid": "Homepage establishes trust and brand identity - avoid manipulative tactics that undermine credibility"
+    },
+    "example": {
+      "url": "/",
+      "title": "{{BRAND_NAME}} รองเท้าฟุตบอลของแท้ 100% ทุกแบรนด์ดัง Nike Adidas Puma จัดส่งฟรีทั่วไทย",
+      "h1": "ร้านรองเท้าฟุตบอลและอุปกรณ์กีฬาครบวงจร ของแท้ มั่นใจได้",
+      "description": "{{BRAND_NAME}} ผู้จำหน่ายรองเท้าฟุตบอลและอุปกรณ์กีฬาครบวงจร ของแท้ 100% จากแบรนด์ชั้นนำ Nike, Adidas, Puma, Mizuno รองเท้าสตั๊ด FG, AG, SG และรองเท้าฟุตซอล ไซต์ครบทุกรุ่น ให้บริการมืออาชีพมาตั้งแต่ปี 2010 จัดส่งฟรีทั่วไทย รับประกันคุณภาพ ช้อปออนไลน์ง่าย ปลอดภัย"
+    }
+  },
+  "product_pages": {
+    "url_pattern": "/products/[product-name], /[category]/[product-name]",
+    "primary_goal": "Product discovery + conversion",
+    "user_intent": "Transactional - want to buy THIS product",
+    "title_format": "[Product Brand + Model] [Product Type] [Key Features/Benefits] [Buying CTAs]",
+    "website_brand_in_title": "NEVER - user searching for product, not your store",
+    "product_brand_in_title": "YES - if part of product name (e.g., Nike, Adidas)",
+    "h1_format": "[Product Brand] [Product Model/Name]",
+    "psychological_frameworks": {
+      "recommended": [
+        "promise_benefit",
+        "use_numbers",
+        "target_audience"
+      ],
+      "framework_priority": "Use all 3 core frameworks: promise_benefit (functional benefits + authenticity) + use_numbers (sizes, features) + target_audience (optional: who it's for).",
+      "application": "Product name with brand first (factual), key benefit (promise_benefit), specific features with numbers (use_numbers), optionally target audience.",
+      "example_application": "Nike Mercurial Superfly 9 Elite FG (product name) + รองเท้าฟุตบอล ของแท้ (promise_benefit: authenticity) + กระชับเท้า ควบคุมลูกแม่น (promise_benefit: functional benefits) + ไซต์ครบ (CTA with implied specificity)",
+      "specificity_note": "Specificity comes from exact product model (Nike Mercurial Superfly 9 Elite FG), specific features (กระชับเท้า), specific availability (ไซต์ครบ). A quality of HOW you apply frameworks, not a separate framework.",
+      "avoid": [
+        "urgency",
+        "fomo",
+        "curiosity"
+      ],
+      "reason_to_avoid": "Product pages need factual information for purchase decision, not urgency/scarcity manipulation"
+    },
+    "example": {
+      "url": "/products/nike-mercurial-superfly-9-elite-fg",
+      "title": "Nike Mercurial Superfly 9 Elite FG รองเท้าฟุตบอล ของแท้ กระชับเท้า ควบคุมลูกแม่น ไซต์ครบ",
+      "h1": "Nike Mercurial Superfly 9 Elite FG",
+      "description": "รองเท้าฟุตบอล Nike Mercurial Superfly 9 Elite FG ของแท้ 100% เทคโนโลยี Flyknit กระชับเท้า ควบคุมลูกได้แม่นยำ พื้นรองเท้า FG เหมาะสนามหญ้าธรรมชาติ ไซต์ 39-45 พร้อมส่ง จัดส่งฟรีทั่วไทย ช้อปออนไลน์ที่ {{BRAND_NAME}}"
+    },
+    "brand_clarification": {
+      "product_brand": "Nike, Adidas (brand of product being sold) - include in title naturally",
+      "website_brand": "{{BRAND_NAME}} (your store name) - NEVER in title, optional at end of description"
+    }
+  },
+  "category_pages": {
+    "url_pattern": "/category/[category-name], /[main-category], /[main-category]/[sub-category]",
+    "primary_goal": "Category ranking + product discovery",
+    "user_intent": "Commercial investigation - exploring category options",
+    "title_format": "[Category Name] [Context/Scope] [Key Benefits/Features] [Varied CTA]",
+    "website_brand_in_title": "NEVER - user exploring category, not seeking specific store",
+    "product_brands_in_title": "Optional - only if highlighting multi-brand selection naturally",
+    "h1_format": "[Category Name]",
+    "cta_rotation": "CRITICAL - NEVER use same CTA twice in batch optimization",
+    "psychological_frameworks": {
+      "recommended": [
+        "promise_benefit",
+        "use_numbers",
+        "ask_questions"
+      ],
+      "framework_priority": "Use first 2-3 only (promise_benefit + use_numbers are core, ask_questions optional if space allows)",
+      "application": "Category name first, promise main benefits, add numbers (quantity/variety), optionally ask question to engage",
+      "example_application": "รองเท้าฟุตบอล (category) + คุณภาพสูง ทนทาน กระชับเท้า (promise_benefit: quality + benefits) + ทุกแบรนด์ดัง Nike Adidas Puma (use_numbers implied: multiple brands) + ไซต์ครบ พร้อมส่ง (promise_benefit: availability)",
+      "optional_enhancement": "If title <52 chars after core frameworks, add: ask_questions pattern ('แบบไหนดีสุด') or specific brand examples (Nike Adidas Puma vs 'ทุกแบรนด์').",
+      "avoid": [
+        "urgency",
+        "fomo",
+        "curiosity"
+      ],
+      "reason_to_avoid": "Category pages are for browsing/comparison, not for creating false urgency or manipulative curiosity"
+    },
+    "example": {
+      "url": "/category/football-boots",
+      "title": "รองเท้าฟุตบอล คุณภาพสูง ทนทาน กระชับเท้า ทุกแบรนด์ดัง ไซต์ครบ พร้อมส่ง",
+      "h1": "รองเท้าฟุตบอล",
+      "description": "รองเท้าฟุตบอลคุณภาพสูง ครบทุกแบรนด์ดัง Nike, Adidas, Puma, Mizuno ทั้งรองเท้าสตั๊ด FG, AG, SG และรองเท้าฟุตซอล ของแท้ 100% กระชับเท้า ทนทาน ไซต์ครบทุกรุ่น จัดส่งฟรีทั่วไทย ช้อปออนไลน์ที่ {{BRAND_NAME}}"
+    },
+    "brand_clarification": {
+      "product_brands": "Nike, Adidas, etc. - mention in description to show variety",
+      "website_brand": "{{BRAND_NAME}} - NEVER in title, optional at end of description"
+    }
+  },
+  "collection_pages": {
+    "subcategories": {
+      "brand_collection_pages": {
+        "url_pattern": "/collection/[product-brand]-[collection-name]",
+        "primary_goal": "Product brand + collection ranking",
+        "user_intent": "Commercial - interested in specific brand collection",
+        "title_format": "[Product Brand] [Collection Name] [Product Type] [Key Features] [CTA]",
+        "product_brand_in_title": "YES - part of collection identity (e.g., Nike, Adidas)",
+        "website_brand_in_title": "NEVER - product brand is sufficient",
+        "h1_format": "[Product Brand] [Collection Name]",
+        "brand_order_rule": "Product brand FIRST, then collection name (Nike Max Voltage, NOT Max Voltage Nike)",
+        "example": {
+          "url": "/collection/nike-max-voltage",
+          "title": "Nike Max Voltage รองเท้าฟุตบอล คอลเลกชันใหม่ ดีไซน์โดดเด่น เทคโนโลยีสูง พร้อมส่ง",
+          "h1": "Nike Max Voltage",
+          "description": "Nike Max Voltage รองเท้าฟุตบอลคอลเลกชันใหม่ล่าสุด ดีไซน์โดดเด่นสะดุดตา เทคโนโลยี Nike ล้ำสมัย กระชับเท้า ควบคุมลูกได้แม่นยำ ของแท้ 100% ไซต์ครบ จัดส่งฟรีทั่วไทย ช้อปออนไลน์ที่ {{BRAND_NAME}}"
+        },
+        "brand_clarification": {
+          "product_brand": "Nike, Adidas (in collection name 'Nike Max Voltage') - YES in title",
+          "website_brand": "{{BRAND_NAME}} (your store name) - NEVER in title, optional in description"
+        }
+      },
+      "curated_collection_pages": {
+        "url_pattern": "/collection/[theme], /new-arrivals, /bestsellers, /sale, /promotions",
+        "primary_goal": "Theme-based product discovery",
+        "user_intent": "Commercial - browsing by theme/time/promotion",
+        "title_format": "[Collection Theme] [Product Category] [Time/Scope] [Benefits] [CTA]",
+        "product_brand_in_title": "NO - multi-brand collection",
+        "website_brand_in_title": "NEVER",
+        "h1_format": "[Collection Theme]",
+        "examples": {
+          "new_arrivals": {
+            "url": "/new-arrivals",
+            "title": "รองเท้าฟุตบอลของใหม่ล่าสุด คอลเลกชัน %%currentyear%% ทุกแบรนด์ดัง พร้อมส่ง",
+            "h1": "สินค้าใหม่ล่าสุด",
+            "description": "รองเท้าฟุตบอลและอุปกรณ์กีฬารุ่นใหม่ล่าสุด %%currentyear%% จาก Nike, Adidas, Puma คอลเลกชันใหม่ เทคโนโลยีล่าสุด ดีไซน์ทันสมัย ของแท้ 100% อัปเดตสินค้าใหม่ทุกสัปดาห์ พร้อมส่งทันที"
+          },
+          "bestsellers": {
+            "url": "/bestsellers",
+            "title": "รองเท้าฟุตบอลขายดี ยอดนิยม รุ่นฮิต มั่นใจได้ รีวิวดี ราคาโดน",
+            "h1": "สินค้าขายดี ยอดนิยม",
+            "description": "รองเท้าฟุตบอลขายดีที่สุด ยอดนิยมสูงสุด ทุกรุ่นที่คนเลือกซื้อมากที่สุด มั่นใจได้ในคุณภาพ รีวิวดี คะแนนสูง Nike Mercurial, Adidas Predator, Puma Future รุ่นฮิตแห่งปี ราคาคุ้มค่า"
+          },
+          "sale": {
+            "url": "/sale",
+            "title": "โปรโมชั่นรองเท้าฟุตบอล ลดราคาสูงสุด 50% ของแท้ มีประกัน จำนวนจำกัด",
+            "h1": "โปรโมชั่นพิเศษ ลดราคา",
+            "description": "โปรโมชั่นพิเศษ รองเท้าฟุตบอลและอุปกรณ์กีฬาลดราคา 20-50% ของแท้ทุกชิ้น มีประกัน รุ่นยอดนิยม แบรนด์ดัง Nike, Adidas, Puma จำนวนจำกัด โปรจบเร็ว รีบช้อปก่อนหมด"
+          }
+        }
+      }
+    },
+    "psychological_frameworks": {
+      "recommended": [
+        "promise_benefit",
+        "use_numbers",
+        "target_audience"
+      ],
+      "reasoning": "Collections need benefit promises (curated selection), numbers (X products), audience targeting (for football players, for goalkeepers)"
+    }
+  },
+  "informational_pages": {
+    "url_pattern": "/blog/[article-slug], /guides/[topic], /how-to/[topic], /articles/[topic]",
+    "primary_goal": "Information discovery + organic traffic",
+    "user_intent": "Informational - seeking knowledge/answers",
+    "title_format": "[Topic Question/Statement] [Key Benefit/Hook] [Additional Value]",
+    "website_brand_in_title": "NEVER - must appear objective and educational, not promotional",
+    "h1_format": "[Topic Question/Statement]",
+    "content_objectivity": "Must appear educational and unbiased for SEO ranking",
+    "brand_mention_allowed": "In description/content body naturally, NOT in title",
+    "psychological_frameworks": {
+      "recommended": [
+        "ask_questions",
+        "use_numbers",
+        "inject_news"
+      ],
+      "framework_priority": "Use all 3 core frameworks (essential for informational content): ask_questions (question format) + use_numbers (7 ways, 10 tips) + inject_news (%%currentyear%%, latest).",
+      "application": "Start with question (how/what/why), add specific numbers (7 ways, 10 tips), inject freshness (%%currentyear%%, latest)",
+      "example_application": "วิธีเลือกรองเท้าฟุตบอล (ask_questions: how-to) + ให้เหมาะกับสนาม (promise_benefit: outcome) + คู่มือ 7 ขั้นตอน (use_numbers) + %%currentyear%% (inject_news: freshness) + FG AG SG TF (specificity as content detail, not framework)",
+      "optional_enhancement": "If title <52 chars after core frameworks, add: curiosity patterns ('ความจริงที่...', 'เคล็ดลับที่...') or specificity (exact technical terms).",
+      "winning_combinations": [
+        "ask_questions + use_numbers + inject_news: 'วิธีทำ SEO %%currentyear%% คู่มือ 7 ขั้นตอน' (all 3 core)",
+        "ask_questions + use_numbers + curiosity: 'ทำไมทันตแพทย์ไม่แนะนำรากฟันเทียมแบบถูก 5 เหตุผลที่ควรรู้'",
+        "ask_questions + inject_news + curiosity: 'วิธีเลือกรองเท้าวิ่ง %%currentyear%% ความจริงที่ Nike ไม่บอก'"
+      ],
+      "avoid": [
+        "urgency",
+        "fomo"
+      ],
+      "reason_to_avoid": "Informational content should be evergreen and educational, not create false urgency or FOMO manipulation"
+    },
+    "examples": {
+      "how_to_guide": {
+        "url": "/blog/how-to-choose-football-boots",
+        "title": "วิธีเลือกรองเท้าฟุตบอลให้เหมาะกับสนาม ครบทุกเทคนิค FG AG SG TF",
+        "h1": "วิธีเลือกรองเท้าฟุตบอลให้เหมาะกับสนาม",
+        "description": "คู่มือเลือกรองเท้าฟุตบอลให้เหมาะกับประเภทสนาม FG, AG, SG, TF ครบทุกเทคนิค เลือกตามรูปเท้า สไตล์การเล่น วิธีดูแลรักษา จากผู้เชี่ยวชาญ เคล็ดลับที่นักฟุตบอลต้องรู้"
+      },
+      "comparison_article": {
+        "url": "/blog/nike-mercurial-vs-adidas-x",
+        "title": "เปรียบเทียบ Nike Mercurial vs Adidas X ต่างกันอย่างไร เลือกแบบไหนดี",
+        "h1": "เปรียบเทียบ Nike Mercurial vs Adidas X Speedflow",
+        "description": "เปรียบเทียบรองเท้าฟุตบอล Nike Mercurial Superfly กับ Adidas X Speedflow ต่างกันอย่างไร จุดเด่นจุดด้อย เหมาะกับนักเตะแบบไหน เปรียบเทียบเทคโนโลยี น้ำหนัก ความกระชับ ควบคุมลูก ราคา"
+      },
+      "listicle": {
+        "url": "/blog/top-10-football-boots-%%currentyear%%",
+        "title": "10 รองเท้าฟุตบอลยอดนิยม %%currentyear%% รุ่นไหนดีที่สุด แนะนำโดยมืออาชีพ",
+        "h1": "10 รองเท้าฟุตบอลยอดนิยมประจำปี %%currentyear%%",
+        "description": "รวม 10 รองเท้าฟุตบอลยอดนิยมที่สุดในปี %%currentyear%% รุ่นไหนดีที่สุด แนะนำโดยนักฟุตบอลมืออาชีพ ทั้ง Nike, Adidas, Puma, Mizuno วิเคราะห์จุดเด่น ราคา ความคุ้มค่า เหมาะกับนักเตะแบบไหน"
+      }
+    }
+  },
+  "trust_credibility_pages": {
+    "purpose": "Build trust, establish credibility, provide transparency",
+    "user_intent": "Navigational/Informational - checking YOUR business specifically",
+    "website_brand_in_title": "REQUIRED - user came to learn about YOUR brand",
+    "h1_format": "[Page Purpose]",
+    "subcategories": {
+      "legal_policy_pages": {
+        "url_pattern": "/privacy-policy, /terms-and-conditions, /cookie-policy, /disclaimer, /refund-policy",
+        "title_format": "[Policy Name] - {{BRAND_NAME}}",
+        "example": {
+          "url": "/privacy-policy",
+          "title": "นโยบายความเป็นส่วนตัว - {{BRAND_NAME}}",
+          "h1": "นโยบายความเป็นส่วนตัว",
+          "description": "นโยบายความเป็นส่วนตัวของ {{BRAND_NAME}} ครอบคลุมการเก็บรักษา ใช้งาน และปกป้องข้อมูลส่วนบุคคลของลูกค้า เป็นไปตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562"
+        }
+      },
+      "company_pages": {
+        "url_pattern": "/about-us, /our-story, /our-team, /team, /careers, /press",
+        "title_format": "[Page Name] - {{BRAND_NAME}} [Key Value/Differentiator]",
+        "example": {
+          "url": "/about-us",
+          "title": "เกี่ยวกับเรา - {{BRAND_NAME}} ผู้จำหน่ายอุปกรณ์ฟุตบอลครบวงจรมืออาชีพ",
+          "h1": "เกี่ยวกับเรา",
+          "description": "{{BRAND_NAME}} ก่อตั้งขึ้นในปี 2010 ด้วยความมุ่งมั่นในการจำหน่ายรองเท้าฟุตบอลและอุปกรณ์กีฬาของแท้ 100% จากแบรนด์ชั้นนำระดับโลก ให้บริการลูกค้ามากกว่า 50,000 คน ด้วยทีมงานมืออาชีพที่เข้าใจความต้องการของนักกีฬาทุกระดับ"
+        }
+      },
+      "customer_service_pages": {
+        "url_pattern": "/contact-us, /contact, /customer-service, /help-center, /help, /support",
+        "title_format": "[Service Name] - {{BRAND_NAME}} [Service Hours/Availability]",
+        "example": {
+          "url": "/contact-us",
+          "title": "ติดต่อเรา - {{BRAND_NAME}} บริการลูกค้า 7 วัน ตอบไว ช่วยเหลือจริง",
+          "h1": "ติดต่อเรา",
+          "description": "ติดต่อ {{BRAND_NAME}} ผ่านช่องทางที่สะดวก LINE, Facebook, Email, โทรศัพท์ ทีมงานพร้อมให้บริการ จันทร์-อาทิตย์ 9:00-20:00 น. ตอบคำถาม แนะนำสินค้า แก้ไขปัญหา ด้วยความเป็นมืออาชีพ"
+        }
+      },
+      "trust_building_pages": {
+        "url_pattern": "/testimonials, /customer-reviews, /reviews, /success-stories, /faqs",
+        "title_format": "[Page Name] - {{BRAND_NAME}} [Trust Signal/Social Proof]",
+        "example": {
+          "url": "/testimonials",
+          "title": "รีวิวจากลูกค้า - {{BRAND_NAME}} มากกว่า 5,000 รีวิว คะแนน 4.9/5",
+          "h1": "รีวิวจากลูกค้า",
+          "description": "รีวิวจริงจากลูกค้า {{BRAND_NAME}} มากกว่า 5,000 รีวิว คะแนนเฉลี่ย 4.9/5 ความพึงพอใจในคุณภาพสินค้า บริการจัดส่ง และการดูแลลูกค้า อ่านประสบการณ์จริงก่อนตัดสินใจซื้อ"
+        }
+      },
+      "service_information_pages": {
+        "url_pattern": "/shipping, /shipping-and-delivery, /delivery, /payment-methods, /returns, /returns-and-exchanges, /order-tracking, /warranty, /guarantee, /authenticity-guarantee",
+        "title_format": "[Service Name] - {{BRAND_NAME}} [Key Benefit]",
+        "examples": {
+          "shipping": {
+            "url": "/shipping-and-delivery",
+            "title": "การจัดส่งและการคืนสินค้า - {{BRAND_NAME}} จัดส่งฟรีทั่วไทย คืนสินค้าได้ 30 วัน",
+            "h1": "การจัดส่งและการคืนสินค้า",
+            "description": "{{BRAND_NAME}} จัดส่งฟรีทั่วประเทศไทย ส่งไว 1-3 วันทำการ คืนสินค้าได้ภายใน 30 วัน เปลี่ยนสินค้าได้หากมีปัญหา รับประกันความพึงพอใจ 100% ตรวจสอบสถานะพัสดุได้ตลอดเวลา"
+          },
+          "authenticity": {
+            "url": "/authenticity-guarantee",
+            "title": "รับประกันของแท้ - {{BRAND_NAME}} ของแท้ 100% ตรวจสอบได้ คืนเงินเต็มถ้าปลอม",
+            "h1": "รับประกันของแท้ 100%",
+            "description": "{{BRAND_NAME}} รับประกันสินค้าของแท้ 100% จากศูนย์จำหน่ายอย่างเป็นทางการ ตรวจสอบได้ทุกชิ้น มีใบรับประกัน หากพบว่าสินค้าไม่ใช่ของแท้ คืนเงินเต็มจำนวนทันที ช้อปได้อย่างมั่นใจ"
+          }
+        }
+      }
+    },
+    "psychological_frameworks": {
+      "recommended": [
+        "inject_news",
+        "use_numbers"
+      ],
+      "reasoning": "Trust pages need news angle (updated %%currentyear%%, latest), numbers (10+ years, 1000+ customers) for credibility"
+    }
+  },
+  "service_pages": {
+    "applicability": "Service-based businesses (dental clinics, law firms, consultancy, repair services, etc.): general service pages WITHOUT location specificity.",
+    "url_pattern": "/services/[service-name], /[service-name]",
+    "primary_goal": "Service discovery + ranking for service keywords",
+    "user_intent": "Informational/Commercial investigation - researching service options generally",
+    "title_format": "[Service Name] [Key Benefits/Features] [Process/Method] [Trust Signals]",
+    "website_brand_in_title": "NEVER - user exploring service generally, not seeking specific provider yet",
+    "h1_format": "[Service Name]",
+    "brand_mention_allowed": "In description naturally, NOT in title",
+    "examples": {
+      "dental_clinic": {
+        "url": "/services/dental-implant",
+        "title": "รากฟันเทียม ทันตแพทย์ผู้เชี่ยวชาญ เทคโนโลยีล้ำสมัย ปลอดภัย รับประกัน 10 ปี",
+        "h1": "บริการรากฟันเทียม",
+        "description": "{{BRAND_NAME}} คลินิกทันตกรรม บริการรากฟันเทียม โดยทันตแพทย์ผู้เชี่ยวชาญ มากกว่า 15 ปี เทคโนโลยี Implant มาตรฐานสากล ปลอดภัย ไม่เจ็บ รับประกัน 10 ปี ราคาชัดเจน ปรึกษาฟรี ผ่อนได้ 0% นัดหมายง่าย โทร 02-XXX-XXXX"
+      },
+      "law_firm": {
+        "url": "/services/divorce-consultation",
+        "title": "ปรึกษาคดีหย่า ทนายเชี่ยวชาญคดีครอบครัว ดูแลครบ จากเจรจาจนจบคดี",
+        "h1": "บริการปรึกษาคดีหย่า",
+        "description": "{{BRAND_NAME}} สำนักงานทนายความ บริการปรึกษาคดีหย่า โดยทนายเชี่ยวชาญคดีครอบครัว ประสบการณ์ 20 ปี ดูแลตั้งแต่เจรจา ยื่นฟ้อง จนจบคดี อัตราชนะคดีสูง ค่าบริการชัดเจน ปรึกษาฟรีครั้งแรก โทร 02-XXX-XXXX"
+      },
+      "digital_marketing": {
+        "url": "/services/seo-service",
+        "title": "บริการ SEO ปั้นเว็บขึ้นหน้าแรก Google เพิ่มยอดขาย รับประกันผล",
+        "h1": "บริการ SEO",
+        "description": "{{BRAND_NAME}} บริการ SEO มืออาชีพ ปั้นเว็บขึ้นหน้าแรก Google เพิ่มยอดขาย เพิ่มลูกค้า วิเคราะห์คู่แข่ง วางแผนคีย์เวิร์ด รายงานผลทุกเดือน รับประกันผลภายใน 90 วัน ราคาคุ้มค่า ปรึกษาฟรี โทร 098-XXX-XXXX"
+      }
+    },
+    "psychological_frameworks": {
+      "recommended": [
+        "promise_benefit",
+        "target_audience",
+        "use_numbers"
+      ],
+      "reasoning": "Service pages need clear benefit promise, audience targeting, and numbers (24/7, same day, 10+ years experience)"
+    }
+  },
+  "local_seo_pages": {
+    "applicability": "Businesses with physical locations or service areas (dental clinics, law firms, restaurants, repair services, etc.): service pages WITH location specificity.",
+    "not_for": "Pure e-commerce without physical presence",
+    "subcategories": {
+      "location_service_pages": {
+        "url_pattern": "/[service]/[location], /[location]/[service]",
+        "primary_goal": "Local service discovery + local rankings",
+        "user_intent": "Local transactional - want service in specific location",
+        "title_format": "[Service] [Location] [Key Benefits/Features] [Local Trust Signals] [Urgency/CTA]",
+        "website_brand_in_title": "NEVER - user searching for service + location, not specific brand",
+        "h1_format": "[Service] ใน[Location]",
+        "brand_mention_allowed": "In description naturally, NOT in title",
+        "examples": {
+          "dental_clinic": {
+            "url": "/dental-implant/bangkok",
+            "title": "รากฟันเทียม กรุงเทพ ทันตแพทย์ผู้เชี่ยวชาญ มาตรฐานสากล รับประกัน 10 ปี ปรึกษาฟรี",
+            "h1": "รากฟันเทียม ในกรุงเทพ",
+            "description": "{{BRAND_NAME}} คลินิกทันตกรรม รากฟันเทียม ในกรุงเทพ โดยทันตแพทย์ผู้เชี่ยวชาญ มากกว่า 15 ปี เทคโนโลยี Implant มาตรฐานสากล รับประกัน 10 ปี ราคาชัดเจน ปรึกษาฟรี นัดหมายง่าย ย่านสุขุมวิท ใกล้ BTS อโศก"
+          },
+          "law_firm": {
+            "url": "/divorce-lawyer/bangkok",
+            "title": "ทนายหย่า กรุงเทพ เชี่ยวชาญคดีครอบครัว ประสบการณ์สูง ปรึกษาฟรี ค่าบริการชัดเจน",
+            "h1": "ทนายหย่า ในกรุงเทพ",
+            "description": "{{BRAND_NAME}} สำนักงานทนายความ ทนายหย่า ในกรุงเทพ เชี่ยวชาญคดีครอบครัว หย่า แบ่งทรัพย์ สิทธิบุตร ประสบการณ์ 20 ปี อัตราชนะคดีสูง ค่าบริการชัดเจน ปรึกษาฟรีครั้งแรก โทร 02-XXX-XXXX"
+          },
+          "ac_repair": {
+            "url": "/ac-repair/bangkok",
+            "title": "ซ่อมแอร์ กรุงเทพ บริการด่วน 24/7 ช่างมืออาชีพ รับประกัน 6 เดือน ราคาชัดเจน",
+            "h1": "ซ่อมแอร์ ในกรุงเทพ",
+            "description": "{{BRAND_NAME}} บริการซ่อมแอร์ กรุงเทพ ทุกแบรนด์ ทุกรุ่น ช่างมืออาชีพ มีใบรับรอง บริการด่วน 24 ชั่วโมง ตรวจเช็กฟรี รับประกัน 6 เดือน ราคาชัดเจน ไม่มีค่าแอบแฝง โทร 098-XXX-XXXX"
+          }
+        }
+      },
+      "store_location_pages": {
+        "url_pattern": "/stores/[location], /locations/[area]",
+        "primary_goal": "Store location information + local foot traffic",
+        "user_intent": "Navigational - finding YOUR physical store",
+        "title_format": "ร้าน[Location/Branch] - {{BRAND_NAME}} [Address Highlight] [Opening Hours]",
+        "website_brand_in_title": "REQUIRED",
+        "h1_format": "{{BRAND_NAME}} สาขา[Location]",
+        "example": {
+          "url": "/stores/siam-square",
+          "title": "ร้านสยามสแควร์ - {{BRAND_NAME}} ใกล้ BTS สยาม เปิดทุกวัน 10:00-22:00",
+          "h1": "{{BRAND_NAME}} สาขาสยามสแควร์",
+          "description": "{{BRAND_NAME}} สาขาสยามสแควร์ ชั้น 3 Siam Center ใกล้ BTS สยาม ทางออก 1 สินค้าครบ มีบริการทดลอง ที่จอดรถสะดวก เปิดทุกวัน 10:00-22:00 น. โทร 02-XXX-XXXX LINE: @brandname"
+        }
+      }
+    },
+    "psychological_frameworks": {
+      "recommended": [
+        "promise_benefit",
+        "target_audience",
+        "use_numbers"
+      ],
+      "reasoning": "Local pages need benefit (near you, fast service), location targeting, numbers (5 min away, 24/7)"
+    }
+  },
+  "critical_rules": {
+    "brand_terminology": {
+      "website_brand": "{{BRAND_NAME}} = your store/website/business name",
+      "product_brand": "Nike, Adidas, Puma, etc. = brands of products you sell",
+      "rule": "These are DIFFERENT brands - don't confuse them!"
+    },
+    "brand_name_placement": {
+      "homepage": "REQUIRED - {{BRAND_NAME}} must be FIRST element in title, NEVER in H1",
+      "trust_credibility_pages": "REQUIRED - {{BRAND_NAME}} in title after dash, NEVER in H1",
+      "service_pages": "NEVER {{BRAND_NAME}} - user researching service generally",
+      "local_seo_pages": "NEVER {{BRAND_NAME}}: user searches 'service + location', not a brand (exception: store_location_pages CAN have brand)",
+      "product_pages": "NEVER {{BRAND_NAME}} - product brand (Nike/Adidas) only if part of product name",
+      "category_pages": "NEVER {{BRAND_NAME}} - focus on category keywords",
+      "collection_pages": {
+        "brand_collections": "Product brand in title (Nike Max Voltage), NEVER {{BRAND_NAME}}",
+        "curated_collections": "NO brand at all in title (/bestsellers, /new-arrivals, /sale)"
+      },
+      "informational_pages": "NEVER {{BRAND_NAME}} - must appear objective for SEO",
+      "h1_rule_all_pages": "NEVER include {{BRAND_NAME}} or any brand suffix in H1 tags (exception: store_location_pages can have brand in H1)"
+    },
+    "collection_name_format": {
+      "correct_order": "Product brand FIRST, then collection name",
+      "examples_correct": [
+        "Nike Max Voltage",
+        "Adidas Copa",
+        "Puma Future"
+      ],
+      "examples_wrong": [
+        "Max Voltage Nike",
+        "Copa Adidas",
+        "Future Puma"
+      ],
+      "rule": "Brand name ALWAYS comes first in collection names"
+    },
+    "cta_variety": {
+      "rule": "NEVER use same CTA twice in same batch optimization",
+      "rotation_required": "Use 12 varied CTAs from thai_language_quality_standards.alternatives",
+      "exception": "OK to repeat if optimizing single page in isolation"
+    },
+    "decision_tree": {
+      "question_1": "Is URL = '/' (homepage)?",
+      "answer_yes_1": "ADD {{BRAND_NAME}} as first element",
+      "question_2": "Is this trust/legal/company page? (/about, /contact, /privacy, /terms, etc.)",
+      "answer_yes_2": "ADD {{BRAND_NAME}}",
+      "question_3": "Is this product/category/collection/blog page?",
+      "answer_yes_3": "NEVER ADD {{BRAND_NAME}}",
+      "default": "When in doubt: Is user searching for YOUR brand specifically? YES = add brand, NO = don't add"
+    }
+  },
+  "brand_name_and_separator_policy": {
+    "rule": "Brand or site name appears ONLY in the homepage title as the first element. NEVER add the brand name or a '|' separator to non-homepage titles. NEVER use em dash or '|' in any generated output.",
+    "reason": "Google shows the Sitename in the SERP, so brand in non-homepage titles wastes character budget needed for keywords and context.",
+    "wrong": "บริการรับทำ SEO เพิ่มยอดขาย ติดอันดับ | BIQDADDY",
+    "right": "บริการรับทำ SEO เพิ่มยอดขาย ติดอันดับ และรองรับ AI Search"
+  },
+  "_lite_note": "Lite edition: the title framework, psychological trigger and click optimization sections of the full file are not included. Per-page-type guidance below is complete."
+}

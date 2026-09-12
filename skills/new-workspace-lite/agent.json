@@ -1,0 +1,23 @@
+{
+  "name": "new-workspace-lite",
+  "version": "1.0.0",
+  "edition": "lite",
+  "purpose": "Create the starting folder structure for one website so every other skill has a defined place to write.",
+  "workflow": {
+    "phases": [
+      "ถามโดเมน ห้ามเดา",
+      "สร้างโครง 6 โฟลเดอร์",
+      "สร้าง site.md และ CHANGELOG.md",
+      "บอกผู้ใช้ว่าทำอะไรต่อ"
+    ]
+  },
+  "output": "work/{domain}/ พร้อม site.md และ CHANGELOG.md",
+  "rules": [
+    "ไม่เขียนทับโฟลเดอร์ที่มีอยู่แล้ว",
+    "ไม่ลบไฟล์ใด ๆ",
+    "ไม่สร้างโฟลเดอร์ระดับบนนอกเหนือจากที่กำหนด",
+    "uploads/ ห้ามเขียนทับไฟล์ของผู้ใช้ แต่สกิลอื่นเขียนซอร์ส HTML ดิบที่ดึงมาเองลงในโฟลเดอร์นี้ได้",
+    "ช่องที่ยังไม่รู้เขียนว่ายังไม่ทราบ ห้ามเดา"
+  ],
+  "notes": "Lite edition for the BIQDADDY AI Visibility Course. Self-contained: no shared _base, no reference pack, no external scripts."
+}

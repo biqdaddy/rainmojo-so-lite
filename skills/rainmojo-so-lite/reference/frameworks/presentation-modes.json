@@ -1,0 +1,110 @@
+{
+  "_note": "Machine-readable twin of _base/presentation-scaffold.md. Loaded by scripts/present.py and by the deep unit test gate. Keys are stable identifiers; edit wording freely, never rename keys.",
+  "version": "1.0",
+  "schema_id": "rainmojo.tier1.summary/1",
+  "tiers": {
+    "tier1": {
+      "name": "Executive quick-glance card",
+      "source": "summary.json emitted at the end of every run that writes a deliverable",
+      "must_contain": ["headline", "handoff", "next_steps"],
+      "audit_must_contain": ["score", "dimensions", "key_risk", "actions", "transparency"],
+      "rule": "Every number is copied from the Tier 2 deliverable; unmeasured values render as could not verify."
+    },
+    "tier2": {
+      "name": "Comprehensive client deliverable",
+      "source": "unified 19-tab report via render_report.py, or the skill's own dated file under its registered route",
+      "rule": "Unchanged by the presentation layer. Never truncated or replaced by the card."
+    }
+  },
+  "host_ladder": [
+    {"rung": 1, "target": "host", "hosts": ["claude-desktop", "cowork"], "renders": "HTML fragment on host CSS variables, Tabler outline icons, transparent outer background, 680px, dark-mode safe"},
+    {"rung": 2, "target": "html", "hosts": ["artifact", "chatgpt", "gemini", "cursor", "vscode", "preview"], "renders": "single self-contained HTML, inline CSS and SVG, zero external requests, reflows to 360px"},
+    {"rung": 3, "target": "mermaid", "hosts": ["github", "obsidian", "any-markdown-with-mermaid"], "renders": "workflow, pipeline, decision tree, mindmap only; a host that does not render fenced mermaid shows raw code, so use ascii there"},
+    {"rung": 3, "target": "ascii", "hosts": ["plain-text", "any-markdown-without-mermaid", "cp874-console"], "renders": "pure ASCII tree diagram of score, key risk, actions or steps, dimensions, hand-off and next steps inside a fenced text block"},
+    {"rung": 4, "target": "md", "hosts": ["claude-code", "cli", "terminal", "email", "unknown"], "renders": "rich Markdown with ASCII bars [#####-----], text pills, GitHub alert blocks"}
+  ],
+  "auto_detection": {
+    "env_override": "RAINMOJO_PRESENT_TARGET",
+    "host_flag": "--host",
+    "default_when_unknown": "md",
+    "fallback_rule": "on render failure drop exactly one rung and retry"
+  },
+  "modes": {
+    "quick_fact": {
+      "triggers_th": ["คืออะไร", "ใช่ไหม", "เท่าไร", "กี่", "ถามสั้น"],
+      "triggers_en": ["what is", "is it", "how many", "how much", "yes or no", "tl;dr"],
+      "structure": ["two-line answer box", "up to three bullets", "no preamble"],
+      "fields": ["tldr", "bullets"],
+      "md_shape": "> [!TIP] answer lines, then a bullet list"
+    },
+    "howto": {
+      "triggers_th": ["ทำยังไง", "ขั้นตอน", "สอน", "ตั้งค่า", "วิธี"],
+      "triggers_en": ["how do i", "how to", "steps", "guide", "set up", "walk me through"],
+      "structure": ["numbered steps with circled digits in Markdown", "each step: do, expect, owner"],
+      "fields": ["steps"],
+      "md_shape": "ordered list, each item: title, then Do and Expect lines"
+    },
+    "comparison": {
+      "triggers_th": ["เปรียบเทียบ", "เลือกอันไหน", "ดีกว่า", "ต่างกัน", "ควรใช้"],
+      "triggers_en": ["compare", "which should i", "versus", "vs", "pros and cons", "difference"],
+      "structure": ["side-by-side table", "impact and effort columns", "one decisive recommendation line"],
+      "fields": ["comparison"],
+      "md_shape": "table then > [!IMPORTANT] Recommendation for you"
+    },
+    "troubleshoot": {
+      "triggers_th": ["ทำไม", "พัง", "ไม่ขึ้น", "แก้ยังไง", "error", "ไม่ติด"],
+      "triggers_en": ["why", "broken", "not showing", "error", "fix", "not indexed", "dropped"],
+      "structure": ["root-cause callout, critical tint", "three quick-fix steps"],
+      "fields": ["root_cause", "steps"],
+      "md_shape": "> [!CAUTION] Root cause, then ordered list of fixes"
+    },
+    "audit": {
+      "triggers_th": ["ตรวจ", "audit", "วิเคราะห์", "รายงาน", "คะแนน", "visibility"],
+      "triggers_en": ["audit", "analyse", "analyze", "score", "visibility", "report", "check my site"],
+      "structure": ["score gauge and status pill", "dimension bars", "platform strip", "query or competitor table", "key risk callout", "priority actions", "transparency footer", "hand-off card"],
+      "fields": ["score", "dimensions", "platforms", "query_matrix", "competitors", "key_risk", "actions", "transparency", "handoff"],
+      "md_shape": "score line, glyph bars, tables, > [!WARNING] key risk, numbered actions, hand-off line"
+    },
+    "deployable": {
+      "triggers_th": ["ขอไฟล์", "สร้าง schema", "generate", "llms.txt", "robots.txt", "export"],
+      "triggers_en": ["give me the file", "generate", "template", "export", "json-ld", "csv"],
+      "structure": ["code blocks with filename header", "client-confined path written", "export options"],
+      "fields": ["deployables"],
+      "md_shape": "fenced code per file with language, path line under each"
+    },
+    "next_steps": {
+      "always": true,
+      "structure": ["two or three next moves", "each an exact slash command or message"],
+      "fields": ["next_steps"],
+      "md_shape": "Next steps heading with a short list of commands"
+    }
+  },
+  "extensions": {
+    "mockup": "Live AI or SERP mockup",
+    "diff": "Before versus after with score delta",
+    "roles": "Executive, developer, content views",
+    "checklist": "Team checklist with owner tags",
+    "transparency": "Data transparency badges",
+    "history": "Sparklines from compare"
+  },
+  "glyph_policy": {
+    "chat_and_markdown_allowlist": ["●", "○", "◐", "◑", "■", "□", "▲", "▼", "►", "◄", "✓", "✗", "★", "☆", "•", "→", "←", "↑", "↓", "↗", "↘", "█", "▓", "▒", "░", "─", "│", "┌", "┐", "└", "┘", "├", "┤", "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩"],
+    "forbidden_ranges": [["1F000", "1FAFF"], ["2600", "27BF"], ["1F1E6", "1F1FF"], ["FE0F", "FE0F"], ["200D", "200D"], ["2B00", "2BFF"]],
+    "html_and_pdf_rule": "inline SVG icons only, no glyphs, no emoji",
+    "text_pills": {"ok": "[PASS]", "warning": "[WARN]", "critical": "[CRIT]", "info": "[INFO]", "unverifiable": "[N/A]"},
+    "bar": {"filled": "#", "empty": "-", "width": 10, "open": "[", "close": "]", "why": "block-shade glyphs fall back to a different font in most Markdown previews and Windows consoles (cp874) and overflow the line; ASCII renders identically everywhere"}
+  },
+  "forbidden_text": {
+    "em_dash": "—",
+    "pipe_outside_tables": "|",
+    "all_caps_headings": true
+  },
+  "status_tokens": {
+    "critical": {"fg": "#D64545", "bg": "#FBECEC"},
+    "warning": {"fg": "#B9740B", "bg": "#FBF1E1"},
+    "ok": {"fg": "#2E9E6B", "bg": "#E7F4EE"},
+    "info": {"fg": "#2B6CB0", "bg": "#E9F1FA"}
+  },
+  "brand_override_tokens": ["--brand-primary", "--brand-accent", "--brand-accent-ink"],
+  "installation_marker": "RAINMOJO_PRESENTATION_LAYER_V1"
+}

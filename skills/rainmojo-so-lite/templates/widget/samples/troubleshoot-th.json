@@ -1,0 +1,62 @@
+{
+  "schema": "rainmojo.tier1.summary/1",
+  "mode": "troubleshoot",
+  "meta": {
+    "skill": "aiso-technical",
+    "client": "Demo Aesthetic Clinic",
+    "domain": "demo-aesthetic.example.invalid",
+    "generated_at": "2026-09-11T15:10:00+07:00",
+    "lang": "th",
+    "run_id": "20260911-1510"
+  },
+  "headline": {
+    "kicker": "วินิจฉัย",
+    "title": "ทำไม Perplexity ไม่อ้างอิงหน้าโปรโมชันเลย"
+  },
+  "root_cause": {
+    "title": "หน้าโปรโมชันเป็น client-side rendered และไม่มี dateModified",
+    "symptom": "อาการ: Perplexity อ้างอิงหน้าบริการหลักได้ แต่ไม่เคยดึงหน้าโปรโมชันใน 30 วัน",
+    "body": "หน้าโปรโมชันโหลดข้อความผ่าน JavaScript หลังเปิดหน้า สัดส่วนข้อความต่อ HTML เพียง 2 เปอร์เซ็นต์ และไม่มี dateModified ในทั้ง JSON-LD และ meta ทำให้ PerplexityBot เห็นหน้าว่างและไม่มีสัญญาณความสดใหม่"
+  },
+  "steps": [
+    {
+      "title": "เปิด server-side rendering ให้หน้าโปรโมชัน",
+      "do": "ตั้งค่า pre-render หรือ SSR ของธีมสำหรับ template โปรโมชัน",
+      "expect": "text ratio มากกว่า 10 เปอร์เซ็นต์และเห็นข้อความใน view-source"
+    },
+    {
+      "title": "ใส่ datePublished และ dateModified",
+      "do": "เพิ่มใน JSON-LD ของหน้าและ article:modified_time",
+      "expect": "platform_readiness รายงาน days_since_modified ได้"
+    },
+    {
+      "title": "ขอ recrawl",
+      "do": "ส่ง URL ผ่าน IndexNow และ Search Console แล้วตรวจซ้ำใน 7 วัน",
+      "expect": "PerplexityBot ปรากฏใน log และหน้าเริ่มถูกอ้างอิง"
+    }
+  ],
+  "transparency": {
+    "crawled_at": "2026-09-11T15:05:00+07:00",
+    "user_agents": [
+      "RainmojoBot/1.0"
+    ],
+    "sources": [
+      "view-source ของหน้าโปรโมชัน 3 หน้า",
+      "server log 30 วัน"
+    ]
+  },
+  "handoff": {
+    "tier2_label": "รายงาน technical AISO ฉบับเต็ม",
+    "tier2_path": "clients/demo-aesthetic.example.invalid/reports/seo-audits/demo-aesthetic.example.invalid_aiso-technical_2026-09-11.md"
+  },
+  "next_steps": [
+    {
+      "label": "ตรวจ SSR ทุกหน้า",
+      "prompt": "/rainmojo-so-lite:aiso-technical-lite demo-aesthetic.example.invalid --all-pages"
+    },
+    {
+      "label": "วัดความพร้อม Perplexity",
+      "prompt": "/rainmojo-so-lite:aiso-platform-lite demo-aesthetic.example.invalid --platform perplexity"
+    }
+  ]
+}
