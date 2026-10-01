@@ -66,7 +66,7 @@ AISO (AI Search Optimization) คือการทำให้ระบบ AI �
 | `meta-basics-lite` | เขียน title และ meta description ให้ความยาวถูกต้อง นับตัวอักษรไทยได้ |
 | `seo-schema-lite` | สร้าง schema markup 4 แบบ Organization, LocalBusiness, FAQPage, Article |
 | `seo-internal-linking-lite` | วางแผนลิงก์ภายในแบบ hub และ spoke |
-| `seo-image-optimizer-lite` | จัดรูปให้เบาและอ่านออก แปลง WebP ตั้งชื่อไฟล์ เขียน alt และตรวจว่าภาพถูก index ได้ |
+| `seo-image-optimizer-lite` | จัดรูปให้เบาและอ่านออก แปลง WebP หรือ AVIF ตั้งชื่อไฟล์ เขียน alt และตรวจว่าภาพถูก index ได้ |
 | `sitemap-architecture-lite` | มาตรฐาน sitemap ที่ถูกต้องและอ่านได้เมื่อเว็บโต: sitemap index, การแบ่งไฟล์, lastmod, hreflang |
 
 ### กลุ่มที่ 4 หาคำค้นและหาช่องว่าง

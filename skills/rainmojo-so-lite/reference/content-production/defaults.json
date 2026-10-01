@@ -95,6 +95,7 @@
       "width": 1200,
       "height": 630,
       "quality": 85,
+      "avif_quality": 60,
       "fit": "cover",
       "allow_upscale": false
     },
@@ -102,6 +103,7 @@
       "width": 1200,
       "height": 800,
       "quality": 85,
+      "avif_quality": 60,
       "fit": "cover",
       "allow_upscale": false
     },

@@ -164,7 +164,7 @@ done
 จากไฟล์ HTML ดิบในขั้นที่ 0 แล้วชั่งทีละไฟล์ อย่างน้อยรูป 10 ไฟล์แรก
 
 ```bash
-grep -o 'src="[^"]*\.\(png\|jpg\|jpeg\|webp\|gif\)[^"]*"' work/{domain}/uploads/home.html | head -10
+grep -o 'src="[^"]*\.\(png\|jpg\|jpeg\|webp\|avif\|gif\)[^"]*"' work/{domain}/uploads/home.html | head -10
 curl -sSL -o /dev/null -w '%{size_download} bytes  %{url_effective}
 ' -m 25 "URL รูปทีละไฟล์"
 ```
