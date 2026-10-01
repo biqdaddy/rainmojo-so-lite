@@ -1,7 +1,7 @@
 ---
 name: seo-image-optimizer-lite
 description: >
-  แปลงภาพเป็น WebP ย่อขนาด ตั้งชื่อไฟล์อังกฤษจากการดูภาพจริง และลบ EXIF
+  แปลงภาพเป็น WebP หรือ AVIF ย่อขนาด ตั้งชื่อไฟล์อังกฤษจากการดูภาพจริง และลบ EXIF
   ใช้เมื่อมีภาพจะเอาขึ้นเว็บ ภาพหนักเกิน หรือชื่อไฟล์เป็นไทยหรือเป็นรหัสกล้อง
 allowed-tools:
   - Read
@@ -46,7 +46,7 @@ any surface; the glyph allowlist applies to chat and Markdown only.
 
 # SEO Image Optimizer
 
-ทำภาพให้พร้อมขึ้นเว็บ 4 เรื่อง ไฟล์เบา ชื่อสื่อความหมาย ไม่มี EXIF และเป็น WebP
+ทำภาพให้พร้อมขึ้นเว็บ 4 เรื่อง ไฟล์เบา ชื่อสื่อความหมาย ไม่มี EXIF และเป็น WebP หรือ AVIF
 AI ไม่ได้ดูภาพ **มันอ่านชื่อไฟล์กับ alt text** ชื่อ `IMG_1234.jpg` จึงไม่บอกอะไรเลย
 
 ---
@@ -61,7 +61,8 @@ AI ไม่ได้ดูภาพ **มันอ่านชื่อไฟ�
 
 **`uploads/` อ่านอย่างเดียว** ผลลัพธ์ต้องเป็นไฟล์ใหม่เสมอ
 
-ตรวจ Pillow ด้วย `python -c "import PIL; print(PIL.__version__)"` ถ้าไม่มีให้เสนอ `pip install Pillow`
+ตรวจ Pillow ด้วย `python -c "import PIL; from PIL import features; print(PIL.__version__, features.check('avif'))"`
+ถ้าไม่มีให้เสนอ `pip install Pillow` ค่าที่สองบอกว่าแปลง AVIF ได้ไหม ถ้าเป็น False ให้ใช้ WebP หรือเสนอ `pip install -U Pillow`
 ห้ามเดาผลแทนการรัน จากนั้นแก้ path แล้วสแกน
 
 **ถ้าติดตั้ง Pillow ไม่ได้ หรือ host นี้รันคำสั่งไม่ได้ ห้ามจบงานเปล่า**
@@ -75,7 +76,7 @@ AI ไม่ได้ดูภาพ **มันอ่านชื่อไฟ�
 python - <<'PY'
 from PIL import Image
 from pathlib import Path
-E = {".jpg",".jpeg",".png",".bmp",".tiff",".tif",".gif",".webp"}
+E = {".jpg",".jpeg",".png",".bmp",".tiff",".tif",".gif",".webp",".avif"}
 for p in sorted(Path("work/example-com/uploads").rglob("*")):
     if p.suffix.lower() in E:
         im = Image.open(p)
@@ -88,10 +89,10 @@ PY
 
 | สิ่งที่เจอ | ระดับ |
 |---|---|
-| ไม่ใช่ WebP หรือกว้างเกินเป้าหมายมาก | ต้องแก้ |
+| ไม่ใช่ WebP หรือ AVIF หรือกว้างเกินเป้าหมายมาก | ต้องแก้ |
 | ชื่อไฟล์เป็นไทย มีช่องว่าง หรือเป็นรหัสกล้อง | ต้องแก้ |
 | มี EXIF เสี่ยงพิกัด GPS ติดไปกับไฟล์ | ต้องแก้ |
-| WebP ชื่อดี ขนาดพอดี ไม่มี EXIF | ผ่าน |
+| WebP หรือ AVIF ชื่อดี ขนาดพอดี ไม่มี EXIF | ผ่าน |
 
 ถ้าผู้ใช้ขอแค่ตรวจ ให้จบที่นี่แล้วข้ามไปขั้นที่ 4 โดยไม่แตะไฟล์
 
@@ -124,7 +125,10 @@ from pathlib import Path
 SRC = Path("work/example-com/uploads")
 DST = Path("work/example-com/03-content/images")
 NAMES = {"IMG_1234.jpg": "dental-checkup-procedure-1"}
-W, Q = 1200, 85
+W = 1200
+FMT = "webp"
+Q = {"webp": 85, "avif": 60}
+ENC = {"webp": ("WEBP", {}), "avif": ("AVIF", {"icc_profile": b""})}
 DST.mkdir(parents=True, exist_ok=True)
 for old, new in NAMES.items():
     im = Image.open(SRC / old)
@@ -136,9 +140,11 @@ for old, new in NAMES.items():
         im = im.convert("RGB")
     if im.width > W:
         im = im.resize((W, round(im.height * W / im.width)), Image.LANCZOS)
-    out = DST / f"{new}.webp"
-    im.save(out, "WEBP", quality=Q)
-    print(old, "->", out.name, out.stat().st_size // 1024, "KB")
+    for f in (("webp", "avif") if FMT == "both" else (FMT,)):
+        out = DST / f"{new}.{f}"
+        pil, extra = ENC[f]
+        im.save(out, pil, quality=Q[f], **extra)
+        print(old, "->", out.name, out.stat().st_size // 1024, "KB")
 PY
 ```
 
@@ -147,15 +153,29 @@ PY
 | ภาพโปร่งใส | วางทับพื้นขาวก่อน ไม่งั้นพื้นเป็นดำ |
 | ภาพเล็กกว่าเป้าหมาย | คงขนาดเดิม **ห้ามขยาย** เพราะขยายแล้วแตก |
 | อัตราส่วน | คงเดิม ย่อตามสัดส่วน |
-| `Q` | ค่าตั้ง encoder ไม่ใช่คะแนนภาพ เริ่มต้น 85 ปรับได้ |
+| `FMT` | `webp` ค่าเริ่มต้น ใช้ได้ทุกที่, `avif` ไฟล์เล็กสุด ใช้เมื่อปลายทางรับ AVIF แน่นอน, `both` ได้สองไฟล์ชื่อเดียวกันไว้ใช้กับ `<picture>` |
+| `Q` | ค่าตั้ง encoder ไม่ใช่คะแนนภาพ เริ่มต้น WebP 85 และ AVIF 60 ปรับได้ |
+| ICC profile | AVIF จะคัดลอก ICC profile จากต้นฉบับมาเองถ้าไม่สั่ง สคริปต์จึงส่ง `icc_profile=b""` ให้ไฟล์สะอาดเท่า WebP |
 
 ความกว้างตามการใช้งาน hero 1920px, บทความ 1200px, สินค้า 800px, thumbnail 400px
+
+เมื่อใช้ `both` ให้วาง AVIF เป็นตัวเลือกแรกและ WebP เป็นตัวสำรอง
+
+```html
+<picture>
+  <source type="image/avif" srcset="/images/dental-checkup-procedure-1.avif">
+  <img src="/images/dental-checkup-procedure-1.webp" alt="..." width="1200" height="800">
+</picture>
+```
+
+- ภาพ og:image สำหรับ Facebook และ LINE ยังใช้ JPG, PNG หรือ WebP อย่าใช้ AVIF
+- ก่อนส่ง AVIF ขึ้น WordPress ให้ตรวจว่าเว็บรับได้ด้วย `wordpress_publisher.py preflight --probe-avif` ผ่านสกิล `wp-content-publisher-lite` (WordPress 6.5 ขึ้นไป และเซิร์ฟเวอร์ต้องประมวลผล AVIF ได้)
 
 ---
 
 ## ขั้นที่ 4 ตรวจผลและเขียนรายงาน
 
-รันสแกนขั้นที่ 1 ซ้ำที่ปลายทาง ยืนยันว่าเป็น WebP กว้างไม่เกินเป้าหมาย และ EXIF ไม่เหลือ
+รันสแกนขั้นที่ 1 ซ้ำที่ปลายทาง ยืนยันว่าเป็น format ที่เลือก (WebP หรือ AVIF) กว้างไม่เกินเป้าหมาย และ EXIF ไม่เหลือ
 **ตัวเลขทุกตัวต้องมาจากผลรันจริง** ถ้ารันสแกนซ้ำไม่สำเร็จ ให้เขียนช่องนั้นว่า `ตรวจไม่ได้`
 ห้ามเขียนว่า `ไม่มี EXIF` เพราะยังไม่ได้ยืนยัน แล้วส่งรายงานส่วนที่ทำได้ต่อไปตามปกติ
 รายงาน `{domain}_image-optimization_{YYYY-MM-DD}.md` เรียงตามนี้

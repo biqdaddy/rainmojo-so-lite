@@ -82,6 +82,16 @@ python "{PLUGIN_ROOT}/skills/rainmojo-so-lite/scripts/wordpress_publisher.py" pr
 
 Credentials must come from `clients/<domain>/.env`.
 
+When `images.format` is `AVIF`, preflight also checks that this WordPress can
+process AVIF. It first looks for an AVIF already in the media library with
+generated sub-sizes (no writes). Without that evidence, plain `preflight` only
+warns; add `--probe-avif` to upload one small AVIF probe, judge WordPress's
+response, and delete the probe. `publish-draft` always runs this probe before
+uploading any article image, and stops with a fix (switch `images.format` to
+`WEBP` and re-plan the manifest, or enable AVIF on the server) when WordPress
+refuses AVIF or stores it without dimensions. If deleting the probe fails, the
+report names the attachment ID to remove by hand.
+
 #### Dry run
 
 ```bash

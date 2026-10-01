@@ -12,6 +12,7 @@ import os
 import re
 import sys
 import time
+import uuid
 from collections import Counter
 from contextlib import contextmanager, nullcontext
 from html.parser import HTMLParser
@@ -43,6 +44,9 @@ IDENTITY_RE = re.compile(
     re.I | re.S,
 )
 ANCHOR_TAG_RE = re.compile(r"<a\b[^>]*>", re.I)
+# Larger than WordPress's 150x150 thumbnail, so a server that can process AVIF
+# generates at least one sub-size for the probe.
+AVIF_PROBE_SIZE = (320, 240)
 
 
 class WordPressError(RuntimeError):
@@ -477,6 +481,8 @@ class WordPressClient:
         *,
         post_type: str | None = None,
         expected_meta_fields: list[str] | None = None,
+        image_format: str = "WEBP",
+        probe_avif: bool = False,
     ) -> dict[str, Any]:
         user = self.get_json("users/me", {"context": "edit"})
         media = self.get_json(
@@ -581,9 +587,148 @@ class WordPressClient:
                 }
             )
 
+        if str(image_format).strip().upper() == "AVIF":
+            avif = check_avif_support(self, probe=probe_avif)
+            report["avif"] = avif
+            report["errors"].extend(avif["errors"])
+            report["warnings"].extend(avif["warnings"])
+
         report["passed"] = not report["errors"]
         report["status"] = "passed" if report["passed"] else "blocked"
         return report
+
+
+def avif_probe_bytes() -> bytes:
+    buffer = BytesIO()
+    Image.new("RGB", AVIF_PROBE_SIZE, (70, 110, 150)).save(buffer, "AVIF", quality=50)
+    return buffer.getvalue()
+
+
+def media_has_subsizes(media: dict[str, Any]) -> bool:
+    sizes = (media.get("media_details") or {}).get("sizes") or {}
+    return isinstance(sizes, dict) and any(name != "full" for name in sizes)
+
+
+def media_has_dimensions(media: dict[str, Any]) -> bool:
+    details = media.get("media_details") or {}
+    return bool(details.get("width")) and bool(details.get("height"))
+
+
+def check_avif_support(wp: "WordPressClient", *, probe: bool) -> dict[str, Any]:
+    """Decide whether this WordPress accepts and processes AVIF uploads.
+
+    Read-only first: an AVIF attachment that already has generated sub-sizes
+    proves support. Otherwise, only when probe is true, upload one small AVIF,
+    judge WordPress's own response, and delete it again. WordPress before 6.5,
+    or a server whose image library cannot decode AVIF, either rejects the
+    upload or stores it without dimensions and sub-sizes.
+    """
+    report: dict[str, Any] = {
+        "format": "AVIF",
+        "supported": None,
+        "method": "",
+        "evidence": "",
+        "probe_media_id": None,
+        "cleanup": "",
+        "errors": [],
+        "warnings": [],
+    }
+    fix = (
+        " Set images.format to WEBP in content-pipeline.json and re-plan the image "
+        "manifest, or enable AVIF on the server (WordPress 6.5 or later with an "
+        "Imagick or GD build that supports AVIF)."
+    )
+    existing = wp.get_json(
+        "media",
+        {"context": "edit", "mime_type": "image/avif", "per_page": 5, "page": 1},
+    )
+    for media in existing if isinstance(existing, list) else []:
+        if (
+            isinstance(media, dict)
+            and str(media.get("mime_type", "")).lower() == "image/avif"
+            and media_has_subsizes(media)
+        ):
+            report.update(
+                supported=True,
+                method="existing_media",
+                evidence=f"Media {media.get('id')} is AVIF with generated sub-sizes.",
+            )
+            return report
+    if not probe:
+        report.update(
+            method="not_probed",
+            evidence="No processed AVIF attachment in the media library.",
+        )
+        report["warnings"].append(
+            "AVIF support is unconfirmed; publish-draft probes it before any upload, "
+            "or run preflight --probe-avif now."
+        )
+        return report
+
+    name = f"rainmojo-avif-probe-{uuid.uuid4().hex[:12]}.avif"
+    slug = media_slug(Path(name))
+    report["method"] = "probe_upload"
+    media: dict[str, Any] | None = None
+    try:
+        response = wp.request(
+            "POST",
+            "media",
+            data=avif_probe_bytes(),
+            headers={
+                "Content-Type": "image/avif",
+                "Content-Disposition": f'attachment; filename="{name}"',
+            },
+        )
+        media = wp.response_json(response, method="POST", route="media")
+    except AmbiguousWriteError as exc:
+        # WordPress before 6.5 answers an AVIF upload with HTTP 500; read back
+        # whether the probe was stored before judging.
+        found = wp.get_json("media", {"context": "edit", "slug": slug})
+        matches = [m for m in found if isinstance(m, dict) and m.get("slug") == slug]
+        if not matches:
+            report.update(supported=False, evidence=f"Upload refused: {exc}")
+            report["errors"].append("WordPress refused an AVIF upload." + fix)
+            return report
+        media = matches[0]
+    except WordPressError as exc:
+        report.update(supported=False, evidence=f"Upload refused: {exc}")
+        report["errors"].append("WordPress refused an AVIF upload." + fix)
+        return report
+
+    media_id = media.get("id") if isinstance(media, dict) else None
+    report["probe_media_id"] = media_id
+    is_avif = str((media or {}).get("mime_type", "")).lower() == "image/avif"
+    sized = media_has_subsizes(media or {})
+    measured = media_has_dimensions(media or {})
+    if is_avif and sized:
+        report.update(supported=True, evidence="Probe stored as AVIF with generated sub-sizes.")
+    elif is_avif and measured:
+        report.update(supported=True, evidence="Probe stored as AVIF with dimensions but no sub-sizes.")
+        report["warnings"].append(
+            "WordPress read the AVIF but generated no sub-sizes: responsive sizes will be "
+            "missing for AVIF images unless sub-sizes are disabled on purpose."
+        )
+    else:
+        report.update(
+            supported=False,
+            evidence=(
+                f"Probe stored as {(media or {}).get('mime_type') or 'unknown type'} "
+                "without dimensions or sub-sizes: the server cannot process AVIF."
+            ),
+        )
+        report["errors"].append("WordPress accepted the file but cannot process AVIF." + fix)
+
+    if media_id:
+        try:
+            wp.request("DELETE", f"media/{media_id}", params={"force": "true"})
+            report["cleanup"] = "deleted"
+        except WordPressError as exc:
+            report["cleanup"] = "failed"
+            report["warnings"].append(
+                f"Delete the AVIF probe attachment {media_id} ({name}) from the media "
+                f"library by hand: {exc}"
+            )
+    return report
 
 
 def client_from_env(
@@ -1734,6 +1879,8 @@ def publish_draft(
             preflight = wp.preflight(
                 post_type=post_type,
                 expected_meta_fields=expected_meta_fields(config),
+                image_format=content_pipeline.image_output_format(config["images"]),
+                probe_avif=True,
             )
             validate_preflight_categories(preflight, config)
             if not preflight["passed"]:
@@ -2111,6 +2258,8 @@ def command_preflight(args: argparse.Namespace) -> int:
     report = client_from_env(client_path, config).preflight(
         post_type=post_type,
         expected_meta_fields=expected_meta_fields(config),
+        image_format=content_pipeline.image_output_format(config["images"]),
+        probe_avif=args.probe_avif,
     )
     validate_preflight_categories(report, config)
     print(json.dumps(report, ensure_ascii=False, indent=2))
@@ -2142,6 +2291,15 @@ def build_parser() -> argparse.ArgumentParser:
         help="Verify authenticated posts, media, categories, and SEO REST schema.",
     )
     preflight.add_argument("--client", required=True)
+    preflight.add_argument(
+        "--probe-avif",
+        action="store_true",
+        help=(
+            "When images.format is AVIF and no processed AVIF exists yet, upload one "
+            "small AVIF probe, judge it, and delete it. Without this flag preflight "
+            "makes no writes."
+        ),
+    )
     preflight.set_defaults(func=command_preflight)
 
     publish = sub.add_parser(
@@ -2212,7 +2370,11 @@ def _self_test() -> int:
     Image.new("RGB", (2, 2), (255, 255, 255)).save(buf, format="PNG")
     ident = identity_from_bytes(buf.getvalue(), "image/png")
     assert isinstance(ident, dict) and ident
-    print("SELF-TEST PASS: draft-only gate, external links, media helpers")
+    probe = Image.open(io.BytesIO(avif_probe_bytes()))
+    assert probe.format == "AVIF" and probe.size == AVIF_PROBE_SIZE
+    assert media_has_subsizes({"media_details": {"sizes": {"thumbnail": {}}}})
+    assert not media_has_subsizes({"media_details": {"sizes": {"full": {}}}})
+    print("SELF-TEST PASS: draft-only gate, external links, media helpers, AVIF probe helpers")
     return 0
 
 

@@ -43,6 +43,9 @@ STATUSES = [
     "verified",
 ]
 
+# Published image encodings: images.format -> file extension. One format per
+# package, because WordPress serves the single file each image item uploads.
+IMAGE_OUTPUT_FORMATS = {"WEBP": ".webp", "AVIF": ".avif"}
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 MARKDOWN_LINK_RE = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)", re.I)
 RAW_LINK_RE = re.compile(r"""href=["']([^"']+)["']""", re.I)
@@ -785,6 +788,10 @@ def validate_config(
                 )
 
     images = require_dict(config, "images")
+    if image_output_format(images) not in IMAGE_OUTPUT_FORMATS:
+        errors.append(
+            "images.format must be one of: " + ", ".join(IMAGE_OUTPUT_FORMATS) + "."
+        )
     for role in ("featured", "inline"):
         dimensions = images.get(role, {})
         if not isinstance(dimensions, dict):
@@ -1057,18 +1064,24 @@ def load_effective_config(
     return effective
 
 
+def image_output_format(images_config: dict[str, Any]) -> str:
+    """Normalized images.format; WEBP when the key is absent."""
+    return str(images_config.get("format", "WEBP")).strip().upper()
+
+
 def image_item(
     slug: str,
     role: str,
     dimensions: dict[str, Any],
     index: int | None = None,
+    extension: str = ".webp",
 ) -> dict[str, Any]:
     is_featured = role == "featured"
     image_id = "featured" if is_featured else f"inline-{index:02d}"
     filename = (
-        f"{slug}-featured.webp"
+        f"{slug}-featured{extension}"
         if is_featured
-        else f"{slug}-inline-{index:02d}.webp"
+        else f"{slug}-inline-{index:02d}{extension}"
     )
     return {
         "id": image_id,
@@ -1227,14 +1240,15 @@ def initialize_package(
         "created_at": timestamp,
         "updated_at": timestamp
     }
+    extension = IMAGE_OUTPUT_FORMATS[image_output_format(config["images"])]
     images = {
         "version": "1.0.0",
         "slug": slug,
         "items": [
-            image_item(slug, "featured", config["images"]["featured"])
+            image_item(slug, "featured", config["images"]["featured"], extension=extension)
         ]
         + [
-            image_item(slug, "inline", config["images"]["inline"], index)
+            image_item(slug, "inline", config["images"]["inline"], index, extension)
             for index in range(1, inline_count + 1)
         ]
     }
@@ -2913,7 +2927,10 @@ def _self_test() -> int:
     assert is_placeholder_domain("example.com") and not is_placeholder_domain("biqdaddy.com")
     defaults = load_json(Path(__file__).resolve().parent.parent / "reference" / "content-production" / "defaults.json")
     assert isinstance(defaults, dict) and defaults, "defaults.json missing"
-    print("SELF-TEST PASS: deep_merge, placeholder domain, defaults.json")
+    assert image_output_format(defaults["images"]) in IMAGE_OUTPUT_FORMATS
+    assert image_output_format({"format": "avif"}) == "AVIF" and IMAGE_OUTPUT_FORMATS["AVIF"] == ".avif"
+    assert image_item("x", "featured", {"width": 10, "height": 10}, extension=".avif")["output"].endswith(".avif")
+    print("SELF-TEST PASS: deep_merge, placeholder domain, defaults.json, images.format WEBP/AVIF")
     return 0
 
 

@@ -76,6 +76,79 @@ def webp_chunks(path: Path) -> list[str]:
     return chunks
 
 
+# Encoder settings per images.format. AVIF copies the source ICC profile unless
+# it is blanked; WebP never embeds one unasked.
+ENCODERS = {
+    "WEBP": {"options": {"method": 6}},
+    "AVIF": {"options": {"icc_profile": b""}},
+}
+# Container markers that would ship embedded metadata, per format
+PROHIBITED_CONTAINER_MARKERS = {
+    "WEBP": {"EXIF", "XMP ", "ICCP", "META"},
+    # iinf item types Exif and mime (XMP), and colr boxes holding an ICC profile
+    "AVIF": {"item:Exif", "item:mime", "colr:prof", "colr:rICC"},
+}
+
+
+def iter_boxes(data: bytes, start: int, end: int):
+    """Yield (type, payload_start, box_end) for ISOBMFF boxes in data[start:end]."""
+    offset = start
+    while offset + 8 <= end:
+        size = int.from_bytes(data[offset : offset + 4], "big")
+        box_type = data[offset + 4 : offset + 8].decode("ascii", errors="replace")
+        header = 8
+        if size == 1:
+            if offset + 16 > end:
+                return
+            size = int.from_bytes(data[offset + 8 : offset + 16], "big")
+            header = 16
+        elif size == 0:
+            size = end - offset
+        if size < header or offset + size > end:
+            return
+        yield box_type, offset + header, offset + size
+        offset += size
+
+
+def avif_markers(path: Path) -> list[str]:
+    """Metadata-relevant markers in an AVIF file: item types from meta/iinf
+    (av01, Exif, mime for XMP) and colour types from iprp/ipco colr boxes
+    (nclx is plain colour signalling; prof or rICC is an embedded ICC profile)."""
+    data = path.read_bytes()
+    if len(data) < 12 or data[4:8] != b"ftyp":
+        return []
+    markers: list[str] = []
+    for box, start, end in iter_boxes(data, 0, len(data)):
+        if box != "meta":
+            continue
+        # meta is a FullBox: skip version and flags
+        for child, c_start, c_end in iter_boxes(data, start + 4, end):
+            if child == "iinf":
+                count_bytes = 2 if data[c_start] == 0 else 4
+                for entry, e_start, e_end in iter_boxes(data, c_start + 4 + count_bytes, c_end):
+                    version = data[e_start] if e_start < e_end else 0
+                    if entry != "infe" or version < 2:
+                        continue
+                    type_at = e_start + 4 + (2 if version == 2 else 4) + 2
+                    markers.append(
+                        "item:" + data[type_at : type_at + 4].decode("ascii", errors="replace")
+                    )
+            elif child == "iprp":
+                for prop, p_start, p_end in iter_boxes(data, c_start, c_end):
+                    if prop != "ipco":
+                        continue
+                    for item, i_start, _i_end in iter_boxes(data, p_start, p_end):
+                        if item == "colr":
+                            markers.append(
+                                "colr:" + data[i_start : i_start + 4].decode("ascii", errors="replace")
+                            )
+    return markers
+
+
+def container_markers(path: Path, image_format: str) -> list[str]:
+    return avif_markers(path) if image_format == "AVIF" else webp_chunks(path)
+
+
 def load_effective_config(
     client: Path,
     package: Path,
@@ -393,6 +466,7 @@ def audit_metadata(
     prohibited_terms: list[str],
     expected_width: int,
     expected_height: int,
+    expected_format: str = "WEBP",
 ) -> dict[str, Any]:
     with Image.open(path) as image:
         keys = sorted(str(key) for key in image.info)
@@ -401,12 +475,12 @@ def audit_metadata(
             for key in keys
             if any(term.lower() in key.lower() for term in prohibited_terms)
         )
-        chunks = webp_chunks(path)
+        chunks = container_markers(path, expected_format)
         prohibited_chunks = sorted(
-            chunk for chunk in chunks if chunk in {"EXIF", "XMP ", "ICCP", "META"}
+            chunk for chunk in chunks if chunk in PROHIBITED_CONTAINER_MARKERS[expected_format]
         )
         passed = (
-            image.format == "WEBP"
+            image.format == expected_format
             and image.size == (expected_width, expected_height)
             and not prohibited
             and not prohibited_chunks
@@ -693,6 +767,16 @@ def process_item(
     reviewed_source = validate_source_review(package, item, config)
     validate_provenance(item, config)
     output = content_pipeline.safe_path(package, item["output"])
+    output_format = content_pipeline.image_output_format(config["images"])
+    if output_format not in ENCODERS:
+        raise RuntimeError(f"Unsupported images.format: {output_format}")
+    expected_suffix = content_pipeline.IMAGE_OUTPUT_FORMATS[output_format]
+    if output.suffix.lower() != expected_suffix:
+        raise RuntimeError(
+            f"{item.get('id')}: output {output.name} does not match images.format "
+            f"{output_format} (expected {expected_suffix}). Re-plan the image manifest "
+            "after changing images.format."
+        )
     width = int(role_config["width"])
     height = int(role_config["height"])
 
@@ -743,15 +827,20 @@ def process_item(
             )
     processed.save(
         output,
-        "WEBP",
-        quality=int(role_config.get("quality", 85)),
-        method=6,
+        output_format,
+        quality=int(
+            role_config.get("avif_quality", 60)
+            if output_format == "AVIF"
+            else role_config.get("quality", 85)
+        ),
+        **ENCODERS[output_format]["options"],
     )
     metadata_report = audit_metadata(
         output,
         effective_prohibited_terms(config["images"]["metadata"]),
         width,
         height,
+        output_format,
     )
     if not metadata_report["passed"]:
         raise RuntimeError(
@@ -1065,7 +1154,18 @@ def _self_test() -> int:
         raise AssertionError("missing provenance must raise")
     except RuntimeError:
         pass
-    print("SELF-TEST PASS: logo policy, prohibited terms, provenance gate")
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        exif = Image.Exif()
+        exif[0x010F] = "Fixture Camera"
+        dirty = Path(tmp) / "dirty.avif"
+        Image.new("RGB", (64, 64), (10, 20, 30)).save(dirty, "AVIF", exif=exif)
+        assert "item:Exif" in avif_markers(dirty), avif_markers(dirty)
+        assert not audit_metadata(dirty, [], 64, 64, "AVIF")["passed"]
+        clean = Path(tmp) / "clean.avif"
+        Image.new("RGB", (64, 64), (10, 20, 30)).save(clean, "AVIF", **ENCODERS["AVIF"]["options"])
+        assert audit_metadata(clean, [], 64, 64, "AVIF")["passed"]
+    print("SELF-TEST PASS: logo policy, prohibited terms, provenance gate, AVIF metadata audit")
     return 0
 
 

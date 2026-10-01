@@ -2,13 +2,13 @@
   "name": "seo-image-optimizer-lite",
   "version": "1.0.0",
   "edition": "lite",
-  "purpose": "Optimize images for the web: convert to WebP, resize to a target width, rename to SEO-friendly English filenames based on visual inspection, and strip EXIF metadata using short inline Python and Pillow snippets.",
+  "purpose": "Optimize images for the web: convert to WebP, AVIF, or a same-name pair of both, resize to a target width, rename to SEO-friendly English filenames based on visual inspection, and strip EXIF metadata using short inline Python and Pillow snippets.",
   "workflow": {
     "phases": [
       "ตรวจว่า Pillow ใช้ได้จริง ห้ามเดาผลแทนการรัน ถ้าใช้ไม่ได้หรือ host นี้รันคำสั่งไม่ได้ ห้ามจบงานเปล่า ให้ทำส่วนที่ยังทำได้ต่อคือเปิดดูภาพ ตั้งชื่อใหม่ เขียน alt text และส่งสคริปต์ให้ผู้ใช้ไปรันเอง",
       "สแกนไฟล์ภาพทั้งหมดรวม subfolder ดูฟอร์แมต มิติ ขนาดไฟล์ และ EXIF แล้วสรุปเป็นระดับ ต้องแก้ หรือ ผ่าน",
       "เปิดดูภาพจริงทีละไฟล์ ตั้งชื่ออังกฤษจากสิ่งที่เห็น แล้วทำตารางจับคู่ให้ผู้ใช้ดูก่อนแปลง",
-      "แปลงเป็น WebP ย่อตามสัดส่วน วางพื้นขาวให้ภาพโปร่งใส และลบ EXIF ด้วย Python inline ผ่าน Bash",
+      "แปลงเป็น WebP, AVIF หรือทั้งคู่ตามค่า FMT ย่อตามสัดส่วน วางพื้นขาวให้ภาพโปร่งใส และลบ EXIF ด้วย Python inline ผ่าน Bash",
       "สแกนโฟลเดอร์ปลายทางซ้ำเพื่อยืนยันผลจริง แล้วเขียนรายงานพร้อมตาราง alt text แนะนำ",
       "เพิ่มบรรทัดลงตารางใน CHANGELOG.md ว่าวันที่ รันสกิลอะไร ได้ไฟล์อะไร"
     ]
